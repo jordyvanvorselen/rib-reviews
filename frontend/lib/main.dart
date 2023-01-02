@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import 'screens/HomeScreen.dart';
 import 'utils/constants.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+  );
+
   runApp(const Main());
 }
 
@@ -21,6 +27,7 @@ class Main extends StatelessWidget {
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
       ),
+      home: HomeScreen(),
     );
   }
 }
