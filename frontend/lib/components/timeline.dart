@@ -46,11 +46,9 @@ class _TimelineState extends State<Timeline> {
       endChild: Container(
         constraints: const BoxConstraints(minHeight: 200),
         child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: EventCard(
-              name: event.venue.name,
-              location: event.venue.location,
-            )),
+          padding: EdgeInsets.all(15.0),
+          child: EventCard(event: event),
+        ),
       ),
     );
   }

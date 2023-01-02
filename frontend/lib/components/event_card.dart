@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:rib_reviews/models/event.dart';
 
 import './event_title.dart';
 import '../../../../utils/constants.dart';
 
 class EventCard extends StatelessWidget {
-  final String name;
-  final String location;
+  final Event event;
 
   const EventCard({
     Key? key,
-    required this.name,
-    required this.location,
+    required this.event,
   }) : super(key: key);
 
   @override
@@ -29,8 +28,8 @@ class EventCard extends StatelessWidget {
               child: Row(
                 children: [
                   EventTitle(
-                    name: this.name,
-                    location: this.location,
+                    name: this.event.venue.name,
+                    location: this.event.venue.location,
                   ),
                 ],
               ),
