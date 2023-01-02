@@ -8,9 +8,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [Timeline()],
-      )),
+        child: Row(
+          children: [SizedBox(width: 15.0), Timeline()],
+        ),
+      ),
     );
   }
 }
