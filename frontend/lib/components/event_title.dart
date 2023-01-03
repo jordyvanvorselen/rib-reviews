@@ -14,22 +14,25 @@ class EventTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          name,
-          style: const TextStyle(fontSize: 20),
-        ),
-        Text(
-          location,
-          style: const TextStyle(
-            fontSize: 16,
-            color: kSecondaryTextColor,
+    return Container(
+      width: 150,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: const TextStyle(fontSize: 20),
           ),
-        ),
-      ],
+          Text(
+            location,
+            style: const TextStyle(
+              fontSize: 16,
+              color: kSecondaryTextColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
