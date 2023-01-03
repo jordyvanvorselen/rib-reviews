@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:rib_reviews/models/user.dart';
 
 class Review {
@@ -12,4 +13,8 @@ class Review {
     required this.user,
     required this.createdAt,
   });
+
+  String getFormattedDate() {
+    return DateFormat.yMMMMd('en_US').format(createdAt);
+  }
 }

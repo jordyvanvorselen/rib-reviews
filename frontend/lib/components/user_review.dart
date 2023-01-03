@@ -26,11 +26,24 @@ class UserReview extends StatelessWidget {
                   ProfilePicture(
                       photoUrl: review.user.getPhotoUrl(), radius: 20),
                   const SizedBox(width: 10),
-                  Text(
-                    review.user.displayName,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      overflow: TextOverflow.ellipsis,
+                  SizedBox(
+                    width: 150,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          review.user.displayName,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          review.getFormattedDate(),
+                          style: const TextStyle(
+                              fontSize: 12, color: kSecondaryTextColor),
+                        ),
+                      ],
                     ),
                   ),
                   const Spacer(),
