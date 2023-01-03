@@ -33,7 +33,7 @@ class EventCard extends StatelessWidget {
         );
       },
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(25),
         child: Container(
           width: 210,
           height: 160,
