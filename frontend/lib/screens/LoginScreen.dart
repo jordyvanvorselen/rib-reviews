@@ -22,8 +22,9 @@ class LoginScreen extends StatelessWidget {
                   return;
                 }
 
-                String username = value!.displayName!;
-                String? photoUrl = value!.photoUrl;
+                String username = value.displayName!;
+                String? photoUrl = value.photoUrl;
+                String email = value.email;
 
                 Navigator.pushReplacement(
                   context,
@@ -31,6 +32,7 @@ class LoginScreen extends StatelessWidget {
                     builder: (context) => HomeScreen(
                       username: username,
                       photoUrl: photoUrl,
+                      email: email,
                     ),
                   ),
                 );
