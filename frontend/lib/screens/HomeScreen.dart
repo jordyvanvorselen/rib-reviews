@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Row(
           children: [
-            SizedBox(width: 65, child: Image.asset("assets/images/logo.png")),
+            SizedBox(width: 55, child: Image.asset("assets/images/logo.png")),
             const SizedBox(width: 60),
             const AppBarTitle(),
           ],

@@ -57,6 +57,17 @@ class Event {
     }
   }
 
+  double getTotalRating() {
+    if (reviews.length == 0) {
+      return 0;
+    }
+
+    return reviews
+            .map((r) => r.rating)
+            .reduce((value, element) => value + element) /
+        reviews.length;
+  }
+
   IndicatorStyle getIndicatorStyle() {
     return IndicatorStyle(
       color: getIndicatorColor(),

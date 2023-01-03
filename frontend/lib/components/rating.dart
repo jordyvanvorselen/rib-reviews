@@ -3,23 +3,25 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:rib_reviews/utils/constants.dart';
 
 class Rating extends StatelessWidget {
-  const Rating({Key? key}) : super(key: key);
+  final double rating;
+
+  const Rating({Key? key, required this.rating}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
-          children: const [
+          children: [
             Text(
-              "4.3",
-              style: TextStyle(fontSize: 24),
+              rating.toStringAsFixed(1),
+              style: const TextStyle(fontSize: 28),
             ),
-            Text(
+            const Text(
               " / ",
               style: TextStyle(fontSize: 10, color: kSecondaryTextColor),
             ),
-            Text(
+            const Text(
               "5",
               style: TextStyle(fontSize: 14, color: kSecondaryTextColor),
             )
@@ -27,7 +29,7 @@ class Rating extends StatelessWidget {
         ),
         RatingBar.builder(
           ignoreGestures: true,
-          initialRating: 3,
+          initialRating: rating,
           direction: Axis.horizontal,
           allowHalfRating: true,
           itemCount: 5,

@@ -22,12 +22,12 @@ class MockEvents {
 
   static final reviews = [
     Review(
-      rating: 4.3,
+      rating: 4.5,
       text: "Wat een geweldig restaurant. Hier wil ik nog eens naartoe!",
       user: users[0],
     ),
     Review(
-      rating: 1.9,
+      rating: 2,
       text: "Dit was echt niks.",
       user: users[1],
     ),
@@ -56,10 +56,10 @@ class MockEvents {
       date: DateTime.parse("2022-10-01 18:30:00.000"),
       venue: Venue(
         location: "Noord-Stramproy Mooi Spul",
-        name: "'t Vosseven Hele Lange Naam",
+        name: "'t Vosseven",
         website: "https://www.nieuwvosseven.nl/",
       ),
-      reviews: [],
+      reviews: reviews,
     ),
     Event(
       date: DateTime.parse("2022-09-01 19:00:00.000"),

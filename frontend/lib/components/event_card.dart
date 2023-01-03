@@ -34,19 +34,21 @@ class EventCard extends StatelessWidget {
                   Column(
                     children: [
                       EventTitle(
-                        name: this.event.venue.name,
-                        location: this.event.venue.location,
+                        name: event.venue.name,
+                        location: event.venue.location,
                       ),
                       const SizedBox(height: 25.0),
                       event.finished()
-                          ? EventReviews()
+                          ? EventReviews(reviews: event.reviews)
                           : EventDate(event: event)
                     ],
                   ),
                   const SizedBox(width: 5.0),
                   Column(
                     children: [
-                      event.finished() ? Rating() : EventLink(event: event)
+                      event.finished()
+                          ? Rating(rating: event.getTotalRating())
+                          : EventLink(event: event)
                     ],
                   )
                 ],
