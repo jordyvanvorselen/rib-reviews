@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:rib_reviews/components/rating.dart';
+import 'package:rib_reviews/components/review_screen_title.dart';
+import 'package:rib_reviews/components/user_review.dart';
+import 'package:rib_reviews/models/event.dart';
+
+class ReviewScreen extends StatelessWidget {
+  final Event event;
+
+  const ReviewScreen({Key? key, required this.event}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  ReviewScreenTitle(event: event),
+                  const Spacer(),
+                  Rating(rating: event.getTotalRating())
+                ],
+              ),
+              const SizedBox(height: 15),
+              const Divider(),
+              ...event.reviews.map((review) => UserReview(review: review))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

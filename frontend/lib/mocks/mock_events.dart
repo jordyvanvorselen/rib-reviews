@@ -55,7 +55,7 @@ class MockEvents {
     Event(
       date: DateTime.parse("2022-10-01 18:30:00.000"),
       venue: Venue(
-        location: "Noord-Stramproy Mooi Spul",
+        location: "Noord-Stramproy",
         name: "'t Vosseven",
         website: "https://www.nieuwvosseven.nl/",
       ),
