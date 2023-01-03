@@ -1,28 +1,16 @@
-import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:rib_reviews/components/app_bar_title.dart';
 import 'package:rib_reviews/components/profile_picture.dart';
 import 'package:rib_reviews/components/timeline.dart';
+import 'package:rib_reviews/models/user.dart';
 
 class HomeScreen extends StatelessWidget {
-  final String username;
-  final String? photoUrl;
-  final String email;
+  final User user;
 
-  const HomeScreen({
-    Key? key,
-    required this.username,
-    required this.photoUrl,
-    required this.email,
-  }) : super(key: key);
+  const HomeScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final String profilePicUrl =
-        photoUrl ?? "https://www.gravatar.com/avatar/${generateMd5(email)}";
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -37,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           Padding(
               padding: EdgeInsets.only(right: 20.0),
-              child: ProfilePicture(photoUrl: profilePicUrl))
+              child: ProfilePicture(photoUrl: user.getPhotoUrl()))
         ],
       ),
       body: SafeArea(
@@ -46,9 +34,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String generateMd5(String input) {
-    return md5.convert(utf8.encode(input)).toString();
   }
 }

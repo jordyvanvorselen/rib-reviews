@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/screens/HomeScreen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,17 +23,15 @@ class LoginScreen extends StatelessWidget {
                   return;
                 }
 
-                String username = value.displayName!;
-                String? photoUrl = value.photoUrl;
-                String email = value.email;
-
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomeScreen(
-                      username: username,
-                      photoUrl: photoUrl,
-                      email: email,
+                      user: User(
+                        email: value.email,
+                        photoUrl: value.photoUrl,
+                        displayName: value.displayName!,
+                      ),
                     ),
                   ),
                 );

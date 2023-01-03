@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rib_reviews/models/review.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 import './venue.dart';
@@ -6,10 +7,11 @@ import './venue.dart';
 enum EventState { unplanned, planned, finished }
 
 class Event {
+  final List<Review> reviews;
   final DateTime? date;
   final Venue venue;
 
-  Event({required this.date, required this.venue});
+  Event({required this.date, required this.venue, required this.reviews});
 
   EventState getState() {
     if (date == null) {
