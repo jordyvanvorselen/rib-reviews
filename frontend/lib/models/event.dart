@@ -3,33 +3,43 @@ import 'package:timeline_tile/timeline_tile.dart';
 
 import './venue.dart';
 
+enum EventState { unplanned, planned, finished }
+
 class Event {
   final DateTime? date;
   final Venue venue;
 
   Event({required this.date, required this.venue});
 
-  Color getIndicatorColor() {
+  EventState getState() {
     if (date == null) {
-      return Colors.grey;
+      return EventState.unplanned;
+    } else if (date!.difference(DateTime.now()).isNegative) {
+      return EventState.finished;
+    } else {
+      return EventState.planned;
     }
-
-    if (date!.difference(DateTime.now()).isNegative) {
-      return Colors.green;
-    }
-
-    return Colors.orange;
   }
 
-  getIcon() {
-    final color = getIndicatorColor();
+  Color getIndicatorColor() {
+    switch (getState()) {
+      case EventState.unplanned:
+        return Colors.grey;
+      case EventState.planned:
+        return Colors.orange;
+      default:
+        return Colors.green;
+    }
+  }
 
-    if (color.value == Colors.grey.value) {
-      return Icons.pending;
-    } else if (color.value == Colors.green.value) {
-      return Icons.done;
-    } else {
-      return Icons.event;
+  IconData getIcon() {
+    switch (getState()) {
+      case EventState.unplanned:
+        return Icons.pending;
+      case EventState.planned:
+        return Icons.event;
+      default:
+        return Icons.done;
     }
   }
 
