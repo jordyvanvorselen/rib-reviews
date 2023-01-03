@@ -31,10 +31,8 @@ class _TimelineState extends State<Timeline> {
   }
 
   TimelineTile getTimelineTile(Event event, int index) {
-    Color indicator = getIndicatorColor(event.date);
-
     return TimelineTile(
-      indicatorStyle: getIndicatorStyle(indicator),
+      indicatorStyle: event.getIndicatorStyle(),
       beforeLineStyle: LineStyle(
         color: getLineColor(index, LineType.before),
         thickness: 5,
@@ -46,7 +44,7 @@ class _TimelineState extends State<Timeline> {
       endChild: Container(
         constraints: const BoxConstraints(minHeight: 200),
         child: Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(15.0),
           child: EventCard(event: event),
         ),
       ),
@@ -63,47 +61,13 @@ class _TimelineState extends State<Timeline> {
     }
 
     if (idx == 0) {
-      return getIndicatorColor(events[idx].date);
+      return events[idx].getIndicatorColor();
     }
 
-    return getIndicatorColor(lineType == LineType.before
-        ? events[idx - 1].date
-        : events[idx + 1].date);
-  }
+    final event =
+        lineType == LineType.before ? events[idx - 1] : events[idx + 1];
 
-  Color getIndicatorColor(DateTime? date) {
-    if (date == null) {
-      return Colors.grey;
-    }
-
-    if (date.difference(DateTime.now()).isNegative) {
-      return Colors.green;
-    }
-
-    return Colors.orange;
-  }
-
-  getIconByColor(Color color) {
-    if (color.value == Colors.grey.value) {
-      return Icons.pending;
-    } else if (color.value == Colors.green.value) {
-      return Icons.done;
-    } else {
-      return Icons.event;
-    }
-  }
-
-  IndicatorStyle getIndicatorStyle(Color color) {
-    return IndicatorStyle(
-      color: color,
-      padding: EdgeInsets.all(5),
-      width: 50.0,
-      iconStyle: IconStyle(
-        color: Colors.white,
-        iconData: getIconByColor(color),
-        fontSize: 35.0,
-      ),
-    );
+    return event.getIndicatorColor();
   }
 }
 
