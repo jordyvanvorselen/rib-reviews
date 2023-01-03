@@ -15,7 +15,7 @@ class EventLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100,
-      height: 125,
+      height: 130,
       child: IconButton(
         tooltip: "Go to website",
         onPressed: () {
@@ -23,7 +23,7 @@ class EventLink extends StatelessWidget {
               mode: LaunchMode.externalApplication);
         },
         icon: Icon(Icons.open_in_new),
-        iconSize: 40,
+        iconSize: 45,
         color: kSecondaryTextColor,
       ),
     );
