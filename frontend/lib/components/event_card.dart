@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rib_reviews/components/event_reviews.dart';
+import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/models/event.dart';
 
 import './event_title.dart';
@@ -26,14 +27,22 @@ class EventCard extends StatelessWidget {
             Positioned(
               left: 20,
               top: 20,
-              child: Column(
+              child: Row(
                 children: [
-                  EventTitle(
-                    name: this.event.venue.name,
-                    location: this.event.venue.location,
+                  Column(
+                    children: [
+                      EventTitle(
+                        name: this.event.venue.name,
+                        location: this.event.venue.location,
+                      ),
+                      const SizedBox(height: 25.0),
+                      EventReviews()
+                    ],
                   ),
-                  const SizedBox(height: 25.0),
-                  EventReviews()
+                  const SizedBox(width: 5.0),
+                  Column(
+                    children: [Rating()],
+                  )
                 ],
               ),
             ),

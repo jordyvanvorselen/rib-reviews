@@ -10,7 +10,7 @@ class EventReviews extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 150,
+          width: 140,
           child: const Text(
             "4 reviews",
             style: TextStyle(
@@ -21,7 +21,7 @@ class EventReviews extends StatelessWidget {
         ),
         const SizedBox(height: 7.5),
         Container(
-          width: 150,
+          width: 140,
           child: Row(
             children: [
               const SizedBox(width: 5),

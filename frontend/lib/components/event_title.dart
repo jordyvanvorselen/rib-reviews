@@ -15,7 +15,7 @@ class EventTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
+      width: 140,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,6 +23,7 @@ class EventTitle extends StatelessWidget {
           Text(
             name,
             style: const TextStyle(fontSize: 20),
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             location,
@@ -30,6 +31,7 @@ class EventTitle extends StatelessWidget {
               fontSize: 16,
               color: kSecondaryTextColor,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
