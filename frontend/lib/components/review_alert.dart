@@ -40,7 +40,7 @@ class ReviewAlert {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () {},
-          color: Colors.green.shade500,
+          color: Colors.green,
           radius: BorderRadius.circular(25),
         ),
         DialogButton(

@@ -17,7 +17,7 @@ class ReviewScreen extends StatelessWidget {
         onPressed: () {
           ReviewAlert().show(context, event);
         },
-        backgroundColor: Colors.green.shade500,
+        backgroundColor: Colors.green,
         child: const Icon(Icons.star, color: Colors.white),
       ),
       body: SafeArea(
