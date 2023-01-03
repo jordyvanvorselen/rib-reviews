@@ -9,7 +9,9 @@ class MockEvents {
     ),
     Event(
       date: DateTime.parse("2022-10-01 18:30:00.000"),
-      venue: Venue(location: "Noord-Stramproy", name: "'t Vosseven"),
+      venue: Venue(
+          location: "Noord-Stramproy Mooi Spul",
+          name: "'t Vosseven Hele Lange Naam"),
     ),
     Event(
       date: DateTime.parse("2022-09-01 19:00:00.000"),

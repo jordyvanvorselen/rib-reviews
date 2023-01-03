@@ -25,7 +25,7 @@ class EventReviews extends StatelessWidget {
           child: Row(
             children: [
               const SizedBox(width: 5),
-              for (int i = 0; i < 3; i++)
+              for (int i = 0; i < 4; i++)
                 const Align(
                   widthFactor: 0.5,
                   child: CircleAvatar(

@@ -21,6 +21,18 @@ class Event {
     }
   }
 
+  bool unplanned() {
+    return getState() == EventState.unplanned;
+  }
+
+  bool planned() {
+    return getState() == EventState.planned;
+  }
+
+  bool finished() {
+    return getState() == EventState.finished;
+  }
+
   Color getIndicatorColor() {
     switch (getState()) {
       case EventState.unplanned:
