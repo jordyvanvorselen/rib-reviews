@@ -28,7 +28,7 @@ class EventReviews extends StatelessWidget {
           width: 140,
           child: Row(children: [
             const SizedBox(width: 7.5),
-            ...reviews.map(
+            ...reviews.take(5).map(
               (review) {
                 return Align(
                   widthFactor: 0.5,

@@ -23,13 +23,55 @@ class MockEvents {
   static final reviews = [
     Review(
       rating: 4.5,
-      text: "Wat een geweldig restaurant. Hier wil ik nog eens naartoe!",
+      text:
+          "Wat een geweldig restaurant. Hier wil ik nog eens naartoe! Ik had gevraagd om een medium ribje. Echt heerlijk. De volgende keer ga ik de ossenhaas eens proberen. Heb er nu al zin in.",
       user: users[0],
+      createdAt: DateTime.now(),
     ),
     Review(
       rating: 2,
       text: "Dit was echt niks.",
       user: users[1],
+      createdAt: DateTime.now(),
+    ),
+    Review(
+      rating: 4.5,
+      text:
+          "Wat een geweldig restaurant. Hier wil ik nog eens naartoe! Ik had gevraagd om een medium ribje. Echt heerlijk. De volgende keer ga ik de ossenhaas eens proberen. Heb er nu al zin in.",
+      user: users[0],
+      createdAt: DateTime.now(),
+    ),
+    Review(
+      rating: 2,
+      text: "Dit was echt niks.",
+      user: users[1],
+      createdAt: DateTime.now(),
+    ),
+    Review(
+      rating: 4.5,
+      text:
+          "Wat een geweldig restaurant. Hier wil ik nog eens naartoe! Ik had gevraagd om een medium ribje. Echt heerlijk. De volgende keer ga ik de ossenhaas eens proberen. Heb er nu al zin in.",
+      user: users[0],
+      createdAt: DateTime.now(),
+    ),
+    Review(
+      rating: 2,
+      text: "Dit was echt niks.",
+      user: users[1],
+      createdAt: DateTime.now(),
+    ),
+    Review(
+      rating: 4.5,
+      text:
+          "Wat een geweldig restaurant. Hier wil ik nog eens naartoe! Ik had gevraagd om een medium ribje. Echt heerlijk. De volgende keer ga ik de ossenhaas eens proberen. Heb er nu al zin in.",
+      user: users[0],
+      createdAt: DateTime.now(),
+    ),
+    Review(
+      rating: 2,
+      text: "Dit was echt niks.",
+      user: users[1],
+      createdAt: DateTime.now(),
     ),
   ];
 

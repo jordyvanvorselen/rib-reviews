@@ -4,37 +4,48 @@ import 'package:rib_reviews/utils/constants.dart';
 
 class Rating extends StatelessWidget {
   final double rating;
+  final double size;
+  final bool showNumber;
+  final bool readOnly;
 
-  const Rating({Key? key, required this.rating}) : super(key: key);
+  const Rating({
+    Key? key,
+    required this.rating,
+    this.size = 20,
+    this.showNumber = true,
+    this.readOnly = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Text(
-              rating.toStringAsFixed(1),
-              style: const TextStyle(fontSize: 28),
-            ),
-            const Text(
-              " / ",
-              style: TextStyle(fontSize: 10, color: kSecondaryTextColor),
-            ),
-            const Text(
-              "5",
-              style: TextStyle(fontSize: 14, color: kSecondaryTextColor),
-            )
-          ],
-        ),
+        showNumber
+            ? Row(
+                children: [
+                  Text(
+                    rating.toStringAsFixed(1),
+                    style: const TextStyle(fontSize: 28),
+                  ),
+                  const Text(
+                    " / ",
+                    style: TextStyle(fontSize: 10, color: kSecondaryTextColor),
+                  ),
+                  const Text(
+                    "5",
+                    style: TextStyle(fontSize: 14, color: kSecondaryTextColor),
+                  )
+                ],
+              )
+            : const SizedBox(),
         RatingBar.builder(
-          ignoreGestures: true,
+          ignoreGestures: readOnly,
           initialRating: rating,
           direction: Axis.horizontal,
           allowHalfRating: true,
           itemCount: 5,
           itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-          itemSize: 20,
+          itemSize: size,
           itemBuilder: (context, _) => const Icon(
             Icons.star,
             color: Colors.amber,
