@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rib_reviews/components/event_date.dart';
+import 'package:rib_reviews/components/event_link.dart';
 import 'package:rib_reviews/components/event_reviews.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/models/event.dart';
@@ -37,13 +38,15 @@ class EventCard extends StatelessWidget {
                         location: this.event.venue.location,
                       ),
                       const SizedBox(height: 25.0),
-                      event.finished() ? EventReviews() : EventDate()
+                      event.finished()
+                          ? EventReviews()
+                          : EventDate(event: event)
                     ],
                   ),
                   const SizedBox(width: 5.0),
                   Column(
                     children: [
-                      event.finished() ? const Rating() : const SizedBox()
+                      event.finished() ? Rating() : EventLink(event: event)
                     ],
                   )
                 ],

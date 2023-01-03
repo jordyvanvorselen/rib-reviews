@@ -64,8 +64,7 @@ class _TimelineState extends State<Timeline> {
       return events[idx].getIndicatorColor();
     }
 
-    final event =
-        lineType == LineType.before ? events[idx - 1] : events[idx + 1];
+    final event = lineType == LineType.before ? events[idx - 1] : events[idx];
 
     return event.getIndicatorColor();
   }
