@@ -4,6 +4,7 @@ import 'package:rib_reviews/components/event_link.dart';
 import 'package:rib_reviews/components/event_reviews.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/models/event.dart';
+import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/screens/ReviewScreen.dart';
 
 import './event_title.dart';
@@ -11,10 +12,12 @@ import '../../../../utils/constants.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
+  final User user;
 
   const EventCard({
     Key? key,
     required this.event,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -28,7 +31,7 @@ class EventCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ReviewScreen(event: event),
+            builder: (context) => ReviewScreen(event: event, user: user),
           ),
         );
       },

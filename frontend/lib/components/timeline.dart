@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rib_reviews/components/event_card.dart';
+import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/constants.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -7,7 +8,8 @@ import '../mocks/mock_events.dart';
 import '../models/event.dart';
 
 class Timeline extends StatefulWidget {
-  const Timeline({Key? key}) : super(key: key);
+  final User user;
+  const Timeline({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Timeline> createState() => _TimelineState();
@@ -45,7 +47,7 @@ class _TimelineState extends State<Timeline> {
         constraints: const BoxConstraints(minHeight: 200),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: EventCard(event: event),
+          child: EventCard(event: event, user: widget.user),
         ),
       ),
     );
