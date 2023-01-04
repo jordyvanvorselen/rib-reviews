@@ -1,0 +1,27 @@
+{
+  "name": "rib-reviews",
+  "version": "1.0.0",
+  "description": "Serverless backend for the rib reviews Flutter app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordyvanvorselen/rib-reviews.git"
+  },
+  "keywords": [
+    "eat",
+    "guild"
+  ],
+  "author": "Jordy van Vorselen",
+  "license": "SEE LICENSE IN ../LICENSE",
+  "bugs": {
+    "url": "https://github.com/jordyvanvorselen/rib-reviews/issues"
+  },
+  "homepage": "https://github.com/jordyvanvorselen/rib-reviews#readme",
+  "devDependencies": {
+    "@vercel/node": "^2.8.3",
+    "prettier": "2.8.1"
+  }
+}
