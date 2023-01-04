@@ -5,23 +5,19 @@ import clientPromise from "../../lib/mongodb";
 import { authorize } from "../../middleware/authorization";
 
 type Error = { error: string };
-type GetResponse = {
+type Venue = {
   _id?: ObjectId;
   location: string;
   name: string;
   website: string;
 };
-type PostResponse = GetResponse | Error;
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") return get(req, res);
   if (req.method === "POST") return post(req, res);
 };
 
-const get = async (
-  req: NextApiRequest,
-  res: NextApiResponse<GetResponse[]>
-) => {
+const get = async (req: NextApiRequest, res: NextApiResponse<Venue[]>) => {
   const db = (await clientPromise).db("rib-reviews");
   const results = await db.collection("venues").find({}).toArray();
 
@@ -37,7 +33,7 @@ const get = async (
 
 const post = async (
   req: NextApiRequest,
-  res: NextApiResponse<PostResponse>
+  res: NextApiResponse<Venue | Error>
 ) => {
   const db = (await clientPromise).db("rib-reviews");
 
