@@ -51,6 +51,7 @@ class LoginScreen extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => HomeScreen(
                           user: User(
+                            id: "0",
                             email: value.email,
                             photoUrl: value.photoUrl,
                             displayName: value.displayName!,

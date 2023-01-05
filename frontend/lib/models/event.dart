@@ -7,13 +7,21 @@ import './venue.dart';
 enum EventState { unplanned, planned, finished }
 
 class Event {
+  final String id;
   final List<Review> reviews;
   final DateTime? date;
   final Venue venue;
 
-  Event({required this.date, required this.venue, required this.reviews});
+  Event(
+      {required this.id,
+      required this.date,
+      required this.venue,
+      required this.reviews});
 
   EventState getState() {
+    if (id == "63b5e86f48d2e315f63c1bb2") {
+      print("Kek");
+    }
     if (date == null) {
       return EventState.unplanned;
     } else if (date!.difference(DateTime.now()).isNegative) {
@@ -71,7 +79,7 @@ class Event {
   IndicatorStyle getIndicatorStyle() {
     return IndicatorStyle(
       color: getIndicatorColor(),
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       width: 50.0,
       iconStyle: IconStyle(
         color: Colors.white,

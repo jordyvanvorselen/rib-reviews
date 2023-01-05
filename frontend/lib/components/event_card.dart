@@ -41,36 +41,30 @@ class EventCard extends StatelessWidget {
           width: 210,
           height: 160,
           color: kPrimaryColor,
-          child: Stack(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Positioned(
-                left: 20,
-                top: 20,
-                child: Row(
-                  children: [
-                    Column(
-                      children: [
-                        EventTitle(
-                          name: event.venue.name,
-                          location: event.venue.location,
-                        ),
-                        const SizedBox(height: 25.0),
-                        event.finished()
-                            ? EventReviews(reviews: event.reviews)
-                            : EventDate(event: event)
-                      ],
-                    ),
-                    const SizedBox(width: 5.0),
-                    Column(
-                      children: [
-                        event.finished()
-                            ? Rating(rating: event.getTotalRating())
-                            : EventLink(event: event)
-                      ],
-                    )
-                  ],
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  EventTitle(
+                    name: event.venue.name,
+                    location: event.venue.location,
+                  ),
+                  const SizedBox(height: 25.0),
+                  event.finished()
+                      ? EventReviews(reviews: event.reviews)
+                      : EventDate(event: event)
+                ],
               ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  event.finished()
+                      ? Rating(rating: event.getTotalRating())
+                      : EventLink(event: event)
+                ],
+              )
             ],
           ),
         ),
