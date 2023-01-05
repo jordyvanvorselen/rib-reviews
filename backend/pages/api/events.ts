@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
 import clientPromise from "../../lib/mongodb";
+import { dateIsValid, documentExists } from "../../lib/utils";
 import { authorize } from "../../middleware/authorization";
 
 type Error = { error: string };
@@ -37,16 +38,10 @@ const post = async (
 
   const { date, venueId } = req.body;
 
-  const venueExists =
-    ObjectId.isValid(venueId) &&
-    (
-      await db
-        .collection("venues")
-        .find({ _id: new ObjectId(venueId) })
-        .toArray()
-    ).length > 0;
+  const venueExists = await documentExists(db, "venues", venueId);
 
-  if (!venueId || !venueExists || !dateIsValid(date)) {
+  // Events can be created without a date, that means they are not planned yet.
+  if (!venueId || !venueExists || !dateIsValid(date, true)) {
     return res.status(422).json({ error: "Invalid request body." });
   }
 
@@ -55,14 +50,6 @@ const post = async (
   db.collection("events").insertOne(event);
 
   res.status(200).json(event);
-};
-
-const dateIsValid = (date: string) => {
-  // Events can be created without a date, that means they are not planned yet.
-  if (!date) return true;
-  if (Date.parse(date) > 0) return true;
-
-  return false;
 };
 
 export default use(authorize, handler);
