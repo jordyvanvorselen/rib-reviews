@@ -11,12 +11,12 @@ class ReviewAlert {
       animationType: AnimationType.grow,
       isCloseButton: false,
       isOverlayTapDismiss: true,
-      descStyle: TextStyle(color: kSecondaryTextColor, fontSize: 20),
+      descStyle: const TextStyle(color: kSecondaryTextColor, fontSize: 20),
       backgroundColor: kSecondaryColor,
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
-      titleStyle: TextStyle(color: kPrimaryTextColor, fontSize: 32),
+      titleStyle: const TextStyle(color: kPrimaryTextColor, fontSize: 32),
     );
 
     return Alert(
@@ -26,7 +26,7 @@ class ReviewAlert {
       title: "Leave a review",
       desc: "How was your time at ${event.venue.name}?",
       content: Column(
-        children: [
+        children: const [
           SizedBox(height: 25),
           Rating(rating: 0, showNumber: false, readOnly: false, size: 38),
           TextField(
@@ -35,22 +35,22 @@ class ReviewAlert {
       ),
       buttons: [
         DialogButton(
-          child: Text(
-            "Save",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
           onPressed: () {},
           color: Colors.green,
           radius: BorderRadius.circular(25),
-        ),
-        DialogButton(
-          child: Text(
-            "Cancel",
+          child: const Text(
+            "Save",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
+        ),
+        DialogButton(
           onPressed: () => Navigator.pop(context),
           color: Colors.grey.shade600,
           radius: BorderRadius.circular(25),
+          child: const Text(
+            "Cancel",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
         ),
       ],
     ).show();
