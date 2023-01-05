@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rib_reviews/components/error_alert.dart';
 import 'package:rib_reviews/components/event_card.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/repositories/events_repository.dart';
@@ -27,9 +26,13 @@ class _TimelineState extends State<Timeline> {
         if (snapshot.hasData) {
           events = snapshot.data as List<Event>;
         } else if (snapshot.hasError) {
-          return ErrorAlert().show(context, snapshot.error.toString());
+          return Expanded(
+            child: Center(child: Text(snapshot.error.toString())),
+          );
         } else {
-          return const CircularProgressIndicator();
+          return const Expanded(
+            child: Center(child: CircularProgressIndicator()),
+          );
         }
 
         return Expanded(

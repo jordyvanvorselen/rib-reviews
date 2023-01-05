@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rib_reviews/components/app_bar_title.dart';
-import 'package:rib_reviews/components/profile_picture.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/components/review_alert.dart';
 import 'package:rib_reviews/components/review_screen_title.dart';
 import 'package:rib_reviews/components/user_review.dart';
-import 'package:rib_reviews/main.dart';
 import 'package:rib_reviews/models/event.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/common.dart';

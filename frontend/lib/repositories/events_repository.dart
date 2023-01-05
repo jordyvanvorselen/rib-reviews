@@ -37,9 +37,11 @@ class EventsRepository {
 
       reviews.sort(((a, b) => b.createdAt.compareTo(a.createdAt)));
       events.sort(
-          ((a, b) => b.date?.compareTo(a?.date ?? DateTime(3000)) ?? 99999999));
+          ((a, b) => b.date?.compareTo(a.date ?? DateTime(3000)) ?? 99999999));
 
       return events;
+    } on Exception catch (_) {
+      return Future.error("Could not fetch data from server.");
     } finally {
       client.close();
     }
