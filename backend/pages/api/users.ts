@@ -44,8 +44,14 @@ const post = async (
 
   const user = { email, ...(photoUrl && { photoUrl }), displayName };
 
-  db.collection("users").findOneAndReplace({ email }, user, { upsert: true });
-  res.status(200).json(user);
+  const result = await db
+    .collection("users")
+    .findOneAndUpdate({ email }, { $set: user }, { upsert: true });
+
+  res.status(200).json({
+    ...user,
+    _id: result.value?._id || result.lastErrorObject?.upserted,
+  });
 };
 
 export default use(authorize, handler);

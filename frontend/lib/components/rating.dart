@@ -7,10 +7,12 @@ class Rating extends StatelessWidget {
   final double size;
   final bool showNumber;
   final bool readOnly;
+  final Function? onUpdate;
 
   const Rating({
     Key? key,
     required this.rating,
+    this.onUpdate,
     this.size = 20,
     this.showNumber = true,
     this.readOnly = true,
@@ -50,7 +52,11 @@ class Rating extends StatelessWidget {
             Icons.star,
             color: Colors.amber,
           ),
-          onRatingUpdate: (_) {},
+          onRatingUpdate: (rating) {
+            if (onUpdate != null) {
+              onUpdate!(rating);
+            }
+          },
         ),
       ],
     );

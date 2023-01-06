@@ -6,7 +6,10 @@ import 'package:rib_reviews/models/event.dart';
 import '../utils/constants.dart';
 
 class ReviewAlert {
-  show(BuildContext context, Event event) {
+  show(BuildContext context, Event event, Function onSave) {
+    var textController = TextEditingController();
+    double ratingState = 0;
+
     var alertStyle = AlertStyle(
       animationType: AnimationType.grow,
       isCloseButton: false,
@@ -26,16 +29,29 @@ class ReviewAlert {
       title: "Leave a review",
       desc: "How was your time at ${event.venue.name}?",
       content: Column(
-        children: const [
-          SizedBox(height: 25),
-          Rating(rating: 0, showNumber: false, readOnly: false, size: 38),
+        children: [
+          const SizedBox(height: 25),
+          Rating(
+              rating: 0,
+              showNumber: false,
+              readOnly: false,
+              size: 38,
+              onUpdate: (rating) {
+                ratingState = rating;
+              }),
           TextField(
-              maxLength: 600, maxLines: 4, style: TextStyle(fontSize: 16)),
+            maxLength: 600,
+            maxLines: 4,
+            style: const TextStyle(fontSize: 16),
+            controller: textController,
+          ),
         ],
       ),
       buttons: [
         DialogButton(
-          onPressed: () {},
+          onPressed: () {
+            onSave(ratingState, textController.text);
+          },
           color: Colors.green,
           radius: BorderRadius.circular(25),
           child: const Text(

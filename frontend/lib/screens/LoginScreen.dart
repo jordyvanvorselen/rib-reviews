@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/screens/HomeScreen.dart';
+import 'package:rib_reviews/services/user_save_service.dart';
 
 import '../utils/constants.dart';
 
@@ -18,12 +18,12 @@ class LoginScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               SizedBox(
                 width: 150,
                 child: Image.asset("assets/images/logo.png"),
               ),
-              SizedBox(height: 75),
+              const SizedBox(height: 75),
               Column(
                 children: const [
                   Text(
@@ -36,26 +36,29 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 50),
-              Container(
+              const SizedBox(height: 50),
+              SizedBox(
                 width: 200,
                 height: 50,
-                child: SignInButton(Buttons.Google, onPressed: () {
+                child: SignInButton(Buttons.Google, onPressed: () async {
                   googleSignIn.signIn().then((value) {
-                    if (value == null || value.displayName == null) {
+                    if (value == null) {
                       return;
                     }
 
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomeScreen(
-                          user: User(
-                            id: "0",
-                            email: value.email,
-                            photoUrl: value.photoUrl,
-                            displayName: value.displayName!,
-                          ),
+                        builder: (context) => FutureBuilder(
+                          future: UserSaveService.save(value.email,
+                              value.photoUrl, value.displayName ?? "Unknown"),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return HomeScreen(user: snapshot.data!);
+                            } else {
+                              return const LoginScreen();
+                            }
+                          },
                         ),
                       ),
                     );

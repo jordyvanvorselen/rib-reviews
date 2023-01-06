@@ -5,9 +5,10 @@ import 'package:rib_reviews/components/review_screen_title.dart';
 import 'package:rib_reviews/components/user_review.dart';
 import 'package:rib_reviews/models/event.dart';
 import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/services/review_save_service.dart';
 import 'package:rib_reviews/utils/common.dart';
 
-class ReviewScreen extends StatelessWidget {
+class ReviewScreen extends StatefulWidget {
   final Event event;
   final User user;
 
@@ -15,12 +16,27 @@ class ReviewScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> {
+  bool isSaving = false;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Common.appBar(user, showLogo: false),
+      appBar: Common.appBar(widget.user, showLogo: false),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ReviewAlert().show(context, event);
+          ReviewAlert().show(context, widget.event, (rating, text) async {
+            try {
+              isSaving = true;
+              await ReviewSaveService.save(
+                  rating, text, widget.user, widget.event);
+            } finally {
+              isSaving = false;
+            }
+          });
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.star, color: Colors.white),
@@ -33,15 +49,15 @@ class ReviewScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ReviewScreenTitle(event: event),
-                  Rating(rating: event.getTotalRating())
+                  ReviewScreenTitle(event: widget.event),
+                  Rating(rating: widget.event.getTotalRating())
                 ],
               ),
               const SizedBox(height: 15),
               const Divider(),
               Expanded(
                 child: ListView(
-                  children: event.reviews
+                  children: widget.event.reviews
                       .map((review) => UserReview(review: review))
                       .fold<List<Widget>>(
                     [],

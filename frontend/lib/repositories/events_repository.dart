@@ -70,7 +70,7 @@ class EventsRepository {
 
     return Review(
         id: review['_id'],
-        rating: review['rating'],
+        rating: review['rating'].toDouble(),
         text: review['text'],
         user: user,
         createdAt: DateTime.parse(review['createdAt']),
