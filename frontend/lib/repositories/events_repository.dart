@@ -13,10 +13,12 @@ class EventsRepository {
     var client = http.Client();
 
     try {
-      var reviewsUrl = Uri.http(Env.apiUrl, '/api/reviews');
-      var eventsUrl = Uri.http(Env.apiUrl, '/api/events');
-      var usersUrl = Uri.http(Env.apiUrl, '/api/users');
-      var venuesUrl = Uri.http(Env.apiUrl, '/api/venues');
+      var uri = Env.localhost == 'true' ? Uri.http : Uri.https;
+
+      var reviewsUrl = uri(Env.apiUrl, '/api/reviews');
+      var eventsUrl = uri(Env.apiUrl, '/api/events');
+      var usersUrl = uri(Env.apiUrl, '/api/users');
+      var venuesUrl = uri(Env.apiUrl, '/api/venues');
 
       var reviewsResponse = await get(client, reviewsUrl);
       var eventsResponse = await get(client, eventsUrl);

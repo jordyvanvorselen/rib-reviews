@@ -11,7 +11,9 @@ class UserSaveService {
   static Future<User> save(
       String email, String? photoUrl, String displayName) async {
     try {
-      var usersUrl = Uri.http(Env.apiUrl, '/api/users');
+      var uri = Env.localhost == 'true' ? Uri.http : Uri.https;
+      var usersUrl = uri(Env.apiUrl, '/api/users');
+
       var response = await _post(
         client,
         usersUrl,

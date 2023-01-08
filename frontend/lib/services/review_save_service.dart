@@ -13,7 +13,9 @@ class ReviewSaveService {
     final client = http.Client();
 
     try {
-      final reviewsUrl = Uri.http(Env.apiUrl, '/api/reviews');
+      var uri = Env.localhost == 'true' ? Uri.http : Uri.https;
+      final reviewsUrl = uri(Env.apiUrl, '/api/reviews');
+
       final response = await _post(
         client,
         reviewsUrl,

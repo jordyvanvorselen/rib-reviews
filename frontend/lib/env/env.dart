@@ -6,4 +6,5 @@ part 'env.g.dart';
 abstract class Env {
   static var apiKey = _Env.apiKey;
   static var apiUrl = _Env.apiUrl;
+  static var localhost = _Env.localhost;
 }
