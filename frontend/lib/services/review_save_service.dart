@@ -8,13 +8,13 @@ import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
 
 class ReviewSaveService {
-  static var client = http.Client();
-
   static Future<Review> save(
       double rating, String text, User user, Event event) async {
+    final client = http.Client();
+
     try {
-      var reviewsUrl = Uri.https(Env.apiUrl, '/api/reviews');
-      var response = await _post(
+      final reviewsUrl = Uri.http(Env.apiUrl, '/api/reviews');
+      final response = await _post(
         client,
         reviewsUrl,
         json.encode({

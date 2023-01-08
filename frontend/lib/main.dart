@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/screens/LoginScreen.dart';
 
 import 'utils/constants.dart';
@@ -9,7 +11,12 @@ void main() {
     const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
   );
 
-  runApp(const Main());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => EventsProvider()),
+    ],
+    child: const Main(),
+  ));
 }
 
 class Main extends StatelessWidget {
@@ -28,7 +35,7 @@ class Main extends StatelessWidget {
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
       ),
-      home: LoginScreen(),
+      home: LoginScreen(), // const messes with the navigation
     );
   }
 }

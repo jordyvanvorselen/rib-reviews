@@ -49,16 +49,17 @@ class ReviewAlert {
       ),
       buttons: [
         DialogButton(
-          onPressed: () {
-            onSave(ratingState, textController.text);
-          },
-          color: Colors.green,
-          radius: BorderRadius.circular(25),
-          child: const Text(
-            "Save",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ),
+            onPressed: () {
+              if (ratingState > 0 && textController.text.isNotEmpty) {
+                onSave(ratingState, textController.text);
+              }
+            },
+            color: Colors.green,
+            radius: BorderRadius.circular(25),
+            child: const Text(
+              "Save",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            )),
         DialogButton(
           onPressed: () => Navigator.pop(context),
           color: Colors.grey.shade600,

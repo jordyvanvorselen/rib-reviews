@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/components/review_alert.dart';
 import 'package:rib_reviews/components/review_screen_title.dart';
 import 'package:rib_reviews/components/user_review.dart';
 import 'package:rib_reviews/models/event.dart';
+import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/services/review_save_service.dart';
 import 'package:rib_reviews/utils/common.dart';
 
@@ -20,23 +23,32 @@ class ReviewScreen extends StatefulWidget {
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
-  bool isSaving = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Common.appBar(widget.user, showLogo: false),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ReviewAlert().show(context, widget.event, (rating, text) async {
-            try {
-              isSaving = true;
-              await ReviewSaveService.save(
-                  rating, text, widget.user, widget.event);
-            } finally {
-              isSaving = false;
-            }
-          });
+          ReviewAlert().show(
+            context,
+            widget.event,
+            (rating, text) async {
+              Review review = await ReviewSaveService.save(
+                rating,
+                text,
+                widget.user,
+                widget.event,
+              );
+
+              setState(() {
+                Provider.of<EventsProvider>(context, listen: false)
+                    .addReview(review, widget.event);
+                widget.event.reviews.add(review);
+              });
+
+              Navigator.pop(context);
+            },
+          );
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.star, color: Colors.white),
@@ -62,7 +74,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       .fold<List<Widget>>(
                     [],
                     (value, element) {
-                      value.add(SizedBox(height: 20));
+                      value.add(const SizedBox(height: 20));
                       value.add(element);
 
                       return value;

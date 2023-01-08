@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rib_reviews/components/event_card.dart';
 import 'package:rib_reviews/models/user.dart';
-import 'package:rib_reviews/repositories/events_repository.dart';
+import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/utils/constants.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -18,34 +19,24 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: EventsRepository.getEvents(),
-      builder: ((context, snapshot) {
-        List<Event> events;
+    Provider.of<EventsProvider>(context).fetchEvents();
 
-        if (snapshot.hasData) {
-          events = snapshot.data as List<Event>;
-        } else if (snapshot.hasError) {
-          return Expanded(
-            child: Center(child: Text(snapshot.error.toString())),
-          );
-        } else {
-          return const Expanded(
-            child: Center(child: CircularProgressIndicator()),
-          );
-        }
+    return Expanded(
+      child: ListView(
+        children:
+            Provider.of<EventsProvider>(context).events.asMap().entries.map(
+          (entry) {
+            int idx = entry.key;
+            Event event = entry.value;
 
-        return Expanded(
-          child: ListView(
-            children: events.asMap().entries.map((entry) {
-              int idx = entry.key;
-              Event event = entry.value;
-
-              return getTimelineTile(events, event, idx);
-            }).toList(),
-          ),
-        );
-      }),
+            return getTimelineTile(
+              Provider.of<EventsProvider>(context).events,
+              event,
+              idx,
+            );
+          },
+        ).toList(),
+      ),
     );
   }
 
