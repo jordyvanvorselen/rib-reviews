@@ -60,7 +60,12 @@
 
 ## About The Project
 
-[![Rib Reviews Screen Shot][product-screenshot]](https://example.com)
+<a href="https://github.com/jordyvanvorselen/rib-reviews">
+  <img src="screenshots/login.png" alt="Login screenshot" width="200" height="400">
+  <img src="screenshots/timeline.png" alt="Timeline screenshot" width="200" height="400">
+  <img src="screenshots/reviews.png" alt="Reviews screenshot" width="200" height="400">
+  <img src="screenshots/review_alert.png" alt="Review alert screenshot" width="200" height="400">
+</a>
 
 Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hosted on Vercel.
 
@@ -154,7 +159,6 @@ Project Link: [https://github.com/jordyvanvorselen/rib-reviews](https://github.c
 [license-url]: https://github.com/jordyvanvorselen/rib-reviews/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jordy-van-vorselen
-[product-screenshot]: images/screenshot.png
 [next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [next-url]: https://nextjs.org/
 [react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
