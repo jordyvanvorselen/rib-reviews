@@ -131,7 +131,7 @@ Distributed under the GPLv3 License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@jordyvanvorselen](https://twitter.com/jordyvanvorselen) - jordyvanvorselen@gmail.com
+Jordy van Vorselen - [@jordyvanvorselen](https://twitter.com/jordyvanvorselen) - jordyvanvorselen@gmail.com
 
 Project Link: [https://github.com/jordyvanvorselen/rib-reviews](https://github.com/github_username/repo_name)
 
@@ -151,7 +151,7 @@ Project Link: [https://github.com/jordyvanvorselen/rib-reviews](https://github.c
 [issues-shield]: https://img.shields.io/github/issues/jordyvanvorselen/rib-reviews.svg?style=for-the-badge
 [issues-url]: https://github.com/jordyvanvorselen/rib-reviews/issues
 [license-shield]: https://img.shields.io/github/license/jordyvanvorselen/rib-reviews.svg?style=for-the-badge
-[license-url]: https://github.com/jordyvanvorselen/rib-reviews/blob/master/LICENSE.txt
+[license-url]: https://github.com/jordyvanvorselen/rib-reviews/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jordy-van-vorselen
 [product-screenshot]: images/screenshot.png
