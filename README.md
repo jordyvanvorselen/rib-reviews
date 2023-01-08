@@ -65,6 +65,8 @@
   <img src="screenshots/timeline.png" alt="Timeline screenshot" width="200" height="400">
   <img src="screenshots/reviews.png" alt="Reviews screenshot" width="200" height="400">
   <img src="screenshots/review_alert.png" alt="Review alert screenshot" width="200" height="400">
+  <br>
+  <br>
 </a>
 
 Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hosted on Vercel.
