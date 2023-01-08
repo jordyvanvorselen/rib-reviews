@@ -28,21 +28,28 @@ class EventReviews extends StatelessWidget {
           width: 140,
           child: Row(children: [
             const SizedBox(width: 7.5),
-            ...reviews.take(5).map(
-              (review) {
-                return Align(
-                  widthFactor: 0.5,
-                  child: CircleAvatar(
-                    radius: 17.5,
-                    backgroundColor: kPrimaryColor,
-                    child: ProfilePicture(
-                      photoUrl: review.user.getPhotoUrl(),
-                      radius: 15,
-                    ),
-                  ),
-                );
-              },
-            ).toList(),
+            ...(reviews.length > 0
+                ? reviews.take(5).map(
+                    (review) {
+                      return Align(
+                        widthFactor: 0.5,
+                        child: CircleAvatar(
+                          radius: 17.5,
+                          backgroundColor: kPrimaryColor,
+                          child: ProfilePicture(
+                            photoUrl: review.user.getPhotoUrl(),
+                            radius: 15,
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList()
+                : [
+                    const Text("-",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kSecondaryTextColor))
+                  ]),
             const SizedBox(height: 32.5)
           ]),
         )

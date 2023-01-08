@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:rib_reviews/components/app_bar_title.dart';
-import 'package:rib_reviews/components/profile_picture.dart';
+import 'package:provider/provider.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/components/review_alert.dart';
 import 'package:rib_reviews/components/review_screen_title.dart';
 import 'package:rib_reviews/components/user_review.dart';
-import 'package:rib_reviews/main.dart';
 import 'package:rib_reviews/models/event.dart';
+import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/providers/events_provider.dart';
+import 'package:rib_reviews/services/review_save_service.dart';
 import 'package:rib_reviews/utils/common.dart';
 
-class ReviewScreen extends StatelessWidget {
+class ReviewScreen extends StatefulWidget {
   final Event event;
   final User user;
 
@@ -18,12 +19,36 @@ class ReviewScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Common.appBar(user, showLogo: false),
+      appBar: Common.appBar(widget.user, showLogo: false),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ReviewAlert().show(context, event);
+          ReviewAlert().show(
+            context,
+            widget.event,
+            (rating, text) async {
+              Review review = await ReviewSaveService.save(
+                rating,
+                text,
+                widget.user,
+                widget.event,
+              );
+
+              setState(() {
+                Provider.of<EventsProvider>(context, listen: false)
+                    .addReview(review, widget.event);
+                widget.event.reviews.add(review);
+              });
+
+              Navigator.pop(context);
+            },
+          );
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.star, color: Colors.white),
@@ -36,20 +61,20 @@ class ReviewScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ReviewScreenTitle(event: event),
-                  Rating(rating: event.getTotalRating())
+                  ReviewScreenTitle(event: widget.event),
+                  Rating(rating: widget.event.getTotalRating())
                 ],
               ),
               const SizedBox(height: 15),
               const Divider(),
               Expanded(
                 child: ListView(
-                  children: event.reviews
+                  children: widget.event.reviews
                       .map((review) => UserReview(review: review))
                       .fold<List<Widget>>(
                     [],
                     (value, element) {
-                      value.add(SizedBox(height: 20));
+                      value.add(const SizedBox(height: 20));
                       value.add(element);
 
                       return value;

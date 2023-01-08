@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rib_reviews/components/event_card.dart';
 import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/utils/constants.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-import '../mocks/mock_events.dart';
 import '../models/event.dart';
 
 class Timeline extends StatefulWidget {
@@ -16,31 +17,38 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  List<Event> events = MockEvents.data;
-
   @override
   Widget build(BuildContext context) {
+    Provider.of<EventsProvider>(context).fetchEvents();
+
     return Expanded(
       child: ListView(
-        children: events.asMap().entries.map((entry) {
-          int idx = entry.key;
-          Event event = entry.value;
+        children:
+            Provider.of<EventsProvider>(context).events.asMap().entries.map(
+          (entry) {
+            int idx = entry.key;
+            Event event = entry.value;
 
-          return getTimelineTile(event, idx);
-        }).toList(),
+            return getTimelineTile(
+              Provider.of<EventsProvider>(context).events,
+              event,
+              idx,
+            );
+          },
+        ).toList(),
       ),
     );
   }
 
-  TimelineTile getTimelineTile(Event event, int index) {
+  TimelineTile getTimelineTile(List<Event> events, Event event, int index) {
     return TimelineTile(
       indicatorStyle: event.getIndicatorStyle(),
       beforeLineStyle: LineStyle(
-        color: getLineColor(index, LineType.before),
+        color: getLineColor(events, index, LineType.before),
         thickness: 5,
       ),
       afterLineStyle: LineStyle(
-        color: getLineColor(index, LineType.after),
+        color: getLineColor(events, index, LineType.after),
         thickness: 5,
       ),
       endChild: Container(
@@ -53,7 +61,7 @@ class _TimelineState extends State<Timeline> {
     );
   }
 
-  Color getLineColor(int idx, LineType lineType) {
+  Color getLineColor(List<Event> events, int idx, LineType lineType) {
     bool isFirst = idx == 0;
     bool isLast = idx + 1 == events.length;
 

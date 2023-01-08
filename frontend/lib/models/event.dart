@@ -7,11 +7,16 @@ import './venue.dart';
 enum EventState { unplanned, planned, finished }
 
 class Event {
+  final String id;
   final List<Review> reviews;
   final DateTime? date;
   final Venue venue;
 
-  Event({required this.date, required this.venue, required this.reviews});
+  Event(
+      {required this.id,
+      required this.date,
+      required this.venue,
+      required this.reviews});
 
   EventState getState() {
     if (date == null) {
@@ -58,9 +63,7 @@ class Event {
   }
 
   double getTotalRating() {
-    if (reviews.length == 0) {
-      return 0;
-    }
+    if (reviews.isEmpty) return 0;
 
     return reviews
             .map((r) => r.rating)
@@ -71,7 +74,7 @@ class Event {
   IndicatorStyle getIndicatorStyle() {
     return IndicatorStyle(
       color: getIndicatorColor(),
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       width: 50.0,
       iconStyle: IconStyle(
         color: Colors.white,
