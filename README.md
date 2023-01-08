@@ -56,8 +56,6 @@
 Because we frequently visited grill restaurants with a group of colleagues to compare their spareribs, we started _The Eat Guild_. This app makes it possible for all members to review these restaurants. It also acts as a suggestion pipeline, so it's easier to track where we want to go next.
 
 <a href="https://github.com/jordyvanvorselen/rib-reviews">
-  <br>
-  <br>
   <img src="screenshots/login.png" alt="Login screenshot" width="200" height="400">
   <img src="screenshots/timeline.png" alt="Timeline screenshot" width="200" height="400">
   <img src="screenshots/reviews.png" alt="Reviews screenshot" width="200" height="400">
