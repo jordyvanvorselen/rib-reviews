@@ -1,24 +1,63 @@
-# rib_reviews
+# Rib Reviews Frontend
 
-A mobile app to rate restaurant visits.
+This Flutter mobile app uses the Next.js backend from the `../backend` folder.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To contribute to this Flutter app, I recommend installing either [Visual Studio Code](https://code.visualstudio.com/) with the [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) and [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code) plugins, or installing `Android Studio`.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
+To set up this project you will need Flutter `3.3.10`. You can follow the install instructions found [here](https://docs.flutter.dev/get-started/install).
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/jordyvanvorselen/rib-reviews.git
+   ```
+2. Change into the frontend directory
+   ```sh
+   cd frontend
+   ```
+3. Install the dependencies
+   ```sh
+   flutter pub get
+   ```
+4. Copy the `env.example` file
+   ```sh
+   cp env.example .env
+   ```
+5. Fill in the secrets
+   ```
+   If you are using the android emulator, make sure to use `10.0.2.2:3000` instead of `localhost:3000` to connect to the backend.
+   ```
+6. Run the code generator to generate the secret constants
+   ```sh
+   flutter pub run build_runner build
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Running the project
+
+1. Run the following command
+   ```sh
+   flutter run --debug
+   ```
+
+<!-- ROADMAP -->
+
+## Learn more about Flutter
+
+To learn more about Flutter, take a look at the following resources:
+
+- [Flutter Documentation](https://docs.flutter.dev/) - learn about Flutter features and API.
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+You can check out [the Flutter GitHub repository](https://github.com/flutter/flutter).
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
-# Before building
-
-Create a `.env` file using the `env.example`. Fill in all the secrets.
-
-Make sure to then run the following:
-
-`$ flutter pub run build_runner build`
