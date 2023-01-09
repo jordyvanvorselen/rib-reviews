@@ -1,29 +1,25 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/models/venue.dart';
+import 'package:rib_reviews/utils/api.dart';
 
 import '../models/event.dart';
 
 class EventsRepository {
   static Future<List<Event>> getEvents() async {
-    var client = http.Client();
-
     try {
-      var uri = Env.localhost == 'true' ? Uri.http : Uri.https;
+      final reviewsUrl = Env.apiUrl("/reviews");
+      final eventsUrl = Env.apiUrl("/events");
+      final usersUrl = Env.apiUrl("/users");
+      final venuesUrl = Env.apiUrl("/venues");
 
-      var reviewsUrl = uri(Env.apiUrl, '/api/reviews');
-      var eventsUrl = uri(Env.apiUrl, '/api/events');
-      var usersUrl = uri(Env.apiUrl, '/api/users');
-      var venuesUrl = uri(Env.apiUrl, '/api/venues');
-
-      var reviewsResponse = await get(client, reviewsUrl);
-      var eventsResponse = await get(client, eventsUrl);
-      var usersResponse = await get(client, usersUrl);
-      var venuesResponse = await get(client, venuesUrl);
+      final reviewsResponse = await API.get(reviewsUrl);
+      final eventsResponse = await API.get(eventsUrl);
+      final usersResponse = await API.get(usersUrl);
+      final venuesResponse = await API.get(venuesUrl);
 
       List<dynamic> rawReviews = jsonDecode(reviewsResponse);
       List<dynamic> rawEvents = jsonDecode(eventsResponse);
@@ -52,12 +48,6 @@ class EventsRepository {
       return events;
     } on Exception catch (_) {
       return Future.error("Could not fetch data from server.");
-    } finally {
-      client.close();
     }
-  }
-
-  static Future<String> get(http.Client client, Uri url) {
-    return client.read(url, headers: {"Authorization": Env.apiKey});
   }
 }
