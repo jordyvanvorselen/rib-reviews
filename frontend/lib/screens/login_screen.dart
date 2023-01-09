@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 125),
               SizedBox(
                 width: 150,
                 child: Image.asset("assets/images/logo.png"),
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                 height: 50,
                 child: SignInButton(Buttons.Google, onPressed: () async {
                   googleSignIn.signIn().then((value) {
-                    if (value == null) {
+                    if (value == null || !value.email.endsWith("@kabisa.nl")) {
                       return;
                     }
 
