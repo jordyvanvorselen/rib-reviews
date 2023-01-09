@@ -14,7 +14,6 @@ class UserSaveService {
       final usersUrl = Env.apiUrl('/users');
 
       var response = await API.post(
-        client,
         usersUrl,
         json.encode({
           "email": email,

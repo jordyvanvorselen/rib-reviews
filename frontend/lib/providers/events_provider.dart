@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:rib_reviews/models/event.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/repositories/events_repository.dart';
+import 'package:rib_reviews/repositories/reviews_repository.dart';
+import 'package:rib_reviews/repositories/users_repository.dart';
+import 'package:rib_reviews/repositories/venues_repository.dart';
 
 class EventsProvider with ChangeNotifier {
   List<Event> _events = [];
@@ -14,7 +17,12 @@ class EventsProvider with ChangeNotifier {
   }
 
   void fetchEvents() async {
-    _events = await EventsRepository.getEvents();
+    final venues = await VenuesRepository.all();
+    final users = await UsersRepository.all();
+    final reviews = await ReviewsRepository.all(users);
+
+    _events = await EventsRepository.all(venues, reviews);
+
     notifyListeners();
   }
 }

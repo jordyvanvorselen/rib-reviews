@@ -18,7 +18,7 @@ class Event {
       required this.venue,
       required this.reviews});
 
-  factory Event.fromJson(Map json, Venue venue, List<Review> reviews) {
+  factory Event.fromJson(dynamic json, Venue venue, List<Review> reviews) {
     return Event(
       id: json['_id'],
       date: json['date'] != null ? DateTime.parse(json['date']) : null,

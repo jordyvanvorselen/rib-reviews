@@ -15,7 +15,7 @@ class User {
     required this.displayName,
   });
 
-  factory User.fromJson(Map json) {
+  factory User.fromJson(dynamic json) {
     return User(
       id: json['_id'],
       displayName: json['displayName'],

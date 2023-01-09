@@ -18,7 +18,7 @@ class Review {
     required this.eventId,
   });
 
-  factory Review.fromJson(Map json, User user) {
+  factory Review.fromJson(dynamic json, User user) {
     return Review(
         id: json['_id'],
         rating: json['rating'].toDouble(),
