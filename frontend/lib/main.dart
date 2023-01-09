@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rib_reviews/providers/events_provider.dart';
-import 'package:rib_reviews/screens/LoginScreen.dart';
+import 'package:rib_reviews/screens/login_screen.dart';
 
 import 'utils/constants.dart';
 

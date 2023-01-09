@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rib_reviews/screens/HomeScreen.dart';
+import 'package:rib_reviews/screens/home_screen.dart';
 import 'package:rib_reviews/services/user_save_service.dart';
 
 import '../utils/constants.dart';
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 125),
               SizedBox(
                 width: 150,
                 child: Image.asset("assets/images/logo.png"),
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                 height: 50,
                 child: SignInButton(Buttons.Google, onPressed: () async {
                   googleSignIn.signIn().then((value) {
-                    if (value == null) {
+                    if (value == null || !value.email.endsWith("@kabisa.nl")) {
                       return;
                     }
 
