@@ -18,6 +18,15 @@ class Event {
       required this.venue,
       required this.reviews});
 
+  factory Event.fromJson(Map json, Venue venue, List<Review> reviews) {
+    return Event(
+      id: json['_id'],
+      date: json['date'] != null ? DateTime.parse(json['date']) : null,
+      venue: venue,
+      reviews: reviews,
+    );
+  }
+
   EventState getState() {
     if (date == null) {
       return EventState.unplanned;

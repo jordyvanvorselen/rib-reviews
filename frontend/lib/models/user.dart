@@ -15,6 +15,15 @@ class User {
     required this.displayName,
   });
 
+  factory User.fromJson(Map json) {
+    return User(
+      id: json['_id'],
+      displayName: json['displayName'],
+      email: json['email'],
+      photoUrl: json['photoUrl'],
+    );
+  }
+
   String getPhotoUrl() {
     return photoUrl ?? "https://www.gravatar.com/avatar/${generateMd5(email)}";
   }

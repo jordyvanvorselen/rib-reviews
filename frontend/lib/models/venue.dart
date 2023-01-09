@@ -9,4 +9,13 @@ class Venue {
       required this.location,
       required this.name,
       required this.website});
+
+  factory Venue.fromJson(Map json) {
+    return Venue(
+      id: json['_id'],
+      location: json['location'],
+      name: json['name'],
+      website: json['website'],
+    );
+  }
 }

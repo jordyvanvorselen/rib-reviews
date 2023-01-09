@@ -18,6 +18,16 @@ class Review {
     required this.eventId,
   });
 
+  factory Review.fromJson(Map json, User user) {
+    return Review(
+        id: json['_id'],
+        rating: json['rating'].toDouble(),
+        text: json['text'],
+        user: user,
+        createdAt: DateTime.parse(json['createdAt']),
+        eventId: json['eventId']);
+  }
+
   String getFormattedDate() {
     return DateFormat.yMMMMd('en_US').format(createdAt);
   }

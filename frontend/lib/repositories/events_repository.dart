@@ -30,12 +30,20 @@ class EventsRepository {
       List<dynamic> rawUsers = jsonDecode(usersResponse);
       List<dynamic> rawVenues = jsonDecode(venuesResponse);
 
-      List<User> users = rawUsers.map((raw) => toUser(raw)).toList();
-      List<Venue> venues = rawVenues.map((raw) => toVenue(raw)).toList();
-      List<Review> reviews =
-          rawReviews.map((raw) => toReview(raw, users)).toList();
-      List<Event> events =
-          rawEvents.map((raw) => toEvent(raw, venues, reviews)).toList();
+      List<User> users = rawUsers.map((raw) => User.fromJson(raw)).toList();
+      List<Venue> venues = rawVenues.map((raw) => Venue.fromJson(raw)).toList();
+      List<Review> reviews = rawReviews
+          .map((raw) => Review.fromJson(
+                raw,
+                users.firstWhere((u) => u.id == raw['userId']),
+              ))
+          .toList();
+      List<Event> events = rawEvents
+          .map((raw) => Event.fromJson(
+              raw,
+              venues.firstWhere((v) => v.id == raw['venueId']),
+              reviews.where((r) => r.eventId == raw['_id']).toList()))
+          .toList();
 
       reviews.sort(((a, b) => b.createdAt.compareTo(a.createdAt)));
       events.sort(
@@ -47,50 +55,6 @@ class EventsRepository {
     } finally {
       client.close();
     }
-  }
-
-  static User toUser(dynamic user) {
-    return User(
-      id: user['_id'],
-      displayName: user['displayName'],
-      email: user['email'],
-      photoUrl: user['photoUrl'],
-    );
-  }
-
-  static Venue toVenue(dynamic venue) {
-    return Venue(
-      id: venue['_id'],
-      location: venue['location'],
-      name: venue['name'],
-      website: venue['website'],
-    );
-  }
-
-  static Review toReview(dynamic review, List<User> users) {
-    User user = users.firstWhere((u) => u.id == review['userId']);
-
-    return Review(
-        id: review['_id'],
-        rating: review['rating'].toDouble(),
-        text: review['text'],
-        user: user,
-        createdAt: DateTime.parse(review['createdAt']),
-        eventId: review['eventId']);
-  }
-
-  static Event toEvent(
-      dynamic event, List<Venue> venues, List<Review> reviews) {
-    Venue venue = venues.firstWhere((v) => v.id == event['venueId']);
-    List<Review> eventReviews =
-        reviews.where((r) => r.eventId == event['_id']).toList();
-
-    return Event(
-      id: event['_id'],
-      date: event['date'] != null ? DateTime.parse(event['date']) : null,
-      venue: venue,
-      reviews: eventReviews,
-    );
   }
 
   static Future<String> get(http.Client client, Uri url) {
