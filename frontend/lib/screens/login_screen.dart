@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rib_reviews/screens/HomeScreen.dart';
+import 'package:rib_reviews/screens/home_screen.dart';
 import 'package:rib_reviews/services/user_save_service.dart';
 
 import '../utils/constants.dart';

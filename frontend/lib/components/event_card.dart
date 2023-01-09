@@ -5,7 +5,7 @@ import 'package:rib_reviews/components/event_reviews.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/models/event.dart';
 import 'package:rib_reviews/models/user.dart';
-import 'package:rib_reviews/screens/ReviewScreen.dart';
+import 'package:rib_reviews/screens/review_screen.dart';
 
 import './event_title.dart';
 import '../../../../utils/constants.dart';
