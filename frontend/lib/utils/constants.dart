@@ -7,3 +7,5 @@ const kSecondaryColor = Color(0xFF3C495D);
 
 const kPrimaryTextColor = Color(0xFFEEF1F4);
 const kSecondaryTextColor = Color(0xFFB1BCCD);
+
+const kErrorTextColor = Color(0xFFCF6679);
