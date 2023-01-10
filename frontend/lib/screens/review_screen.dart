@@ -43,9 +43,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
               setState(() {
                 Provider.of<EventsProvider>(context, listen: false)
                     .addReview(review, widget.event);
-                widget.event.reviews.add(review);
               });
 
+              // ignore: use_build_context_synchronously
               Navigator.pop(context);
             },
           );

@@ -12,7 +12,7 @@ class EventsProvider with ChangeNotifier {
   List<Event> get events => _events;
 
   void addReview(Review review, Event event) {
-    _events.firstWhere((e) => e.id == event.id).reviews.add(review);
+    _events.firstWhere((e) => e.id == event.id).reviews.insert(0, review);
     notifyListeners();
   }
 

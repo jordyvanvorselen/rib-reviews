@@ -18,9 +18,12 @@ class Timeline extends StatefulWidget {
 
 class _TimelineState extends State<Timeline> {
   @override
-  Widget build(BuildContext context) {
-    Provider.of<EventsProvider>(context).fetchEvents();
+  void initState() {
+    Provider.of<EventsProvider>(context, listen: false).fetchEvents();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: ListView(
         children:
