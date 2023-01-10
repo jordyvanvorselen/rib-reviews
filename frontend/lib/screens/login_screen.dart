@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,8 +8,16 @@ import 'package:rib_reviews/services/user_save_service.dart';
 
 import '../utils/constants.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isProcessingLogin = false;
+  bool showLoginError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,34 +47,43 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 50),
-              SizedBox(
-                width: 200,
-                height: 50,
-                child: SignInButton(Buttons.Google, onPressed: () async {
-                  googleSignIn.signIn().then((value) {
-                    if (value == null || !value.email.endsWith("@kabisa.nl")) {
-                      return;
-                    }
+              isProcessingLogin
+                  ? const CircularProgressIndicator()
+                  : SizedBox(
+                      width: 200,
+                      height: 50,
+                      child: SignInButton(Buttons.Google, onPressed: () async {
+                        googleSignIn.signIn().then((value) async {
+                          setState(() => isProcessingLogin = true);
 
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FutureBuilder(
-                          future: UserSaveService.save(value.email,
-                              value.photoUrl, value.displayName ?? "Unknown"),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return HomeScreen(user: snapshot.data!);
-                            } else {
-                              return const LoginScreen();
-                            }
-                          },
-                        ),
-                      ),
-                    );
-                  });
-                }),
-              ),
+                          if (value == null ||
+                              !value.email.endsWith("@kabisa.nl")) {
+                            setState(() {
+                              isProcessingLogin = false;
+                              showLoginError = true;
+                            });
+                            return;
+                          }
+
+                          final user = await UserSaveService.save(value.email,
+                              value.photoUrl, value.displayName ?? "Unknown");
+
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => HomeScreen(user: user),
+                            ),
+                          );
+                        });
+                      }),
+                    ),
+              const SizedBox(height: 25),
+              if (showLoginError)
+                const Text(
+                  "Login failed. Make sure to use a Kabisa email adress.",
+                  style: TextStyle(color: kErrorTextColor),
+                )
             ],
           ),
         ),
