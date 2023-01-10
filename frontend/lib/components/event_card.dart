@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rib_reviews/components/event_date.dart';
 import 'package:rib_reviews/components/event_link.dart';
 import 'package:rib_reviews/components/event_reviews.dart';
+import 'package:rib_reviews/components/generic_box_shadow.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/models/event.dart';
 import 'package:rib_reviews/models/user.dart';
@@ -24,9 +25,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (!event.finished()) {
-          return;
-        }
+        if (!event.finished()) return;
 
         Navigator.push(
           context,
@@ -35,37 +34,39 @@ class EventCard extends StatelessWidget {
           ),
         );
       },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(25),
-        child: Container(
-          width: 210,
-          height: 160,
-          color: kPrimaryColor,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  EventTitle(
-                    name: event.venue.name,
-                    location: event.venue.location,
-                  ),
-                  const SizedBox(height: 25.0),
-                  event.finished()
-                      ? EventReviews(reviews: event.reviews)
-                      : EventDate(event: event)
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  event.finished()
-                      ? Rating(rating: event.getTotalRating())
-                      : EventLink(event: event)
-                ],
-              )
-            ],
+      child: GenericBoxShadow(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(25),
+          child: Container(
+            width: 210,
+            height: 160,
+            color: kPrimaryColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    EventTitle(
+                      name: event.venue.name,
+                      location: event.venue.location,
+                    ),
+                    const SizedBox(height: 25.0),
+                    event.finished()
+                        ? EventReviews(reviews: event.reviews)
+                        : EventDate(event: event)
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    event.finished()
+                        ? Rating(rating: event.getTotalRating())
+                        : EventLink(event: event)
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

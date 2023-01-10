@@ -20,14 +20,22 @@ class _TimelineState extends State<Timeline> {
   @override
   void initState() {
     Provider.of<EventsProvider>(context, listen: false).fetchEvents();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final events = Provider.of<EventsProvider>(context).events.asMap();
+
     return Expanded(
-      child: ListView(
-        children:
-            Provider.of<EventsProvider>(context).events.asMap().entries.map(
+      child: ListView(children: [
+        if (events.isEmpty)
+          Container(
+            height: MediaQuery.of(context).size.height - 200,
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator(),
+          ),
+        ...events.entries.map(
           (entry) {
             int idx = entry.key;
             Event event = entry.value;
@@ -39,7 +47,7 @@ class _TimelineState extends State<Timeline> {
             );
           },
         ).toList(),
-      ),
+      ]),
     );
   }
 
