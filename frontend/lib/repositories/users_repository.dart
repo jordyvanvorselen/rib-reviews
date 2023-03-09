@@ -7,7 +7,7 @@ import 'package:rib_reviews/utils/api.dart';
 class UsersRepository {
   static Future<List<User>> all() async {
     try {
-      final usersUrl = Env.apiUrl("/users");
+      final usersUrl = Env.apiPath("/users");
       final usersResponse = await API.get(usersUrl);
 
       List<User> users = jsonDecode(usersResponse)

@@ -11,7 +11,7 @@ class EventsRepository {
   static Future<List<Event>> all(
       List<Venue> venues, List<Review> reviews) async {
     try {
-      final eventsUrl = Env.apiUrl("/events");
+      final eventsUrl = Env.apiPath("/events");
       final eventsResponse = await API.get(eventsUrl);
 
       List<Event> events = jsonDecode(eventsResponse)

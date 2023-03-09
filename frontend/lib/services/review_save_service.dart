@@ -10,7 +10,7 @@ class ReviewSaveService {
   static Future<Review> save(
       double rating, String text, User user, Event event) async {
     try {
-      final reviewsUrl = Env.apiUrl('/reviews');
+      final reviewsUrl = Env.apiPath('/reviews');
 
       final response = await API.post(
         reviewsUrl,

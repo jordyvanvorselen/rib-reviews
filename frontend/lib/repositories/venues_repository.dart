@@ -7,7 +7,7 @@ import 'package:rib_reviews/utils/api.dart';
 class VenuesRepository {
   static Future<List<Venue>> all() async {
     try {
-      final venuesUrl = Env.apiUrl("/venues");
+      final venuesUrl = Env.apiPath("/venues");
       final venuesResponse = await API.get(venuesUrl);
 
       List<Venue> venues = jsonDecode(venuesResponse)

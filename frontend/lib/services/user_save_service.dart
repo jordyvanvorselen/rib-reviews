@@ -8,7 +8,7 @@ class UserSaveService {
   static Future<User> save(
       String email, String? photoUrl, String displayName) async {
     try {
-      final usersUrl = Env.apiUrl('/users');
+      final usersUrl = Env.apiPath('/users');
 
       var response = await API.post(
         usersUrl,
