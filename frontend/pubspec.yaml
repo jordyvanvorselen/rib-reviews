@@ -39,19 +39,18 @@ dependencies:
   flutter_signin_button: ^2.0.0
   crypto: ^3.0.2
   rflutter_alert: ^2.0.4
-  envify: ^2.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.5
-  provider: ^6.0.5
+  flutter_secure_storage: ^8.0.0
+  envied: ^0.3.0
+  flutter_riverpod: ^2.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  envify_generator: ^2.0.2
-  build_runner: any
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -59,6 +58,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  envied_generator: ^0.3.0
+  build_runner: ^2.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

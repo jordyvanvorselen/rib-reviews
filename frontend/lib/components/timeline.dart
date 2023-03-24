@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rib_reviews/components/event_card.dart';
 import 'package:rib_reviews/models/user.dart';
-import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/utils/constants.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 import '../models/event.dart';
+import '../providers/providers.dart';
 
-class Timeline extends StatefulWidget {
+class Timeline extends ConsumerStatefulWidget {
   final User user;
   const Timeline({Key? key, required this.user}) : super(key: key);
 
   @override
-  State<Timeline> createState() => _TimelineState();
+  TimelineState createState() => TimelineState();
 }
 
-class _TimelineState extends State<Timeline> {
+class TimelineState extends ConsumerState<Timeline> {
   @override
   void initState() {
-    Provider.of<EventsProvider>(context, listen: false).fetchEvents();
+    ref.read(Providers.eventsProvider).fetchEvents();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final events = Provider.of<EventsProvider>(context).events.asMap();
+    final events = ref.watch(Providers.eventsProvider).events.asMap();
 
     return Expanded(
       child: ListView(children: [
@@ -41,7 +41,7 @@ class _TimelineState extends State<Timeline> {
             Event event = entry.value;
 
             return getTimelineTile(
-              Provider.of<EventsProvider>(context).events,
+              ref.watch(Providers.eventsProvider).events,
               event,
               idx,
             );

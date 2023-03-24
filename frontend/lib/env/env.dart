@@ -1,16 +1,17 @@
-import 'package:envify/envify.dart';
+import 'package:envied/envied.dart';
 
 part 'env.g.dart';
 
-@Envify()
+@Envied()
 abstract class Env {
-  static var apiKey = _Env.apiKey;
-  static var apiUrl = _Env.localhost;
-  static var localhost = _Env.localhost;
+  @EnviedField()
+  static const API_URL = _Env.API_URL;
+  @EnviedField()
+  static const LOCALHOST = _Env.LOCALHOST;
 
   static Uri apiPath(String path) {
-    return _Env.localhost == 'true'
-        ? Uri.http(_Env.apiUrl, '/api$path')
-        : Uri.https(_Env.apiUrl, '/api$path');
+    return _Env.LOCALHOST == 'true'
+        ? Uri.http(_Env.API_URL, '/api$path')
+        : Uri.https(_Env.API_URL, '/api$path');
   }
 }

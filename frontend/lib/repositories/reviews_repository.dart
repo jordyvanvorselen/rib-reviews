@@ -6,10 +6,14 @@ import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/api.dart';
 
 class ReviewsRepository {
-  static Future<List<Review>> all(List<User> users) async {
+  API apiClient;
+
+  ReviewsRepository({required this.apiClient});
+
+  Future<List<Review>> all(List<User> users) async {
     try {
       final reviewsUrl = Env.apiPath("/reviews");
-      final reviewsResponse = await API.get(reviewsUrl);
+      final reviewsResponse = await apiClient.get(reviewsUrl);
 
       List<Review> reviews = jsonDecode(reviewsResponse)
           .map<Review>((raw) => Review.fromJson(

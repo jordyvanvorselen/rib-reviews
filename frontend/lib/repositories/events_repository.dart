@@ -8,11 +8,14 @@ import 'package:rib_reviews/utils/api.dart';
 import '../models/event.dart';
 
 class EventsRepository {
-  static Future<List<Event>> all(
-      List<Venue> venues, List<Review> reviews) async {
+  API apiClient;
+
+  EventsRepository({required this.apiClient});
+
+  Future<List<Event>> all(List<Venue> venues, List<Review> reviews) async {
     try {
       final eventsUrl = Env.apiPath("/events");
-      final eventsResponse = await API.get(eventsUrl);
+      final eventsResponse = await apiClient.get(eventsUrl);
 
       List<Event> events = jsonDecode(eventsResponse)
           .map<Event>((raw) => Event.fromJson(

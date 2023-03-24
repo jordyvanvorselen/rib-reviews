@@ -1,23 +1,35 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:rib_reviews/env/env.dart';
 
 class API {
-  static Future<String> get(Uri url) {
+  FlutterSecureStorage storage;
+
+  API({required this.storage});
+
+  Future<String> get(Uri url) async {
     final client = http.Client();
 
     try {
-      return client.read(url, headers: {"Authorization": Env.apiKey});
+      final userId = await storage.read(key: 'userId') ?? '';
+
+      print('userId: $userId');
+
+      return await client.read(url, headers: {"Authorization": userId});
     } finally {
       client.close();
     }
   }
 
-  static Future<String> post(Uri url, Object body) async {
+  Future<String> post(Uri url, Object body) async {
     final client = http.Client();
 
     try {
+      final userId = await storage.read(key: 'userId') ?? '';
+
+      print('userId: $userId');
+
       http.Response response = await client.post(url, body: body, headers: {
-        "Authorization": Env.apiKey,
+        "Authorization": userId,
         "Content-Type": "application/json"
       });
 

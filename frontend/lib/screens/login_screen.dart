@@ -1,21 +1,20 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rib_reviews/providers/providers.dart';
 import 'package:rib_reviews/screens/home_screen.dart';
-import 'package:rib_reviews/services/user_save_service.dart';
 
 import '../utils/constants.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends ConsumerState<LoginScreen> {
   bool isProcessingLogin = false;
   bool showLoginError = false;
 
@@ -62,11 +61,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               isProcessingLogin = false;
                               showLoginError = true;
                             });
-                            return;
+
+                            return googleSignIn.signOut();
                           }
 
-                          final user = await UserSaveService.save(value.email,
-                              value.photoUrl, value.displayName ?? "Unknown");
+                          final auth = await value.authentication;
+                          final userId = auth.accessToken;
+
+                          print('writing userId $userId to secure storage!');
+
+                          await ref.read(Providers.secureStorageProvider).write(
+                                key: 'userId',
+                                value: userId,
+                              );
+
+                          final user = await ref
+                              .read(Providers.userSaveServiceProvider)
+                              .save(value.email, value.photoUrl,
+                                  value.displayName ?? "Unknown");
 
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(

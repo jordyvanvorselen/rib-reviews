@@ -7,12 +7,16 @@ import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/api.dart';
 
 class ReviewSaveService {
-  static Future<Review> save(
+  API apiClient;
+
+  ReviewSaveService({required this.apiClient});
+
+  Future<Review> save(
       double rating, String text, User user, Event event) async {
     try {
       final reviewsUrl = Env.apiPath('/reviews');
 
-      final response = await API.post(
+      final response = await apiClient.post(
         reviewsUrl,
         json.encode({
           "rating": rating,

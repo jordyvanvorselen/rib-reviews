@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/components/review_alert.dart';
 import 'package:rib_reviews/components/review_screen_title.dart';
@@ -7,11 +7,10 @@ import 'package:rib_reviews/components/user_review.dart';
 import 'package:rib_reviews/models/event.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
-import 'package:rib_reviews/providers/events_provider.dart';
-import 'package:rib_reviews/services/review_save_service.dart';
+import 'package:rib_reviews/providers/providers.dart';
 import 'package:rib_reviews/utils/common.dart';
 
-class ReviewScreen extends StatefulWidget {
+class ReviewScreen extends ConsumerStatefulWidget {
   final Event event;
   final User user;
 
@@ -19,10 +18,10 @@ class ReviewScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ReviewScreen> createState() => _ReviewScreenState();
+  ReviewScreenState createState() => ReviewScreenState();
 }
 
-class _ReviewScreenState extends State<ReviewScreen> {
+class ReviewScreenState extends ConsumerState<ReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,15 +32,17 @@ class _ReviewScreenState extends State<ReviewScreen> {
             context,
             widget.event,
             (rating, text) async {
-              Review review = await ReviewSaveService.save(
-                rating,
-                text,
-                widget.user,
-                widget.event,
-              );
+              Review review =
+                  await ref.watch(Providers.reviewSaveServiceProvider).save(
+                        rating,
+                        text,
+                        widget.user,
+                        widget.event,
+                      );
 
               setState(() {
-                Provider.of<EventsProvider>(context, listen: false)
+                ref
+                    .read(Providers.eventsProvider)
                     .addReview(review, widget.event);
               });
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:rib_reviews/providers/events_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rib_reviews/screens/login_screen.dart';
 
 import 'utils/constants.dart';
@@ -11,11 +10,8 @@ void main() {
     const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
   );
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => EventsProvider()),
-    ],
-    child: const Main(),
+  runApp(const ProviderScope(
+    child: Main(),
   ));
 }
 

@@ -5,10 +5,14 @@ import 'package:rib_reviews/models/venue.dart';
 import 'package:rib_reviews/utils/api.dart';
 
 class VenuesRepository {
-  static Future<List<Venue>> all() async {
+  API apiClient;
+
+  VenuesRepository({required this.apiClient});
+
+  Future<List<Venue>> all() async {
     try {
       final venuesUrl = Env.apiPath("/venues");
-      final venuesResponse = await API.get(venuesUrl);
+      final venuesResponse = await apiClient.get(venuesUrl);
 
       List<Venue> venues = jsonDecode(venuesResponse)
           .map<Venue>((json) => Venue.fromJson(json))
