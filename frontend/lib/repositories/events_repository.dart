@@ -15,9 +15,10 @@ class EventsRepository {
   Future<List<Event>> all(List<Venue> venues, List<Review> reviews) async {
     try {
       final eventsUrl = Env.apiPath("/events");
-      final eventsResponse = await apiClient.get(eventsUrl);
+      final eventsResponse =
+          (await apiClient.get(eventsUrl).run()).getOrElse((l) => throw l);
 
-      List<Event> events = jsonDecode(eventsResponse)
+      List<Event> events = jsonDecode(eventsResponse.body)
           .map<Event>((raw) => Event.fromJson(
               raw,
               venues.firstWhere((v) => v.id == raw['venueId']),

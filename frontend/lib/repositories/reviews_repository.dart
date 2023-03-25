@@ -13,9 +13,10 @@ class ReviewsRepository {
   Future<List<Review>> all(List<User> users) async {
     try {
       final reviewsUrl = Env.apiPath("/reviews");
-      final reviewsResponse = await apiClient.get(reviewsUrl);
+      final reviewsResponse =
+          (await apiClient.get(reviewsUrl).run()).getOrElse((l) => throw l);
 
-      List<Review> reviews = jsonDecode(reviewsResponse)
+      List<Review> reviews = jsonDecode(reviewsResponse.body)
           .map<Review>((raw) => Review.fromJson(
                 raw,
                 users.firstWhere((u) => u.id == raw['userId']),

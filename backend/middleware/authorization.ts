@@ -13,17 +13,20 @@ export const authorize: Middleware<NextApiRequest> = async (
 ) => {
   if (!req.headers.authorization) return unauthorized(res);
 
-  const ticket = await client
+  await client
     .verifyIdToken({
       idToken: req.headers.authorization,
     })
-    .catch((err) => console.error(err));
+    .then((ticket) => {
+      const payload = ticket.getPayload();
 
-  const payload = ticket?.getPayload();
+      if (!payload || payload["hd"] !== "kabisa.nl") return unauthorized(res);
 
-  if (!payload || payload["hd"] !== "kabisa.nl") return unauthorized(res);
-
-  return next();
+      return next();
+    })
+    .catch((_) => {
+      return unauthorized(res);
+    });
 };
 
 const unauthorized = (res: NextApiResponse) =>

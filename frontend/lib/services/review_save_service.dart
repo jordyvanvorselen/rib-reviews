@@ -16,18 +16,21 @@ class ReviewSaveService {
     try {
       final reviewsUrl = Env.apiPath('/reviews');
 
-      final response = await apiClient.post(
-        reviewsUrl,
-        json.encode({
-          "rating": rating,
-          "text": text,
-          "createdAt": DateTime.now().toString(),
-          "userId": user.id,
-          "eventId": event.id
-        }),
-      );
+      final response = (await apiClient
+              .post(
+                reviewsUrl,
+                json.encode({
+                  "rating": rating,
+                  "text": text,
+                  "createdAt": DateTime.now().toString(),
+                  "userId": user.id,
+                  "eventId": event.id
+                }),
+              )
+              .run())
+          .getOrElse((l) => throw l);
 
-      return Review.fromJson(jsonDecode(response), user);
+      return Review.fromJson(jsonDecode(response.body), user);
     } on Exception catch (_) {
       return Future.error("Could not save review.");
     }

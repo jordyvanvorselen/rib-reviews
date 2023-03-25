@@ -13,16 +13,19 @@ class UserSaveService {
     try {
       final usersUrl = Env.apiPath('/users');
 
-      var response = await apiClient.post(
-        usersUrl,
-        json.encode({
-          "email": email,
-          "photoUrl": photoUrl,
-          "displayName": displayName,
-        }),
-      );
+      var response = (await apiClient
+              .post(
+                usersUrl,
+                json.encode({
+                  "email": email,
+                  "photoUrl": photoUrl,
+                  "displayName": displayName,
+                }),
+              )
+              .run())
+          .getOrElse((l) => throw l);
 
-      return User.fromJson(jsonDecode(response));
+      return User.fromJson(jsonDecode(response.body));
     } on Exception catch (_) {
       return Future.error("Could not save user.");
     }

@@ -12,9 +12,10 @@ class UsersRepository {
   Future<List<User>> all() async {
     try {
       final usersUrl = Env.apiPath("/users");
-      final usersResponse = await apiClient.get(usersUrl);
+      final usersResponse =
+          (await apiClient.get(usersUrl).run()).getOrElse((l) => throw l);
 
-      List<User> users = jsonDecode(usersResponse)
+      List<User> users = jsonDecode(usersResponse.body)
           .map<User>((json) => User.fromJson(json))
           .toList();
 

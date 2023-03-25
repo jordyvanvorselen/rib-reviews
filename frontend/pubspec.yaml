@@ -47,6 +47,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   envied: ^0.3.0
   flutter_riverpod: ^2.3.2
+  fpdart: ^0.5.0
 
 dev_dependencies:
   flutter_test:

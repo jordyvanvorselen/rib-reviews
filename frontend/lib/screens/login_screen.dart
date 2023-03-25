@@ -18,6 +18,15 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   bool isProcessingLogin = false;
   bool showLoginError = false;
 
+  void signOut(GoogleSignIn googleSignIn) {
+    setState(() {
+      isProcessingLogin = false;
+      showLoginError = true;
+    });
+
+    googleSignIn.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -58,12 +67,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                           setState(() => isProcessingLogin = true);
 
                           if (account == null) {
-                            setState(() {
-                              isProcessingLogin = false;
-                              showLoginError = true;
-                            });
-
-                            return googleSignIn.signOut();
+                            signOut(googleSignIn);
+                            return;
                           }
 
                           final auth = await account.authentication;
@@ -76,18 +81,23 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                             value: auth.idToken,
                           );
 
-                          final user = await ref
-                              .read(Providers.userSaveServiceProvider)
-                              .save(account.email, account.photoUrl,
-                                  account.displayName ?? "Unknown");
+                          try {
+                            final user = await ref
+                                .read(Providers.userSaveServiceProvider)
+                                .save(account.email, account.photoUrl,
+                                    account.displayName ?? "Unknown");
 
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => HomeScreen(user: user),
-                            ),
-                          );
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => HomeScreen(user: user),
+                              ),
+                            );
+                          } catch (_) {
+                            signOut(googleSignIn);
+                            return;
+                          }
                         });
                       }),
                     ),

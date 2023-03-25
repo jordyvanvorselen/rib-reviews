@@ -12,9 +12,10 @@ class VenuesRepository {
   Future<List<Venue>> all() async {
     try {
       final venuesUrl = Env.apiPath("/venues");
-      final venuesResponse = await apiClient.get(venuesUrl);
+      final venuesResponse =
+          (await apiClient.get(venuesUrl).run()).getOrElse((l) => throw l);
 
-      List<Venue> venues = jsonDecode(venuesResponse)
+      List<Venue> venues = jsonDecode(venuesResponse.body)
           .map<Venue>((json) => Venue.fromJson(json))
           .toList();
 
