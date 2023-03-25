@@ -7,9 +7,20 @@ import 'package:rib_reviews/repositories/users_repository.dart';
 import 'package:rib_reviews/repositories/venues_repository.dart';
 
 class EventsProvider with ChangeNotifier {
-  List<Event> _events = [];
+  VenuesRepository venuesRepository;
+  UsersRepository usersRepository;
+  ReviewsRepository reviewsRepository;
+  EventsRepository eventsRepository;
 
+  List<Event> _events = [];
   List<Event> get events => _events;
+
+  EventsProvider({
+    required this.venuesRepository,
+    required this.usersRepository,
+    required this.reviewsRepository,
+    required this.eventsRepository,
+  });
 
   void addReview(Review review, Event event) {
     _events.firstWhere((e) => e.id == event.id).reviews.insert(0, review);
@@ -17,11 +28,11 @@ class EventsProvider with ChangeNotifier {
   }
 
   void fetchEvents() async {
-    final venues = await VenuesRepository.all();
-    final users = await UsersRepository.all();
-    final reviews = await ReviewsRepository.all(users);
+    final venues = await venuesRepository.all();
+    final users = await usersRepository.all();
+    final reviews = await reviewsRepository.all(users);
 
-    _events = await EventsRepository.all(venues, reviews);
+    _events = await eventsRepository.all(venues, reviews);
 
     notifyListeners();
   }

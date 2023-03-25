@@ -5,21 +5,27 @@ import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/api.dart';
 
 class UserSaveService {
-  static Future<User> save(
-      String email, String? photoUrl, String displayName) async {
+  API apiClient;
+
+  UserSaveService({required this.apiClient});
+
+  Future<User> save(String email, String? photoUrl, String displayName) async {
     try {
       final usersUrl = Env.apiPath('/users');
 
-      var response = await API.post(
-        usersUrl,
-        json.encode({
-          "email": email,
-          "photoUrl": photoUrl,
-          "displayName": displayName,
-        }),
-      );
+      var response = (await apiClient
+              .post(
+                usersUrl,
+                json.encode({
+                  "email": email,
+                  "photoUrl": photoUrl,
+                  "displayName": displayName,
+                }),
+              )
+              .run())
+          .getOrElse((l) => throw l);
 
-      return User.fromJson(jsonDecode(response));
+      return User.fromJson(jsonDecode(response.body));
     } on Exception catch (_) {
       return Future.error("Could not save user.");
     }

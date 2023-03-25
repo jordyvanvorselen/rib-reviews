@@ -1,27 +1,37 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rib_reviews/providers/providers.dart';
 import 'package:rib_reviews/screens/home_screen.dart';
-import 'package:rib_reviews/services/user_save_service.dart';
 
 import '../utils/constants.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends ConsumerState<LoginScreen> {
   bool isProcessingLogin = false;
   bool showLoginError = false;
 
+  void signOut(GoogleSignIn googleSignIn) {
+    setState(() {
+      isProcessingLogin = false;
+      showLoginError = true;
+    });
+
+    googleSignIn.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+        serverClientId:
+            '970203920402-ckkm3fa3ku58k56m926k09cmeito57q1.apps.googleusercontent.com');
 
     return Scaffold(
       body: SafeArea(
@@ -53,28 +63,41 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 200,
                       height: 50,
                       child: SignInButton(Buttons.Google, onPressed: () async {
-                        googleSignIn.signIn().then((value) async {
+                        googleSignIn.signIn().then((account) async {
                           setState(() => isProcessingLogin = true);
 
-                          if (value == null ||
-                              !value.email.endsWith("@kabisa.nl")) {
-                            setState(() {
-                              isProcessingLogin = false;
-                              showLoginError = true;
-                            });
+                          if (account == null) {
+                            signOut(googleSignIn);
                             return;
                           }
 
-                          final user = await UserSaveService.save(value.email,
-                              value.photoUrl, value.displayName ?? "Unknown");
+                          final auth = await account.authentication;
 
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => HomeScreen(user: user),
-                            ),
+                          final secureStorage =
+                              ref.read(Providers.secureStorageProvider);
+
+                          await secureStorage.write(
+                            key: 'idToken',
+                            value: auth.idToken,
                           );
+
+                          try {
+                            final user = await ref
+                                .read(Providers.userSaveServiceProvider)
+                                .save(account.email, account.photoUrl,
+                                    account.displayName ?? "Unknown");
+
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => HomeScreen(user: user),
+                              ),
+                            );
+                          } catch (_) {
+                            signOut(googleSignIn);
+                            return;
+                          }
                         });
                       }),
                     ),

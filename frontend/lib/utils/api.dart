@@ -1,29 +1,49 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
-import 'package:rib_reviews/env/env.dart';
 
 class API {
-  static Future<String> get(Uri url) {
+  FlutterSecureStorage storage;
+
+  API({required this.storage});
+
+  TaskEither<String, http.Response> get(Uri url) {
     final client = http.Client();
 
-    try {
-      return client.read(url, headers: {"Authorization": Env.apiKey});
-    } finally {
-      client.close();
-    }
+    return TaskEither.tryCatch(() async {
+      final idToken = await storage.read(key: 'idToken') ?? '';
+
+      final response =
+          await client.get(url, headers: {"Authorization": idToken});
+
+      if (response.statusCode != 200) {
+        throw response.body;
+      }
+
+      return response;
+    }, (error, stackTrace) {
+      return error.toString();
+    });
   }
 
-  static Future<String> post(Uri url, Object body) async {
+  TaskEither<String, http.Response> post(Uri url, Object body) {
     final client = http.Client();
 
-    try {
-      http.Response response = await client.post(url, body: body, headers: {
-        "Authorization": Env.apiKey,
+    return TaskEither.tryCatch(() async {
+      final idToken = await storage.read(key: 'idToken') ?? '';
+
+      final response = await client.post(url, body: body, headers: {
+        "Authorization": idToken,
         "Content-Type": "application/json"
       });
 
-      return response.body;
-    } finally {
-      client.close();
-    }
+      if (response.statusCode != 200) {
+        throw response.body;
+      }
+
+      return response;
+    }, (error, stackTrace) {
+      return error.toString();
+    });
   }
 }

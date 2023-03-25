@@ -7,23 +7,30 @@ import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/api.dart';
 
 class ReviewSaveService {
-  static Future<Review> save(
+  API apiClient;
+
+  ReviewSaveService({required this.apiClient});
+
+  Future<Review> save(
       double rating, String text, User user, Event event) async {
     try {
       final reviewsUrl = Env.apiPath('/reviews');
 
-      final response = await API.post(
-        reviewsUrl,
-        json.encode({
-          "rating": rating,
-          "text": text,
-          "createdAt": DateTime.now().toString(),
-          "userId": user.id,
-          "eventId": event.id
-        }),
-      );
+      final response = (await apiClient
+              .post(
+                reviewsUrl,
+                json.encode({
+                  "rating": rating,
+                  "text": text,
+                  "createdAt": DateTime.now().toString(),
+                  "userId": user.id,
+                  "eventId": event.id
+                }),
+              )
+              .run())
+          .getOrElse((l) => throw l);
 
-      return Review.fromJson(jsonDecode(response), user);
+      return Review.fromJson(jsonDecode(response.body), user);
     } on Exception catch (_) {
       return Future.error("Could not save review.");
     }
