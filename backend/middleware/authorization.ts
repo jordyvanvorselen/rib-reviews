@@ -2,7 +2,8 @@ import { OAuth2Client } from "google-auth-library";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Middleware } from "next-api-route-middleware";
 
-const CLIENT_ID = "";
+const CLIENT_ID =
+  "970203920402-s9f86krqagtivv1uqkkkn0qnmj3lv9ci.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
 export const authorize: Middleware<NextApiRequest> = async (
@@ -12,18 +13,15 @@ export const authorize: Middleware<NextApiRequest> = async (
 ) => {
   if (!req.headers.authorization) return unauthorized(res);
 
-  const ticket = await client.verifyIdToken({
-    idToken: req.headers.authorization,
-    audience: CLIENT_ID,
-  });
+  const ticket = await client
+    .verifyIdToken({
+      idToken: req.headers.authorization,
+    })
+    .catch((err) => console.error(err));
 
-  const payload = ticket.getPayload();
+  const payload = ticket?.getPayload();
 
-  if (!payload) return unauthorized(res);
-
-  const domain = payload["hd"];
-
-  if (domain !== "@kabisa.nl") return unauthorized(res);
+  if (!payload || payload["hd"] !== "kabisa.nl") return unauthorized(res);
 
   return next();
 };

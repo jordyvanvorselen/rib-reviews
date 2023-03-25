@@ -10,11 +10,9 @@ class API {
     final client = http.Client();
 
     try {
-      final userId = await storage.read(key: 'userId') ?? '';
+      final idToken = await storage.read(key: 'idToken') ?? '';
 
-      print('userId: $userId');
-
-      return await client.read(url, headers: {"Authorization": userId});
+      return await client.read(url, headers: {"Authorization": idToken});
     } finally {
       client.close();
     }
@@ -24,12 +22,10 @@ class API {
     final client = http.Client();
 
     try {
-      final userId = await storage.read(key: 'userId') ?? '';
-
-      print('userId: $userId');
+      final idToken = await storage.read(key: 'idToken') ?? '';
 
       http.Response response = await client.post(url, body: body, headers: {
-        "Authorization": userId,
+        "Authorization": idToken,
         "Content-Type": "application/json"
       });
 

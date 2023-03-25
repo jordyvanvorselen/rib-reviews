@@ -19,7 +19,7 @@ class Providers {
     (ref) => API(storage: ref.watch(secureStorageProvider)),
   );
 
-  static final eventsProvider = Provider<EventsProvider>(
+  static final eventsProvider = ChangeNotifierProvider<EventsProvider>(
     (ref) => EventsProvider(
         venuesRepository: ref.watch(venuesRepositoryProvider),
         usersRepository: ref.watch(usersRepositoryProvider),

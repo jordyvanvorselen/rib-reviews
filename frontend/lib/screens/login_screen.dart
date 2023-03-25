@@ -20,7 +20,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+        serverClientId:
+            '970203920402-ckkm3fa3ku58k56m926k09cmeito57q1.apps.googleusercontent.com');
 
     return Scaffold(
       body: SafeArea(
@@ -52,11 +54,10 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       width: 200,
                       height: 50,
                       child: SignInButton(Buttons.Google, onPressed: () async {
-                        googleSignIn.signIn().then((value) async {
+                        googleSignIn.signIn().then((account) async {
                           setState(() => isProcessingLogin = true);
 
-                          if (value == null ||
-                              !value.email.endsWith("@kabisa.nl")) {
+                          if (account == null) {
                             setState(() {
                               isProcessingLogin = false;
                               showLoginError = true;
@@ -65,20 +66,20 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                             return googleSignIn.signOut();
                           }
 
-                          final auth = await value.authentication;
-                          final userId = auth.accessToken;
+                          final auth = await account.authentication;
 
-                          print('writing userId $userId to secure storage!');
+                          final secureStorage =
+                              ref.read(Providers.secureStorageProvider);
 
-                          await ref.read(Providers.secureStorageProvider).write(
-                                key: 'userId',
-                                value: userId,
-                              );
+                          await secureStorage.write(
+                            key: 'idToken',
+                            value: auth.idToken,
+                          );
 
                           final user = await ref
                               .read(Providers.userSaveServiceProvider)
-                              .save(value.email, value.photoUrl,
-                                  value.displayName ?? "Unknown");
+                              .save(account.email, account.photoUrl,
+                                  account.displayName ?? "Unknown");
 
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
