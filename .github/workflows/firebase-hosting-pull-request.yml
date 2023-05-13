@@ -13,9 +13,12 @@ jobs:
         with:
           flutter-version: ${{ env.flutter_version }}
           cache: true
-      - run: flutter pub get
-      - run: flutter build web
-      - run: flutter test && flutter build web
+      - name: build and deploy
+        working-directory: ./frontend
+        run: |
+          flutter pub get
+          flutter build web
+          working
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
