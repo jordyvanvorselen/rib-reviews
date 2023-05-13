@@ -18,11 +18,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 class LoginScreenState extends ConsumerState<LoginScreen> {
   bool isProcessingLogin = false;
   bool showLoginError = false;
+  String? exceptionText = null;
 
-  void signOut(GoogleSignIn googleSignIn) {
+  void signOut(GoogleSignIn googleSignIn, {String? exceptionText}) {
     setState(() {
       isProcessingLogin = false;
       showLoginError = true;
+      exceptionText = exceptionText;
     });
 
     googleSignIn.signOut();
@@ -60,8 +62,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
             builder: (_) => HomeScreen(user: user),
           ),
         );
-      } catch (_) {
-        signOut(googleSignIn);
+      } catch (e) {
+        signOut(googleSignIn, exceptionText: e.toString());
         return;
       }
     });
@@ -100,9 +102,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                           .renderButton()),
               const SizedBox(height: 25),
               if (showLoginError)
-                const Text(
-                  "Login failed. Make sure to use a Kabisa email adress.",
-                  style: TextStyle(color: kErrorTextColor),
+                Text(
+                  "Login failed. Make sure to use a Kabisa email adress. $exceptionText",
+                  style: const TextStyle(color: kErrorTextColor),
                 )
             ],
           ),
