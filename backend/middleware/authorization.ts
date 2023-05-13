@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Middleware } from "next-api-route-middleware";
 
 const CLIENT_ID =
-  "20020247765-m67ihrajm4cjbiio5ht78f16gdib1hoh.apps.googleusercontent.com";
+  "970203920402-qqr276qr996vkg7vac3lnd8vdeh0refk.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
 export const authorize: Middleware<NextApiRequest> = async (
