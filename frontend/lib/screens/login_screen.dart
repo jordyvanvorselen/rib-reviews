@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -104,14 +102,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                           .renderButton()),
               const SizedBox(height: 25),
               if (showLoginError)
-                const Text(
-                  "Login failed. Make sure to use a Kabisa email adress.",
-                  style: TextStyle(color: kErrorTextColor),
-                )
-              if (showException)
-                const Text(
-                  "Login failed. ",
-                  style: TextStyle(color: kErrorTextColor),
+                Text(
+                  "Login failed. Make sure to use a Kabisa email adress. $exceptionText",
+                  style: const TextStyle(color: kErrorTextColor),
                 )
             ],
           ),
