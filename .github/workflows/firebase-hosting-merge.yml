@@ -12,6 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: flutter test && flutter build web
+      - name: Build PWA
+        working-directory: ./frontend
+        run: |
+          cp .env.production .env
+          flutter pub get
+          flutter pub run build_runner build
+          flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
