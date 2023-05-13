@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rib_reviews/providers/providers.dart';
-import 'package:rib_reviews/screens/home_screen.dart';
+import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
+import 'package:google_sign_in_web/google_sign_in_web.dart' as web;
 
+import '../providers/providers.dart';
 import '../utils/constants.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -29,9 +30,41 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-        serverClientId:
-            '970203920402-ckkm3fa3ku58k56m926k09cmeito57q1.apps.googleusercontent.com');
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    googleSignIn.onCurrentUserChanged
+        .listen((GoogleSignInAccount? account) async {
+      if (account == null) {
+        signOut(googleSignIn);
+        return;
+      }
+
+      final secureStorage = ref.read(Providers.secureStorageProvider);
+
+      final auth = await account.authentication;
+
+      await secureStorage.write(
+        key: 'idToken',
+        value: auth.idToken,
+      );
+
+      try {
+        final userSaveService = ref.read(Providers.userSaveServiceProvider);
+        final user = await userSaveService.save(
+            account.email, account.photoUrl, account.displayName ?? "Unknown");
+
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => HomeScreen(user: user),
+          ),
+        );
+      } catch (_) {
+        signOut(googleSignIn);
+        return;
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -62,45 +95,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                   : SizedBox(
                       width: 200,
                       height: 50,
-                      child: SignInButton(Buttons.Google, onPressed: () async {
-                        googleSignIn.signIn().then((account) async {
-                          setState(() => isProcessingLogin = true);
-
-                          if (account == null) {
-                            signOut(googleSignIn);
-                            return;
-                          }
-
-                          final auth = await account.authentication;
-
-                          final secureStorage =
-                              ref.read(Providers.secureStorageProvider);
-
-                          await secureStorage.write(
-                            key: 'idToken',
-                            value: auth.idToken,
-                          );
-
-                          try {
-                            final user = await ref
-                                .read(Providers.userSaveServiceProvider)
-                                .save(account.email, account.photoUrl,
-                                    account.displayName ?? "Unknown");
-
-                            // ignore: use_build_context_synchronously
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => HomeScreen(user: user),
-                              ),
-                            );
-                          } catch (_) {
-                            signOut(googleSignIn);
-                            return;
-                          }
-                        });
-                      }),
-                    ),
+                      child: (GoogleSignInPlatform.instance
+                              as web.GoogleSignInPlugin)
+                          .renderButton()),
               const SizedBox(height: 25),
               if (showLoginError)
                 const Text(

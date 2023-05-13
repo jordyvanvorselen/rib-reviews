@@ -276,3 +276,5 @@ fabric.properties
 
 .env
 lib/env/env.g.dart
+
+.vscode/
