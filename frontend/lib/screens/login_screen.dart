@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -18,11 +20,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 class LoginScreenState extends ConsumerState<LoginScreen> {
   bool isProcessingLogin = false;
   bool showLoginError = false;
+  String? exceptionText = null;
 
-  void signOut(GoogleSignIn googleSignIn) {
+  void signOut(GoogleSignIn googleSignIn, {String? exceptionText}) {
     setState(() {
       isProcessingLogin = false;
       showLoginError = true;
+      exceptionText = exceptionText;
     });
 
     googleSignIn.signOut();
@@ -60,8 +64,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
             builder: (_) => HomeScreen(user: user),
           ),
         );
-      } catch (_) {
-        signOut(googleSignIn);
+      } catch (e) {
+        signOut(googleSignIn, exceptionText: e.toString());
         return;
       }
     });
@@ -102,6 +106,11 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               if (showLoginError)
                 const Text(
                   "Login failed. Make sure to use a Kabisa email adress.",
+                  style: TextStyle(color: kErrorTextColor),
+                )
+              if (showException)
+                const Text(
+                  "Login failed. ",
                   style: TextStyle(color: kErrorTextColor),
                 )
             ],
