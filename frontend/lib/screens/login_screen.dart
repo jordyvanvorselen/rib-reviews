@@ -37,7 +37,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
       if (account == null) {
-        signOut(googleSignIn);
+        signOut(googleSignIn, exceptionText: 'Wrong username or password.');
         return;
       }
 
