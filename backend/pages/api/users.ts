@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
 import clientPromise from "../../lib/mongodb";
 import { authorize } from "../../middleware/authorization";
+import { cors } from "../../middleware/cors";
 
 type Error = { error: string };
 type User = {
@@ -54,4 +55,4 @@ const post = async (
   });
 };
 
-export default use(authorize, handler);
+export default use(authorize, cors, handler);
