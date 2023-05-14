@@ -39,7 +39,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       });
 
       if (account == null) {
-        signOut(googleSignIn;
+        signOut(googleSignIn);
         return;
       }
 
