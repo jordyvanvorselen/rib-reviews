@@ -18,13 +18,11 @@ class LoginScreen extends ConsumerStatefulWidget {
 class LoginScreenState extends ConsumerState<LoginScreen> {
   bool isProcessingLogin = false;
   bool showLoginError = false;
-  String? exceptionText = null;
 
-  void signOut(GoogleSignIn googleSignIn, {String? exceptionText}) {
+  void signOut(GoogleSignIn googleSignIn) {
     setState(() {
       isProcessingLogin = false;
       showLoginError = true;
-      exceptionText = exceptionText;
     });
 
     googleSignIn.signOut();
@@ -41,7 +39,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       });
 
       if (account == null) {
-        signOut(googleSignIn, exceptionText: 'Wrong username or password.');
+        signOut(googleSignIn;
         return;
       }
 
@@ -69,7 +67,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       } catch (e, s) {
         debugPrint('Exception: ${e.toString()}');
         debugPrint('Stacktrace: ${s.toString()}');
-        signOut(googleSignIn, exceptionText: e.toString() + s.toString());
+        signOut(googleSignIn);
         return;
       }
     });
@@ -109,7 +107,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               const SizedBox(height: 25),
               if (showLoginError)
                 Text(
-                  "Login failed. Make sure to use a Kabisa email adress. $exceptionText",
+                  "Login failed. Make sure to use a Kabisa email adress.",
                   style: const TextStyle(color: kErrorTextColor),
                 )
             ],
