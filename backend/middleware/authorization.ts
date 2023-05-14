@@ -11,7 +11,6 @@ export const authorize: Middleware<NextApiRequest> = async (
   res: NextApiResponse,
   next: Function
 ) => {
-  return next();
   if (!req.headers.authorization) return unauthorized(res);
 
   await client
