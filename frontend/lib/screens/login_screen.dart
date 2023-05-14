@@ -36,6 +36,10 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
     googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
+      setState(() {
+        isProcessingLogin = true;
+      });
+
       if (account == null) {
         signOut(googleSignIn, exceptionText: 'Wrong username or password.');
         return;
@@ -63,6 +67,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         );
       } catch (e, s) {
+        debugPrint('Exception: ${e.toString()}');
+        debugPrint('Stacktrace: ${s.toString()}');
         signOut(googleSignIn, exceptionText: e.toString() + s.toString());
         return;
       }
