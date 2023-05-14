@@ -62,8 +62,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
             builder: (_) => HomeScreen(user: user),
           ),
         );
-      } catch (e) {
-        signOut(googleSignIn, exceptionText: e.toString());
+      } catch (e, s) {
+        signOut(googleSignIn, exceptionText: e.toString() + s.toString());
         return;
       }
     });
