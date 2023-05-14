@@ -4,6 +4,7 @@ import { use } from "next-api-route-middleware";
 import clientPromise from "../../lib/mongodb";
 import { dateIsValid, documentExists } from "../../lib/utils";
 import { authorize } from "../../middleware/authorization";
+import { cors } from "../../middleware/cors";
 
 type Error = { error: string };
 type Review = {
@@ -72,4 +73,4 @@ const post = async (
   res.status(200).json(review);
 };
 
-export default use(authorize, handler);
+export default use(cors, authorize, handler);
