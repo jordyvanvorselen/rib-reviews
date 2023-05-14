@@ -26,8 +26,8 @@ class UserSaveService {
           .getOrElse((l) => throw l);
 
       return User.fromJson(jsonDecode(response.body));
-    } on Exception catch (_) {
-      return Future.error("Could not save user.");
+    } on Exception catch (e) {
+      return Future.error(e.toString());
     }
   }
 }
