@@ -1,4 +1,3 @@
-import Cors from 'cors';
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Middleware } from "next-api-route-middleware";
 
@@ -7,7 +6,7 @@ export const cors: Middleware<NextApiRequest> = async (
   res: NextApiResponse,
   next: Function
 ) => {
-  Cors({ methods: ['POST', 'GET', 'HEAD'] });
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
   return next();
 };
