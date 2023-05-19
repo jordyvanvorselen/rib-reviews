@@ -55,7 +55,7 @@ final _mockReviews = [
     "createdAt": "2023-05-19 14:42:04.994",
     "eventId": "1",
     "rating": 1.5,
-    "text": "Test",
+    "text": "Erg lekker gegeten.",
     "userId": "1"
   }
 ];
