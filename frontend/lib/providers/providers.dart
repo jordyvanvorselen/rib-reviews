@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/repositories/events_repository.dart';
 import 'package:rib_reviews/services/review_save_service.dart';
@@ -15,8 +16,15 @@ class Providers {
     (ref) => const FlutterSecureStorage(),
   );
 
+  static final httpClientProvider = Provider<http.Client>(
+    (ref) => http.Client(),
+  );
+
   static final apiClientProvider = Provider<API>(
-    (ref) => API(storage: ref.watch(secureStorageProvider)),
+    (ref) => API(
+      storage: ref.watch(secureStorageProvider),
+      client: ref.watch(httpClientProvider),
+    ),
   );
 
   static final eventsProvider = ChangeNotifierProvider<EventsProvider>(

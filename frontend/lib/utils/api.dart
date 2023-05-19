@@ -4,12 +4,10 @@ import 'package:http/http.dart' as http;
 
 class API {
   FlutterSecureStorage storage;
-
-  API({required this.storage});
+  http.Client client;
+  API({required this.storage, required this.client});
 
   TaskEither<String, http.Response> get(Uri url) {
-    final client = http.Client();
-
     return TaskEither.tryCatch(() async {
       final idToken = await storage.read(key: 'idToken') ?? '';
 
