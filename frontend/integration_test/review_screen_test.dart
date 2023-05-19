@@ -46,4 +46,24 @@ void main() {
       expect($('Erg lekker gegeten.'), findsOneWidget);
     },
   );
+
+  patrolTest(
+    '''
+    Given I am logged in
+    And I am on the review screen
+    When I click the floating action button
+    Then I see a popup that allows me to create a new review
+    ''',
+    (PatrolTester $) async {
+      await mockNetworkImagesFor(
+        () async => await $.pumpWidgetAndSettle(widget),
+      );
+
+      expect($(FloatingActionButton), findsOneWidget);
+
+      await $(FloatingActionButton).tap(andSettle: true);
+
+      expect($(AlertDialog), findsOneWidget);
+    },
+  );
 }
