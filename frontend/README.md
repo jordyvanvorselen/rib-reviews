@@ -46,6 +46,13 @@ To set up this project you will need Flutter `3.3.10`. You can follow the instal
    flutter run --debug
    ```
 
+### Running the tests
+
+1. Run the following command
+   ```sh
+   flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d chrome
+   ```
+
 <!-- ROADMAP -->
 
 ## Learn more about Flutter
