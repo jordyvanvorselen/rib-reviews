@@ -41,7 +41,15 @@ To set up this project you will need Flutter `3.3.10`. You can follow the instal
 
 ### Running the project
 
-1. Run the following command
+1. Install chromedriver and add it to your PATH
+   ```sh
+   yay chromedriver
+   ```
+2. Run chromedriver on port 4444
+   ```sh
+   chromedriver --port=4444
+   ```
+2. Run the following command
    ```sh
    flutter run --debug
    ```
