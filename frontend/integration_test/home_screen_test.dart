@@ -22,7 +22,7 @@ void main() {
     '''
     Given I am logged in
     When I open the home screen
-    Then I want to see a timeline
+    Then I see a timeline
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
@@ -38,11 +38,11 @@ void main() {
     Given I am logged in
     And there are 2 events in the database
     When I open the home screen
-    Then I want to see a timeline tile for each event
-    And I want to see the name of each event
-    And I want to see the location of each event
-    And I want to see how many reviews an event has
-    And I want to see the rating of the event
+    Then I see a timeline tile for each event
+    And I see the name of each event
+    And I see the location of each event
+    And I see how many reviews an event has
+    And I see the rating of the event
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(

@@ -64,8 +64,7 @@ void _initFakeApi() {
           "_id": "1",
           "displayName": "Jordy van Vorselen",
           "email": "jordy.van.vorselen@kabisa.nl",
-          "photoUrl":
-              "https://lh3.googleusercontent.com/a/AGNmyxb2leu0Zt91Fx8M80myLas7B6YwdyICzTrm1uIo=s96-c"
+          "photoUrl": null
         }
       ]),
     );

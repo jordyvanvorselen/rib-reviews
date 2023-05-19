@@ -20,7 +20,7 @@ jobs:
       - name: Setup repo for testing
         working-directory: ./frontend
         run: |
-          cp .env.production .env
+          cp .env.development .env
           flutter pub get
           flutter pub run build_runner build
 
@@ -38,6 +38,11 @@ jobs:
       - name: Build PWA
         working-directory: ./frontend
         run: |
+          flutter clean
+          rm lib/env/env.g.dart
+          cp .env.development .env
+          flutter pub get
+          flutter pub run build_runner build
           flutter build web
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
