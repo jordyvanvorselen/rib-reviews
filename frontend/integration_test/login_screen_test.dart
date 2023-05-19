@@ -8,7 +8,7 @@ void main() {
     '''
     Given I am not logged in
     When I open the login screen
-    Then I want to see the logo
+    Then I see the logo
     ''',
     (PatrolTester $) async {
       await $.pumpWidgetAndSettle(Main());
@@ -21,7 +21,7 @@ void main() {
     '''
     Given I am not logged in
     When I open the login screen
-    Then I want to see the title of the app
+    Then I see the title of the app
     ''',
     (PatrolTester $) async {
       await $.pumpWidgetAndSettle(Main());
