@@ -14,7 +14,9 @@ void main() {
 }
 
 class Main extends StatelessWidget {
-  const Main({Key? key}) : super(key: key);
+  const Main({Key? key, this.overrideWidget}) : super(key: key);
+
+  final Widget? overrideWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class Main extends StatelessWidget {
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
       ),
-      home: const LoginScreen(),
+      home: overrideWidget ?? const LoginScreen(),
     );
   }
 }
