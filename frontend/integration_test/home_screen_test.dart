@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:rib_reviews/screens/home_screen.dart';
+import 'package:rib_reviews/screens/review_screen.dart';
 import 'package:rib_reviews/components/timeline.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:timeline_tile/timeline_tile.dart';
@@ -59,6 +60,24 @@ void main() {
 
       expect($('1 reviews'), findsOneWidget);
       expect($('1.5'), findsOneWidget);
+    },
+  );
+
+  patrolTest(
+    '''
+    Given I am logged in
+    When I open the home screen
+    And I click the timeline tile of a finished event
+    Then I navigate to the review screen
+    ''',
+    (PatrolTester $) async {
+      await mockNetworkImagesFor(
+        () async => await $.pumpWidgetAndSettle(widget),
+      );
+
+      await $(TimelineTile).at(1).tap(andSettle: true);
+
+      expect($(ReviewScreen), findsOneWidget);
     },
   );
 }
