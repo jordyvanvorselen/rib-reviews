@@ -5,6 +5,10 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:rib_reviews/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rib_reviews/env/env.dart';
+import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/models/event.dart';
+import 'package:rib_reviews/models/venue.dart';
+import 'package:rib_reviews/models/review.dart';
 
 final dio = Dio(BaseOptions(baseUrl: Env.apiPath().toString()));
 final dioAdapter = DioAdapter(dio: dio);
@@ -18,7 +22,13 @@ Widget buildTree(Widget widget) {
   );
 }
 
-final mockVenues = [
+Venue getVenue(int index) => Venue.fromJson(_mockVenues[index]);
+User getUser(int index) => User.fromJson(_mockUsers[index]);
+Review getReview(int index) => Review.fromJson(_mockReviews[index], getUser(0));
+Event getEvent(int index) => Event.fromJson(_mockEvents[index], getVenue(index),
+    _mockReviews.map((r) => Review.fromJson(r, getUser(0))).toList());
+
+final _mockVenues = [
   {
     "_id": "1",
     "location": "Helmond",
@@ -39,7 +49,7 @@ final mockVenues = [
   }
 ];
 
-final mockReviews = [
+final _mockReviews = [
   {
     "_id": "1",
     "createdAt": "2023-05-19 14:42:04.994",
@@ -50,13 +60,13 @@ final mockReviews = [
   }
 ];
 
-final mockEvents = [
+final _mockEvents = [
   {"_id": "1", "date": "2022-08-11 18:00:00", "venueId": "1"},
   {"_id": "2", "date": null, "venueId": "2"},
   {"_id": "3", "date": "2999-08-11 18:00:00", "venueId": "3"}
 ];
 
-final mockUsers = [
+final _mockUsers = [
   {
     "_id": "1",
     "displayName": "Jordy van Vorselen",
@@ -67,8 +77,8 @@ final mockUsers = [
 
 void _initFakeApi() {
   dioAdapter
-    ..onGet('/venues', (server) => server.reply(200, mockVenues))
-    ..onGet('/reviews', (server) => server.reply(200, mockReviews))
-    ..onGet('/events', (server) => server.reply(200, mockEvents))
-    ..onGet('/users', (server) => server.reply(200, mockUsers));
+    ..onGet('/venues', (server) => server.reply(200, _mockVenues))
+    ..onGet('/reviews', (server) => server.reply(200, _mockReviews))
+    ..onGet('/events', (server) => server.reply(200, _mockEvents))
+    ..onGet('/users', (server) => server.reply(200, _mockUsers));
 }
