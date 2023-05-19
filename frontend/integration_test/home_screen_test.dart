@@ -27,7 +27,7 @@ void main() {
       await $.pumpWidgetAndSettle(const Main());
 
       expect($('Welcome to'), findsWidgets);
-      expect($('The Eat Guildt'), findsWidgets);
+      expect($('The Eat Guild'), findsWidgets);
     },
   );
 }

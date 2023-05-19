@@ -1,23 +1,26 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/repositories/events_repository.dart';
+import 'package:rib_reviews/repositories/reviews_repository.dart';
+import 'package:rib_reviews/repositories/users_repository.dart';
+import 'package:rib_reviews/repositories/venues_repository.dart';
 import 'package:rib_reviews/services/review_save_service.dart';
 import 'package:rib_reviews/services/user_save_service.dart';
 import 'package:rib_reviews/utils/api.dart';
-
-import '../repositories/reviews_repository.dart';
-import '../repositories/users_repository.dart';
-import '../repositories/venues_repository.dart';
 
 class Providers {
   static final secureStorageProvider = Provider<FlutterSecureStorage>(
     (ref) => const FlutterSecureStorage(),
   );
 
-  static final httpClientProvider = Provider<http.Client>(
-    (ref) => http.Client(),
+  static final httpClientProvider = Provider<Dio>(
+    (ref) => Dio(BaseOptions(
+      baseUrl: Env.apiPath().toString(),
+      contentType: 'application/json',
+    )),
   );
 
   static final apiClientProvider = Provider<API>(

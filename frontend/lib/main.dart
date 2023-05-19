@@ -10,9 +10,7 @@ void main() {
     const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
   );
 
-  runApp(const ProviderScope(
-    child: Main(),
-  ));
+  runApp(const ProviderScope(child: Main()));
 }
 
 class Main extends StatelessWidget {

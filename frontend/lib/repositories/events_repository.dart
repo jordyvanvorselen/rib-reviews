@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/venue.dart';
 import 'package:rib_reviews/utils/api.dart';
@@ -14,11 +11,10 @@ class EventsRepository {
 
   Future<List<Event>> all(List<Venue> venues, List<Review> reviews) async {
     try {
-      final eventsUrl = Env.apiPath("/events");
       final eventsResponse =
-          (await apiClient.get(eventsUrl).run()).getOrElse((l) => throw l);
+          (await apiClient.get('/events').run()).getOrElse((l) => throw l);
 
-      List<Event> events = jsonDecode(eventsResponse.body)
+      List<Event> events = eventsResponse.data
           .map<Event>((raw) => Event.fromJson(
               raw,
               venues.firstWhere((v) => v.id == raw['venueId']),
