@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: nanasess/setup-chromedriver@v2
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.10.1
@@ -32,12 +34,7 @@ jobs:
       - name: Run tests
         working-directory: ./frontend
         run: |
-          flutter config --enable-web
-          git clone https://github.com/flutter/web_installers.git
-          cd web_installers/packages/web_drivers/
-          flutter pub get
-          dart lib/web_driver_installer.dart & sleep 20
-          chromedriver/chromedriver --port=4444 & sleep 5
+          chromedriver --port=4444 & sleep 5
           flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d chrome
 
       - name: Build PWA
