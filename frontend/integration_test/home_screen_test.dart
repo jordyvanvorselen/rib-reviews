@@ -1,40 +1,22 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
-import 'package:rib_reviews/main.dart';
 import 'package:rib_reviews/screens/home_screen.dart';
 import 'package:rib_reviews/components/timeline.dart';
-import 'package:rib_reviews/models/user.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dio/dio.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:rib_reviews/providers/providers.dart';
-import 'package:rib_reviews/env/env.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+import 'package:rib_reviews/models/user.dart';
 import './utils.dart';
 
-final dio = Dio(BaseOptions(baseUrl: Env.apiPath().toString()));
-final dioAdapter = DioAdapter(dio: dio);
-
-final widget = ProviderScope(
-  child: Main(
-    overrideWidget: HomeScreen(
-      user: User(
-        email: 'jordyvanvorselen@gmail.com',
-        id: '1',
-        photoUrl: null,
-        displayName: 'Jordy',
-      ),
-    ),
-  ),
-  overrides: [Providers.httpClientProvider.overrideWithValue(dio)],
-);
-
 void main() {
-  setUp(() {
-    initFakeApi(dioAdapter);
-  });
+  final widget = buildTree(
+    HomeScreen(
+      user: User(
+          email: 'jordyvanvorselen@gmail.com',
+          id: '1',
+          photoUrl: null,
+          displayName: 'Jordy'),
+    ),
+  );
 
   patrolTest(
     '''
