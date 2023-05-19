@@ -6,8 +6,8 @@ class AppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         Text(
           "Welcome to",
           style: TextStyle(color: kSecondaryTextColor, fontSize: 16),

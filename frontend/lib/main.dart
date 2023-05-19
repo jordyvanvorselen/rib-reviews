@@ -31,7 +31,7 @@ class Main extends StatelessWidget {
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
       ),
-      home: LoginScreen(), // const messes with the navigation
+      home: const LoginScreen(),
     );
   }
 }

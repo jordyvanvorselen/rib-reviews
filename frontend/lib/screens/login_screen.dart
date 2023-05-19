@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+// ignore: depend_on_referenced_packages
 import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
 import 'package:google_sign_in_web/google_sign_in_web.dart' as web;
 
@@ -83,8 +84,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                 child: Image.asset("assets/images/logo.png"),
               ),
               const SizedBox(height: 75),
-              Column(
-                children: const [
+              const Column(
+                children: [
                   Text(
                     "Welcome to",
                     style: TextStyle(color: kSecondaryTextColor, fontSize: 24),
@@ -106,9 +107,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                           .renderButton()),
               const SizedBox(height: 25),
               if (showLoginError)
-                Text(
+                const Text(
                   "Login failed. Make sure to use a Kabisa email adress.",
-                  style: const TextStyle(color: kErrorTextColor),
+                  style: TextStyle(color: kErrorTextColor),
                 )
             ],
           ),

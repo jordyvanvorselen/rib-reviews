@@ -13,7 +13,7 @@ class EventReviews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: 140,
           child: Text(
             "${reviews.length} reviews",
@@ -24,11 +24,11 @@ class EventReviews extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 7.5),
-        Container(
+        SizedBox(
           width: 140,
           child: Row(children: [
             const SizedBox(width: 7.5),
-            ...(reviews.length > 0
+            ...(reviews.isNotEmpty
                 ? reviews.take(5).map(
                     (review) {
                       return Align(

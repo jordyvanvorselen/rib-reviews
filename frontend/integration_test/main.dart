@@ -1,9 +1,9 @@
 import 'package:integration_test/integration_test.dart';
 
-import 'home_screen_test.dart' as homeScreen;
+import 'home_screen_test.dart' as home_screen;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  homeScreen.main();
+  home_screen.main();
 }
