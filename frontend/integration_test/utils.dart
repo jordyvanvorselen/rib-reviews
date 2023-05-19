@@ -34,6 +34,12 @@ void _initFakeApi() {
           "location": "Weert",
           "name": "De Slak",
           "website": "https://deslak.com/nederweert/"
+        },
+        {
+          "_id": "3",
+          "location": "Eindhoven",
+          "name": "Ribs Factory",
+          "website": "https://ribsfactory.com/"
         }
       ]),
     )
@@ -54,7 +60,8 @@ void _initFakeApi() {
       '/events',
       (server) => server.reply(200, [
         {"_id": "1", "date": "2022-08-11 18:00:00", "venueId": "1"},
-        {"_id": "2", "date": "2024-08-11 18:00:00", "venueId": "2"}
+        {"_id": "2", "date": null, "venueId": "2"},
+        {"_id": "3", "date": "2999-08-11 18:00:00", "venueId": "3"}
       ]),
     )
     ..onGet(
