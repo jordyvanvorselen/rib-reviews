@@ -10,13 +10,13 @@ void main() {
     const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
   );
 
-  runApp(const ProviderScope(
-    child: Main(),
-  ));
+  runApp(const ProviderScope(child: Main()));
 }
 
 class Main extends StatelessWidget {
-  const Main({Key? key}) : super(key: key);
+  const Main({Key? key, this.overrideWidget}) : super(key: key);
+
+  final Widget? overrideWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class Main extends StatelessWidget {
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
       ),
-      home: LoginScreen(), // const messes with the navigation
+      home: overrideWidget ?? const LoginScreen(),
     );
   }
 }

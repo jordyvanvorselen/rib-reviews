@@ -1,23 +1,22 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:http/http.dart' as http;
 
 class API {
   FlutterSecureStorage storage;
+  // http.Client client;
+  Dio client;
+  API({required this.storage, required this.client});
 
-  API({required this.storage});
-
-  TaskEither<String, http.Response> get(Uri url) {
-    final client = http.Client();
-
+  TaskEither<String, Response> get(String resource) {
     return TaskEither.tryCatch(() async {
       final idToken = await storage.read(key: 'idToken') ?? '';
 
-      final response =
-          await client.get(url, headers: {"Authorization": idToken});
+      final response = await client.get(resource,
+          options: Options(headers: {"Authorization": idToken}));
 
       if (response.statusCode != 200) {
-        throw response.body;
+        throw response.data;
       }
 
       return response;
@@ -26,19 +25,21 @@ class API {
     });
   }
 
-  TaskEither<String, http.Response> post(Uri url, Object body) {
-    final client = http.Client();
-
+  TaskEither<String, Response> post(String resource, Object body) {
     return TaskEither.tryCatch(() async {
       final idToken = await storage.read(key: 'idToken') ?? '';
 
-      final response = await client.post(url, body: body, headers: {
-        "Authorization": idToken,
-        "Content-Type": "application/json"
-      });
+      final response = await client.post(resource,
+          data: body,
+          options: Options(
+            headers: {
+              "Authorization": idToken,
+              "Content-Type": "application/json"
+            },
+          ));
 
       if (response.statusCode != 200) {
-        throw response.body;
+        throw response.data;
       }
 
       return response;

@@ -13,7 +13,7 @@ class EventLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 100,
       height: 130,
       child: IconButton(
@@ -22,7 +22,7 @@ class EventLink extends StatelessWidget {
           launchUrlString(event.venue.website,
               mode: LaunchMode.externalApplication);
         },
-        icon: Icon(Icons.open_in_new),
+        icon: const Icon(Icons.open_in_new),
         iconSize: 45,
         color: kSecondaryTextColor,
       ),

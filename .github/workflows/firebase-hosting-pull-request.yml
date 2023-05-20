@@ -9,17 +9,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - uses: nanasess/setup-chromedriver@v2
+
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.3.10
+          flutter-version: 3.10.1
           cache: true
+
+      - name: Setup repo for testing
+        working-directory: ./frontend
+        run: |
+          cp .env.development .env
+          flutter pub get
+          flutter pub run build_runner build
+
+      - name: Run flutter analyze
+        working-directory: ./frontend
+        run: |
+          flutter analyze
+
+      - name: Run tests
+        working-directory: ./frontend
+        run: |
+          chromedriver --port=4444 &
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d web-server --profile
+
       - name: Build PWA
         working-directory: ./frontend
         run: |
+          flutter clean
+          rm lib/env/env.g.dart
           cp .env.production .env
           flutter pub get
           flutter pub run build_runner build
           flutter build web
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

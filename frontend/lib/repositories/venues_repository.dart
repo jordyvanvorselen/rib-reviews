@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/models/venue.dart';
 import 'package:rib_reviews/utils/api.dart';
 
@@ -11,11 +8,10 @@ class VenuesRepository {
 
   Future<List<Venue>> all() async {
     try {
-      final venuesUrl = Env.apiPath("/venues");
       final venuesResponse =
-          (await apiClient.get(venuesUrl).run()).getOrElse((l) => throw l);
+          (await apiClient.get('/venues').run()).getOrElse((l) => throw l);
 
-      List<Venue> venues = jsonDecode(venuesResponse.body)
+      List<Venue> venues = venuesResponse.data
           .map<Venue>((json) => Venue.fromJson(json))
           .toList();
 

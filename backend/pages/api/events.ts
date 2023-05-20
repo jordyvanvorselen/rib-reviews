@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
-import clientPromise from "../../lib/mongodb";
+import clientPromise, { DATABASE_NAME } from "../../lib/mongodb";
 import { dateIsValid, documentExists } from "../../lib/utils";
 import { authorize } from "../../middleware/authorization";
 import { cors } from "../../middleware/cors";
@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const get = async (req: NextApiRequest, res: NextApiResponse<Event[]>) => {
-  const db = (await clientPromise).db("rib-reviews");
+  const db = (await clientPromise).db(DATABASE_NAME);
   const results = await db.collection("events").find({}).toArray();
 
   const events = results.map((r) => ({
@@ -35,7 +35,7 @@ const post = async (
   req: NextApiRequest,
   res: NextApiResponse<Event | Error>
 ) => {
-  const db = (await clientPromise).db("rib-reviews");
+  const db = (await clientPromise).db(DATABASE_NAME);
 
   const { date, venueId } = req.body;
 

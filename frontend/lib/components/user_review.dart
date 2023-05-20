@@ -52,7 +52,7 @@ class UserReview extends StatelessWidget {
                     Rating(rating: review.rating, showNumber: false)
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Text(
                   review.text,
                   style:

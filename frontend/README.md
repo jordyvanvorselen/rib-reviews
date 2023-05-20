@@ -8,7 +8,16 @@ To contribute to this Flutter app, I recommend installing either [Visual Studio 
 
 ### Prerequisites
 
-To set up this project you will need Flutter `3.3.10`. You can follow the install instructions found [here](https://docs.flutter.dev/get-started/install).
+To set up this project you will need Flutter `3.10.1`. You can follow the install instructions found [here](https://docs.flutter.dev/get-started/install).
+
+You can also use `asdf` for `flutter` and `java`:
+
+```sh
+asdf plugin add flutter
+asdf plugin add java
+
+asdf install
+```
 
 ### Installation
 
@@ -44,6 +53,21 @@ To set up this project you will need Flutter `3.3.10`. You can follow the instal
 1. Run the following command
    ```sh
    flutter run --debug
+   ```
+
+### Running the tests
+
+1. Install chromedriver and add it to your PATH
+   ```sh
+   yay chromedriver
+   ```
+2. Run chromedriver on port 4444
+   ```sh
+   chromedriver --port=4444
+   ```
+3. Run the following command
+   ```sh
+   flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d web-server --profile --no-headless
    ```
 
 <!-- ROADMAP -->

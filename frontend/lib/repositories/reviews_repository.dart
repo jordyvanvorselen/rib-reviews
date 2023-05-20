@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/api.dart';
@@ -12,11 +9,10 @@ class ReviewsRepository {
 
   Future<List<Review>> all(List<User> users) async {
     try {
-      final reviewsUrl = Env.apiPath("/reviews");
       final reviewsResponse =
-          (await apiClient.get(reviewsUrl).run()).getOrElse((l) => throw l);
+          (await apiClient.get('/reviews').run()).getOrElse((l) => throw l);
 
-      List<Review> reviews = jsonDecode(reviewsResponse.body)
+      List<Review> reviews = reviewsResponse.data
           .map<Review>((raw) => Review.fromJson(
                 raw,
                 users.firstWhere((u) => u.id == raw['userId']),

@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/api.dart';
 
@@ -11,13 +8,11 @@ class UsersRepository {
 
   Future<List<User>> all() async {
     try {
-      final usersUrl = Env.apiPath("/users");
       final usersResponse =
-          (await apiClient.get(usersUrl).run()).getOrElse((l) => throw l);
+          (await apiClient.get('/users').run()).getOrElse((l) => throw l);
 
-      List<User> users = jsonDecode(usersResponse.body)
-          .map<User>((json) => User.fromJson(json))
-          .toList();
+      List<User> users =
+          usersResponse.data.map<User>((json) => User.fromJson(json)).toList();
 
       return users;
     } on Exception catch (_) {

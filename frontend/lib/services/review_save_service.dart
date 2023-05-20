@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/models/event.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
@@ -14,11 +13,9 @@ class ReviewSaveService {
   Future<Review> save(
       double rating, String text, User user, Event event) async {
     try {
-      final reviewsUrl = Env.apiPath('/reviews');
-
       final response = (await apiClient
               .post(
-                reviewsUrl,
+                '/reviews',
                 json.encode({
                   "rating": rating,
                   "text": text,
@@ -30,7 +27,7 @@ class ReviewSaveService {
               .run())
           .getOrElse((l) => throw l);
 
-      return Review.fromJson(jsonDecode(response.body), user);
+      return Review.fromJson(response.data, user);
     } on Exception catch (_) {
       return Future.error("Could not save review.");
     }
