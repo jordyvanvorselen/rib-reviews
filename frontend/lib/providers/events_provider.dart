@@ -23,6 +23,8 @@ class EventsProvider with ChangeNotifier {
   });
 
   void addReview(Review review, Event event) {
+    debugPrint(_events.map((e) => e.id).toList().toString());
+    debugPrint(event.id.toString());
     _events.firstWhere((e) => e.id == event.id).reviews.insert(0, review);
     notifyListeners();
   }

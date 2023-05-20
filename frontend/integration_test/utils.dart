@@ -75,10 +75,24 @@ final _mockUsers = [
   }
 ];
 
+final _mockNewReview = {
+  "_id": "2",
+  "rating": 4.5,
+  "text": 'Nice place!',
+  "createdAt": "2023-05-19 14:42:04.994",
+  "userId": "1",
+  "eventId": "1"
+};
+
 void _initFakeApi() {
   dioAdapter
     ..onGet('/venues', (server) => server.reply(200, _mockVenues))
     ..onGet('/reviews', (server) => server.reply(200, _mockReviews))
     ..onGet('/events', (server) => server.reply(200, _mockEvents))
-    ..onGet('/users', (server) => server.reply(200, _mockUsers));
+    ..onGet('/users', (server) => server.reply(200, _mockUsers))
+    ..onPost(
+      '/reviews',
+      (server) => server.reply(200, _mockNewReview),
+      data: Matchers.any,
+    );
 }

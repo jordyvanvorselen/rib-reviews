@@ -10,7 +10,7 @@ import 'package:rib_reviews/models/user.dart';
 import './utils.dart';
 
 void main() {
-  final widget = buildTree(
+  final homeScreen = buildTree(
     HomeScreen(
       user: User(
           email: 'jordyvanvorselen@gmail.com',
@@ -28,7 +28,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(widget),
+        () async => await $.pumpWidgetAndSettle(homeScreen),
       );
 
       expect($(Timeline), findsOneWidget);
@@ -49,7 +49,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(widget),
+        () async => await $.pumpWidgetAndSettle(homeScreen),
       );
 
       expect($(EventCard), findsNWidgets(3));
@@ -76,7 +76,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(widget),
+        () async => await $.pumpWidgetAndSettle(homeScreen),
       );
 
       expect($(EventCard), findsNWidgets(3));
@@ -103,7 +103,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(widget),
+        () async => await $.pumpWidgetAndSettle(homeScreen),
       );
 
       expect($(EventCard), findsNWidgets(3));
@@ -124,7 +124,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(widget),
+        () async => await $.pumpWidgetAndSettle(homeScreen),
       );
 
       await $(EventCard).at(2).tap(andSettle: true);
