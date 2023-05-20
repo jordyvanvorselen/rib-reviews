@@ -50,6 +50,13 @@ asdf install
 
 ### Running the project
 
+1. Run the following command
+   ```sh
+   flutter run --debug
+   ```
+
+### Running the tests
+
 1. Install chromedriver and add it to your PATH
    ```sh
    yay chromedriver
@@ -58,14 +65,7 @@ asdf install
    ```sh
    chromedriver --port=4444
    ```
-2. Run the following command
-   ```sh
-   flutter run --debug
-   ```
-
-### Running the tests
-
-1. Run the following command
+3. Run the following command
    ```sh
    flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d chrome
    ```
