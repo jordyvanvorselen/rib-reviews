@@ -1,6 +1,6 @@
 {
-    "name": "frontend",
-    "short_name": "frontend",
+    "name": "The Eat Guild",
+    "short_name": "The Eat Guild",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
