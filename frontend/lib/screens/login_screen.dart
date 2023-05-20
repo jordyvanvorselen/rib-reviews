@@ -66,8 +66,6 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         );
       } catch (e, s) {
-        debugPrint('Exception: ${e.toString()}');
-        debugPrint('Stacktrace: ${s.toString()}');
         signOut(googleSignIn);
         return;
       }

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:rib_reviews/models/venue.dart';
 import 'package:rib_reviews/utils/api.dart';
 
@@ -18,7 +17,6 @@ class VenuesRepository {
 
       return venues;
     } on Exception catch (_) {
-      debugPrint(_.toString());
       return Future.error("Could not fetch venues from the server.");
     }
   }
