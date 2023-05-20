@@ -35,7 +35,7 @@ jobs:
         working-directory: ./frontend
         run: |
           chromedriver --port=4444 & sleep 5
-          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d web-server --profile --browser-name=chrome
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d chrome --headless --web-run-headless
 
       - name: Build PWA
         working-directory: ./frontend
