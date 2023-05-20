@@ -8,7 +8,16 @@ To contribute to this Flutter app, I recommend installing either [Visual Studio 
 
 ### Prerequisites
 
-To set up this project you will need Flutter `3.3.10`. You can follow the install instructions found [here](https://docs.flutter.dev/get-started/install).
+To set up this project you will need Flutter `3.10.1`. You can follow the install instructions found [here](https://docs.flutter.dev/get-started/install).
+
+You can also use `asdf` for `flutter` and `java`:
+
+```sh
+asdf plugin add flutter
+asdf plugin add java
+
+asdf install
+```
 
 ### Installation
 
