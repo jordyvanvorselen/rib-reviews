@@ -6,7 +6,10 @@ import 'review_screen_feature.dart' as review_screen;
 import 'review_modal_feature.dart' as review_modal;
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
+      as IntegrationTestWidgetsFlutterBinding;
+
+  binding.testTextInput.register();
 
   login_screen.main();
   home_screen.main();
