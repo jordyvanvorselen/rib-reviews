@@ -36,7 +36,7 @@ jobs:
         run: |
           chromedriver --port=4444 &
           sudo /usr/bin/Xvfb -ac $DISPLAY -screen 0 1920x1080x24 > /dev/null 2>&1 &
-          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d chrome --headless --web-run-headless
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main.dart -d chrome --headless --web-run-headless --web-browser-flag="--headless=new"
 
       - name: Build PWA
         working-directory: ./frontend
