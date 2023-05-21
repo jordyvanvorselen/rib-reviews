@@ -34,7 +34,7 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
   Widget build(BuildContext context) {
     void onReactionTap(Reaction reaction) {
       setState(() {
-        ref.read(Providers.reactionsController).toggleReaction(
+        ref.watch(Providers.reactionsController).toggleReaction(
               reaction.emoji,
               reaction.review,
               widget.currentUser,
@@ -51,7 +51,7 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
                 child: EmojiPicker(
                   onEmojiSelected: (category, emoji) {
                     setState(() {
-                      ref.read(Providers.reactionsController).toggleReaction(
+                      ref.watch(Providers.reactionsController).toggleReaction(
                             emoji.emoji,
                             review,
                             widget.currentUser,

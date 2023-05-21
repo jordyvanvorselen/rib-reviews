@@ -17,6 +17,8 @@ class ReactionsController with ChangeNotifier {
   List<Reaction> _reactions = [];
   List<Reaction> get reactions => _reactions;
 
+  bool _disposed = false;
+
   ReactionsController({
     required this.reactionsRepository,
     required this.usersRepository,
@@ -24,7 +26,15 @@ class ReactionsController with ChangeNotifier {
     required this.reactionSaveService,
   });
 
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
   void toggleReaction(String emoji, Review review, User user) {
+    if (_disposed) return;
+
     Reaction? reaction = _reactions
         .firstWhereOrNull((r) => r.emoji == emoji && r.review.id == review.id);
 
@@ -54,6 +64,8 @@ class ReactionsController with ChangeNotifier {
   }
 
   void fetchReactions() async {
+    if (_disposed) return;
+
     final users = await usersRepository.all();
     final reviews = await reviewsRepository.all(users);
 

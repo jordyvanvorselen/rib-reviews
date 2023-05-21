@@ -1,25 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:patrol/patrol.dart';
-import 'package:rib_reviews/screens/home_screen.dart';
-import 'package:rib_reviews/screens/review_screen.dart';
-import 'package:rib_reviews/components/timeline.dart';
 import 'package:network_image_mock/network_image_mock.dart';
-import 'package:rib_reviews/components/event_link.dart';
+import 'package:patrol/patrol.dart';
 import 'package:rib_reviews/components/event_card.dart';
-import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/components/event_link.dart';
+import 'package:rib_reviews/components/timeline.dart';
+import 'package:rib_reviews/screens/review_screen.dart';
+
 import './utils.dart';
 
 void main() {
-  final homeScreen = buildTree(
-    HomeScreen(
-      user: User(
-          email: 'jordyvanvorselen@gmail.com',
-          id: '1',
-          photoUrl: null,
-          displayName: 'Jordy'),
-    ),
-  );
-
   patrolTest(
     '''
     Given I am logged in
@@ -28,7 +17,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(homeScreen),
+        () async => await $.pumpWidgetAndSettle(getHomeScreen()),
       );
 
       expect($(Timeline), findsOneWidget);
@@ -49,7 +38,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(homeScreen),
+        () async => await $.pumpWidgetAndSettle(getHomeScreen()),
       );
 
       expect($(EventCard), findsNWidgets(3));
@@ -76,7 +65,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(homeScreen),
+        () async => await $.pumpWidgetAndSettle(getHomeScreen()),
       );
 
       expect($(EventCard), findsNWidgets(3));
@@ -103,7 +92,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(homeScreen),
+        () async => await $.pumpWidgetAndSettle(getHomeScreen()),
       );
 
       expect($(EventCard), findsNWidgets(3));
@@ -124,7 +113,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(homeScreen),
+        () async => await $.pumpWidgetAndSettle(getHomeScreen()),
       );
 
       await $(EventCard).at(2).tap(andSettle: true);

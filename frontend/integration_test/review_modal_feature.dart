@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:patrol/patrol.dart';
-import 'package:rib_reviews/screens/review_screen.dart';
 import 'package:network_image_mock/network_image_mock.dart';
-import 'package:rib_reviews/models/user.dart';
-import 'package:rib_reviews/components/review_screen_title.dart';
-import 'package:rib_reviews/components/rating.dart';
-import 'package:rib_reviews/components/event_card.dart';
+import 'package:patrol/patrol.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:rib_reviews/screens/home_screen.dart';
+import 'package:rib_reviews/components/event_card.dart';
+import 'package:rib_reviews/components/rating.dart';
+
 import './utils.dart';
 
 void main() {
-  final reviewScreen =
-      buildTree(ReviewScreen(event: getEvent(0), currentUser: getUser(0)));
-
   patrolTest(
     '''
     Given I am logged in
@@ -24,8 +18,10 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(reviewScreen),
+        () async => await $.pumpWidgetAndSettle(getHomeScreen()),
       );
+
+      await $(EventCard).at(2).tap(andSettle: true);
 
       expect($(FloatingActionButton), findsOneWidget);
 
@@ -37,16 +33,6 @@ void main() {
 
       expect($(AlertDialog), findsNothing);
     },
-  );
-
-  final homeScreen = buildTree(
-    HomeScreen(
-      user: User(
-          email: 'jordyvanvorselen@gmail.com',
-          id: '1',
-          photoUrl: null,
-          displayName: 'Jordy'),
-    ),
   );
 
   patrolTest(
@@ -63,7 +49,7 @@ void main() {
     ''',
     (PatrolTester $) async {
       await mockNetworkImagesFor(
-        () async => await $.pumpWidgetAndSettle(homeScreen),
+        () async => await $.pumpWidgetAndSettle(getHomeScreen()),
       );
 
       await $(EventCard).at(2).tap(andSettle: true);
@@ -78,7 +64,9 @@ void main() {
       expect($(AlertDialog).$(TextField), findsOneWidget);
 
       await $(AlertDialog).$(Rating).$(Icons.star).at(4).tap(andSettle: true);
-      await $(AlertDialog).$(TextField).enterText('Nice place!');
+      await $(AlertDialog)
+          .$(TextField)
+          .enterText('Nice place!', andSettle: true);
 
       await $(DialogButton).$('Save').tap(andSettle: true);
 
