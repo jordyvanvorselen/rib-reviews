@@ -10,6 +10,7 @@ import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/providers/providers.dart';
 import 'package:rib_reviews/utils/common.dart';
+import 'package:rib_reviews/utils/responsive.dart';
 
 class ReviewScreen extends ConsumerStatefulWidget {
   final Event event;
@@ -55,7 +56,11 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
     }
 
     return Scaffold(
-      appBar: Common.appBar(widget.user, context, showLogo: false),
+      appBar: Common.appBar(
+        widget.user,
+        context,
+        showLogo: Responsive.isWeb(context),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ReviewAlert().show(
@@ -86,7 +91,7 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(25),
+          padding: const EdgeInsets.symmetric(vertical: 25),
           child: Column(
             children: [
               ReviewHeader(widget: widget),

@@ -5,7 +5,7 @@ import 'package:rib_reviews/components/profile_picture.dart';
 import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/models/reaction.dart';
 import 'package:rib_reviews/models/review.dart';
-import 'package:rib_reviews/utils/screen.dart';
+import 'package:rib_reviews/utils/responsive.dart';
 
 import '../utils/constants.dart';
 
@@ -24,8 +24,8 @@ class UserReview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: Screen.isWeb(context) ? 500 : 25),
+      padding: EdgeInsets.symmetric(
+          horizontal: Responsive.horizontalPadding(context) + 25),
       child: GenericBoxShadow(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(28),
@@ -83,7 +83,7 @@ class UserReview extends StatelessWidget {
                       ),
                     ),
                     ...reactions
-                        .take(Screen.isWeb(context) ? 21 : 6)
+                        .take(Responsive.isWeb(context) ? 21 : 6)
                         .map((r) => Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5),
