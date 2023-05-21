@@ -47,4 +47,27 @@ class API {
       return error.toString();
     });
   }
+
+  TaskEither<String, Response> put(String resource, Object body) {
+    return TaskEither.tryCatch(() async {
+      final idToken = await storage.read(key: 'idToken') ?? '';
+
+      final response = await client.put(resource,
+          data: body,
+          options: Options(
+            headers: {
+              "Authorization": idToken,
+              "Content-Type": "application/json"
+            },
+          ));
+
+      if (response.statusCode != 200) {
+        throw response.data;
+      }
+
+      return response;
+    }, (error, stackTrace) {
+      return error.toString();
+    });
+  }
 }

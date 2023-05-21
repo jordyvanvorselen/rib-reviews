@@ -19,13 +19,13 @@ class Timeline extends ConsumerStatefulWidget {
 class TimelineState extends ConsumerState<Timeline> {
   @override
   void initState() {
-    ref.read(Providers.eventsProvider).fetchEvents();
+    ref.read(Providers.eventsController).fetchEvents();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final events = ref.watch(Providers.eventsProvider).events.asMap();
+    final events = ref.watch(Providers.eventsController).events.asMap();
 
     return Expanded(
       child: ListView(children: [
@@ -41,7 +41,7 @@ class TimelineState extends ConsumerState<Timeline> {
             Event event = entry.value;
 
             return getTimelineTile(
-              ref.watch(Providers.eventsProvider).events,
+              ref.watch(Providers.eventsController).events,
               event,
               idx,
             );

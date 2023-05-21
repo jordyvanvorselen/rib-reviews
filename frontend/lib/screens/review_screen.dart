@@ -14,9 +14,9 @@ import 'package:rib_reviews/utils/responsive.dart';
 
 class ReviewScreen extends ConsumerStatefulWidget {
   final Event event;
-  final User user;
+  final User currentUser;
 
-  const ReviewScreen({Key? key, required this.event, required this.user})
+  const ReviewScreen({Key? key, required this.event, required this.currentUser})
       : super(key: key);
 
   @override
@@ -24,10 +24,24 @@ class ReviewScreen extends ConsumerStatefulWidget {
 }
 
 class ReviewScreenState extends ConsumerState<ReviewScreen> {
-  List<Reaction> reactions = [];
+  @override
+  void initState() {
+    ref.read(Providers.reactionsController).fetchReactions();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    void onReactionTap(Reaction reaction) {
+      setState(() {
+        ref.read(Providers.reactionsController).toggleReaction(
+              reaction.emoji,
+              reaction.review,
+              widget.currentUser,
+            );
+      });
+    }
+
     void onReaction(Review review) {
       showModalBottomSheet(
           context: context,
@@ -37,15 +51,17 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
                 child: EmojiPicker(
                   onEmojiSelected: (category, emoji) {
                     setState(() {
-                      reactions.add(Reaction(
-                        emoji: emoji.emoji,
-                        users: [widget.user],
-                        review: review,
-                      ));
+                      ref.read(Providers.reactionsController).toggleReaction(
+                            emoji.emoji,
+                            review,
+                            widget.currentUser,
+                          );
+
+                      Navigator.pop(context);
                     });
                   },
-                  config: const Config(
-                    columns: 8,
+                  config: Config(
+                    columns: Responsive.isWeb(context) ? 24 : 8,
                     emojiSizeMax: 24,
                     enableSkinTones: false,
                     showRecentsTab: true,
@@ -57,7 +73,7 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
 
     return Scaffold(
       appBar: Common.appBar(
-        widget.user,
+        widget.currentUser,
         context,
         showLogo: Responsive.isWeb(context),
       ),
@@ -71,13 +87,13 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
                   await ref.watch(Providers.reviewSaveServiceProvider).save(
                         rating,
                         text,
-                        widget.user,
+                        widget.currentUser,
                         widget.event,
                       );
 
               setState(() {
                 ref
-                    .read(Providers.eventsProvider)
+                    .read(Providers.eventsController)
                     .addReview(review, widget.event);
               });
 
@@ -102,7 +118,13 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
                       .map((review) => UserReview(
                             review: review,
                             onReaction: () => onReaction(review),
-                            reactions: reactions,
+                            reactions: ref
+                                .watch(Providers.reactionsController)
+                                .reactions
+                                .where((r) => r.review.id == review.id)
+                                .toList(),
+                            currentUser: widget.currentUser,
+                            onReactionTap: onReactionTap,
                           ))
                       .fold<List<Widget>>(
                     [],

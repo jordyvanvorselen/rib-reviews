@@ -30,7 +30,7 @@ class EventCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ReviewScreen(event: event, user: user),
+            builder: (context) => ReviewScreen(event: event, currentUser: user),
           ),
         );
       },

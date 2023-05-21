@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rib_reviews/controllers/events_controller.dart';
+import 'package:rib_reviews/controllers/reactions_controller.dart';
 import 'package:rib_reviews/env/env.dart';
-import 'package:rib_reviews/providers/events_provider.dart';
 import 'package:rib_reviews/repositories/events_repository.dart';
+import 'package:rib_reviews/repositories/reactions_repository.dart';
 import 'package:rib_reviews/repositories/reviews_repository.dart';
 import 'package:rib_reviews/repositories/users_repository.dart';
 import 'package:rib_reviews/repositories/venues_repository.dart';
+import 'package:rib_reviews/services/reaction_save_service.dart';
 import 'package:rib_reviews/services/review_save_service.dart';
 import 'package:rib_reviews/services/user_save_service.dart';
 import 'package:rib_reviews/utils/api.dart';
@@ -30,12 +33,26 @@ class Providers {
     ),
   );
 
-  static final eventsProvider = ChangeNotifierProvider<EventsProvider>(
-    (ref) => EventsProvider(
+  static final eventsController = ChangeNotifierProvider<EventsController>(
+    (ref) => EventsController(
         venuesRepository: ref.watch(venuesRepositoryProvider),
         usersRepository: ref.watch(usersRepositoryProvider),
         reviewsRepository: ref.watch(reviewsRepositoryProvider),
         eventsRepository: ref.watch(eventsRepositoryProvider)),
+  );
+
+  static final reactionsController =
+      ChangeNotifierProvider<ReactionsController>(
+    (ref) => ReactionsController(
+      reactionsRepository: ref.watch(reactionsRepositoryProvider),
+      usersRepository: ref.watch(usersRepositoryProvider),
+      reviewsRepository: ref.watch(reviewsRepositoryProvider),
+      reactionSaveService: ref.watch(reactionsSaveServiceProvider),
+    ),
+  );
+
+  static final reactionsRepositoryProvider = Provider<ReactionsRepository>(
+    (ref) => ReactionsRepository(apiClient: ref.watch(apiClientProvider)),
   );
 
   static final eventsRepositoryProvider = Provider<EventsRepository>(
@@ -56,6 +73,10 @@ class Providers {
 
   static final userSaveServiceProvider = Provider<UserSaveService>(
     (ref) => UserSaveService(apiClient: ref.watch(apiClientProvider)),
+  );
+
+  static final reactionsSaveServiceProvider = Provider<ReactionSaveService>(
+    (ref) => ReactionSaveService(apiClient: ref.watch(apiClientProvider)),
   );
 
   static final reviewSaveServiceProvider = Provider<ReviewSaveService>(
