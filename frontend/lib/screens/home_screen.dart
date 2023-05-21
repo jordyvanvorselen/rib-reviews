@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rib_reviews/components/timeline.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/utils/common.dart';
+import 'package:rib_reviews/utils/screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final User user;
@@ -11,10 +12,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Common.appBar(user),
+      appBar: Common.appBar(user, context),
       body: SafeArea(
-        child: Row(
-          children: [const SizedBox(width: 15.0), Timeline(user: user)],
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: Screen.isWeb(context) ? 500 : 0),
+          child: Row(
+            children: [const SizedBox(width: 15.0), Timeline(user: user)],
+          ),
         ),
       ),
     );

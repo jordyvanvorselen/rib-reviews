@@ -1,10 +1,11 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/components/review_alert.dart';
-import 'package:rib_reviews/components/review_screen_title.dart';
+import 'package:rib_reviews/components/review_header.dart';
 import 'package:rib_reviews/components/user_review.dart';
 import 'package:rib_reviews/models/event.dart';
+import 'package:rib_reviews/models/reaction.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/providers/providers.dart';
@@ -22,10 +23,39 @@ class ReviewScreen extends ConsumerStatefulWidget {
 }
 
 class ReviewScreenState extends ConsumerState<ReviewScreen> {
+  List<Reaction> reactions = [];
+
   @override
   Widget build(BuildContext context) {
+    void onReaction(Review review) {
+      showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return SizedBox(
+                height: 400,
+                child: EmojiPicker(
+                  onEmojiSelected: (category, emoji) {
+                    setState(() {
+                      reactions.add(Reaction(
+                        emoji: emoji.emoji,
+                        users: [widget.user],
+                        review: review,
+                      ));
+                    });
+                  },
+                  config: const Config(
+                    columns: 8,
+                    emojiSizeMax: 24,
+                    enableSkinTones: false,
+                    showRecentsTab: true,
+                    buttonMode: ButtonMode.CUPERTINO,
+                  ),
+                ));
+          });
+    }
+
     return Scaffold(
-      appBar: Common.appBar(widget.user, showLogo: false),
+      appBar: Common.appBar(widget.user, context, showLogo: false),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ReviewAlert().show(
@@ -56,22 +86,19 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(25),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ReviewScreenTitle(event: widget.event),
-                  Rating(rating: widget.event.getTotalRating())
-                ],
-              ),
-              const SizedBox(height: 15),
+              ReviewHeader(widget: widget),
               const Divider(),
               Expanded(
                 child: ListView(
                   children: widget.event.reviews
-                      .map((review) => UserReview(review: review))
+                      .map((review) => UserReview(
+                            review: review,
+                            onReaction: () => onReaction(review),
+                            reactions: reactions,
+                          ))
                       .fold<List<Widget>>(
                     [],
                     (value, element) {
