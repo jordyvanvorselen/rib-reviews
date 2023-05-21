@@ -22,7 +22,7 @@
     <a href="https://github.com/jordyvanvorselen/rib-reviews"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/jordyvanvorselen/rib-reviews">View Demo</a>
+    <a href="https://rib-reviews.web.app">View Live Version</a>
     ·
     <a href="https://github.com/jordyvanvorselen/rib-reviews/issues">Report Bug</a>
     ·
