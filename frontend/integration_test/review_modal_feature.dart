@@ -13,7 +13,7 @@ import './utils.dart';
 
 void main() {
   final reviewScreen =
-      buildTree(ReviewScreen(event: getEvent(0), user: getUser(0)));
+      buildTree(ReviewScreen(event: getEvent(0), currentUser: getUser(0)));
 
   patrolTest(
     '''

@@ -8,7 +8,8 @@ import 'package:rib_reviews/components/rating.dart';
 import './utils.dart';
 
 void main() {
-  final widget = buildTree(ReviewScreen(event: getEvent(0), user: getUser(0)));
+  final widget =
+      buildTree(ReviewScreen(event: getEvent(0), currentUser: getUser(0)));
 
   patrolTest(
     '''
