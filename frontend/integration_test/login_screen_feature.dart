@@ -11,7 +11,7 @@ void main() {
     Then I see the logo
     ''',
     (PatrolTester $) async {
-      await $.pumpWidgetAndSettle(Main());
+      await $.pumpWidgetAndSettle(const Main());
 
       expect($(Image), findsOneWidget);
     },
@@ -24,7 +24,7 @@ void main() {
     Then I see the title of the app
     ''',
     (PatrolTester $) async {
-      await $.pumpWidgetAndSettle(Main());
+      await $.pumpWidgetAndSettle(const Main());
 
       expect($('Welcome to'), findsWidgets);
       expect($('The Eat Guild'), findsWidgets);

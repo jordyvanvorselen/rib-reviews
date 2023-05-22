@@ -1,20 +1,22 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rib_reviews/components/rating.dart';
 import 'package:rib_reviews/components/review_alert.dart';
-import 'package:rib_reviews/components/review_screen_title.dart';
+import 'package:rib_reviews/components/review_header.dart';
 import 'package:rib_reviews/components/user_review.dart';
 import 'package:rib_reviews/models/event.dart';
+import 'package:rib_reviews/models/reaction.dart';
 import 'package:rib_reviews/models/review.dart';
 import 'package:rib_reviews/models/user.dart';
 import 'package:rib_reviews/providers/providers.dart';
 import 'package:rib_reviews/utils/common.dart';
+import 'package:rib_reviews/utils/responsive.dart';
 
 class ReviewScreen extends ConsumerStatefulWidget {
   final Event event;
-  final User user;
+  final User currentUser;
 
-  const ReviewScreen({Key? key, required this.event, required this.user})
+  const ReviewScreen({Key? key, required this.event, required this.currentUser})
       : super(key: key);
 
   @override
@@ -23,9 +25,58 @@ class ReviewScreen extends ConsumerStatefulWidget {
 
 class ReviewScreenState extends ConsumerState<ReviewScreen> {
   @override
+  void initState() {
+    ref.read(Providers.reactionsController).fetchReactions();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    void onReactionTap(Reaction reaction) {
+      setState(() {
+        ref.watch(Providers.reactionsController).toggleReaction(
+              reaction.emoji,
+              reaction.review,
+              widget.currentUser,
+            );
+      });
+    }
+
+    void onReaction(Review review) {
+      showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return SizedBox(
+                height: 400,
+                child: EmojiPicker(
+                  onEmojiSelected: (category, emoji) {
+                    setState(() {
+                      ref.watch(Providers.reactionsController).toggleReaction(
+                            emoji.emoji,
+                            review,
+                            widget.currentUser,
+                          );
+
+                      Navigator.pop(context);
+                    });
+                  },
+                  config: Config(
+                    columns: Responsive.isWeb(context) ? 24 : 8,
+                    emojiSizeMax: 24,
+                    enableSkinTones: false,
+                    showRecentsTab: true,
+                    buttonMode: ButtonMode.CUPERTINO,
+                  ),
+                ));
+          });
+    }
+
     return Scaffold(
-      appBar: Common.appBar(widget.user, showLogo: false),
+      appBar: Common.appBar(
+        widget.currentUser,
+        context,
+        showLogo: Responsive.isWeb(context),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ReviewAlert().show(
@@ -36,13 +87,13 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
                   await ref.watch(Providers.reviewSaveServiceProvider).save(
                         rating,
                         text,
-                        widget.user,
+                        widget.currentUser,
                         widget.event,
                       );
 
               setState(() {
                 ref
-                    .read(Providers.eventsProvider)
+                    .read(Providers.eventsController)
                     .addReview(review, widget.event);
               });
 
@@ -56,22 +107,25 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: const EdgeInsets.symmetric(vertical: 25),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ReviewScreenTitle(event: widget.event),
-                  Rating(rating: widget.event.getTotalRating())
-                ],
-              ),
-              const SizedBox(height: 15),
+              ReviewHeader(widget: widget),
               const Divider(),
               Expanded(
                 child: ListView(
                   children: widget.event.reviews
-                      .map((review) => UserReview(review: review))
+                      .map((review) => UserReview(
+                            review: review,
+                            onReaction: () => onReaction(review),
+                            reactions: ref
+                                .watch(Providers.reactionsController)
+                                .reactions
+                                .where((r) => r.review.id == review.id)
+                                .toList(),
+                            currentUser: widget.currentUser,
+                            onReactionTap: onReactionTap,
+                          ))
                       .fold<List<Widget>>(
                     [],
                     (value, element) {

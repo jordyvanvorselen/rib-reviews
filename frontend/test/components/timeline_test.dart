@@ -1,17 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:rib_reviews/components/timeline.dart';
 import 'package:rib_reviews/env/env.dart';
 import 'package:rib_reviews/models/user.dart';
-import 'package:timeline_tile/timeline_tile.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:dio/dio.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:http/http.dart' as http;
 import 'package:rib_reviews/providers/providers.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 void main() {
   final dio = Dio(BaseOptions(baseUrl: Env.apiPath().toString()));
@@ -97,6 +94,7 @@ void main() {
     await mockNetworkImagesFor(
       () async => await tester.pumpWidget(
         ProviderScope(
+          overrides: [Providers.httpClientProvider.overrideWithValue(dio)],
           child: MaterialApp(
             home: Column(
               children: [
@@ -112,7 +110,6 @@ void main() {
               ],
             ),
           ),
-          overrides: [Providers.httpClientProvider.overrideWithValue(dio)],
         ),
       ),
     );

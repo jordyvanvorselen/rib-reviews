@@ -1,13 +1,12 @@
 import 'package:integration_test/integration_test.dart';
 
-import 'login_screen_feature.dart' as login_screen;
 import 'home_screen_feature.dart' as home_screen;
-import 'review_screen_feature.dart' as review_screen;
+import 'login_screen_feature.dart' as login_screen;
 import 'review_modal_feature.dart' as review_modal;
+import 'review_screen_feature.dart' as review_screen;
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   binding.testTextInput.register();
 

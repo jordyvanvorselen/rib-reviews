@@ -6,16 +6,16 @@ import 'package:rib_reviews/repositories/reviews_repository.dart';
 import 'package:rib_reviews/repositories/users_repository.dart';
 import 'package:rib_reviews/repositories/venues_repository.dart';
 
-class EventsProvider with ChangeNotifier {
-  VenuesRepository venuesRepository;
-  UsersRepository usersRepository;
-  ReviewsRepository reviewsRepository;
-  EventsRepository eventsRepository;
+class EventsController with ChangeNotifier {
+  final VenuesRepository venuesRepository;
+  final UsersRepository usersRepository;
+  final ReviewsRepository reviewsRepository;
+  final EventsRepository eventsRepository;
 
   List<Event> _events = [];
   List<Event> get events => _events;
 
-  EventsProvider({
+  EventsController({
     required this.venuesRepository,
     required this.usersRepository,
     required this.reviewsRepository,

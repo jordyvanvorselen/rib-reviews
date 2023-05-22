@@ -30,7 +30,7 @@ class EventCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ReviewScreen(event: event, user: user),
+            builder: (context) => ReviewScreen(event: event, currentUser: user),
           ),
         );
       },
@@ -41,31 +41,34 @@ class EventCard extends StatelessWidget {
             width: 210,
             height: 160,
             color: kPrimaryColor,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    EventTitle(
-                      name: event.venue.name,
-                      location: event.venue.location,
-                    ),
-                    const SizedBox(height: 25.0),
-                    event.finished()
-                        ? EventReviews(reviews: event.reviews)
-                        : EventDate(event: event)
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    event.finished()
-                        ? Rating(rating: event.getTotalRating())
-                        : EventLink(event: event)
-                  ],
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      EventTitle(
+                        name: event.venue.name,
+                        location: event.venue.location,
+                      ),
+                      const SizedBox(height: 25.0),
+                      event.finished()
+                          ? EventReviews(reviews: event.reviews)
+                          : EventDate(event: event)
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      event.finished()
+                          ? Rating(rating: event.getTotalRating())
+                          : EventLink(event: event)
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

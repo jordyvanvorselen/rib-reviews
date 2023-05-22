@@ -1,24 +1,37 @@
-import 'package:rib_reviews/main.dart';
-import 'package:flutter/widgets.dart';
 import 'package:dio/dio.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:rib_reviews/providers/providers.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:rib_reviews/env/env.dart';
-import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/main.dart';
 import 'package:rib_reviews/models/event.dart';
-import 'package:rib_reviews/models/venue.dart';
 import 'package:rib_reviews/models/review.dart';
+import 'package:rib_reviews/models/user.dart';
+import 'package:rib_reviews/models/venue.dart';
+import 'package:rib_reviews/providers/providers.dart';
+import 'package:rib_reviews/screens/home_screen.dart';
 
 final dio = Dio(BaseOptions(baseUrl: Env.apiPath().toString()));
 final dioAdapter = DioAdapter(dio: dio);
 
-Widget buildTree(Widget widget) {
+Widget getHomeScreen() {
+  return _buildTree(
+    HomeScreen(
+      user: User(
+          email: 'jordyvanvorselen@gmail.com',
+          id: '1',
+          photoUrl: null,
+          displayName: 'Jordy'),
+    ),
+  );
+}
+
+Widget _buildTree(Widget widget) {
   _initFakeApi();
 
   return ProviderScope(
-    child: Main(overrideWidget: widget),
     overrides: [Providers.httpClientProvider.overrideWithValue(dio)],
+    child: Main(overrideWidget: widget),
   );
 }
 
@@ -75,6 +88,15 @@ final _mockUsers = [
   }
 ];
 
+final _mockReactions = [
+  {
+    "_id": "1",
+    "emoji": "😊",
+    "userIds": ["1"],
+    "reviewId": "1"
+  }
+];
+
 final _mockNewReview = {
   "_id": "2",
   "rating": 4.5,
@@ -90,9 +112,15 @@ void _initFakeApi() {
     ..onGet('/reviews', (server) => server.reply(200, _mockReviews))
     ..onGet('/events', (server) => server.reply(200, _mockEvents))
     ..onGet('/users', (server) => server.reply(200, _mockUsers))
+    ..onGet('/reactions', (server) => server.reply(200, _mockReactions))
     ..onPost(
       '/reviews',
       (server) => server.reply(200, _mockNewReview),
+      data: Matchers.any,
+    )
+    ..onPut(
+      '/reactions',
+      (server) => server.reply(204, {}),
       data: Matchers.any,
     );
 }
