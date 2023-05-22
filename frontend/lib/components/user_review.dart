@@ -79,7 +79,7 @@ class UserReview extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: [
                         IconButton(
