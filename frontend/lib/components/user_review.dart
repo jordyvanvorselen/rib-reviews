@@ -82,7 +82,8 @@ class UserReview extends StatelessWidget {
                     children: [
                       IconButton(
                         iconSize: 20,
-                        padding: EdgeInsets.zero,
+                        padding: const EdgeInsets.only(right: 5),
+                        constraints: const BoxConstraints(),
                         alignment: Alignment.centerLeft,
                         color: const Color.fromARGB(150, 255, 255, 255),
                         onPressed: onReaction,
