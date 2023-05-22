@@ -78,38 +78,41 @@ class UserReview extends StatelessWidget {
                         color: kSecondaryTextColor, fontSize: 14),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      IconButton(
-                        iconSize: 20,
-                        padding: const EdgeInsets.only(right: 5),
-                        constraints: const BoxConstraints(),
-                        alignment: Alignment.centerLeft,
-                        color: const Color.fromARGB(150, 255, 255, 255),
-                        onPressed: onReaction,
-                        icon: const Icon(
-                          Icons.add_reaction_outlined,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          iconSize: 20,
+                          padding: const EdgeInsets.only(right: 5),
+                          constraints: const BoxConstraints(),
+                          alignment: Alignment.center,
+                          color: const Color.fromARGB(150, 255, 255, 255),
+                          onPressed: onReaction,
+                          icon: const Icon(
+                            Icons.add_reaction_outlined,
+                          ),
                         ),
-                      ),
-                      Flexible(
-                        child: Wrap(
-                          runSpacing: 10,
-                          children: [
-                            ...reactions
-                                .map((r) => Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      child: EmojiReaction(
-                                        currentUser: currentUser,
-                                        reaction: r,
-                                        onTap: onReactionTap,
-                                      ),
-                                    ))
-                                .toList()
-                          ],
-                        ),
-                      )
-                    ],
+                        Flexible(
+                          child: Wrap(
+                            runSpacing: 10,
+                            children: [
+                              ...reactions
+                                  .map((r) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        child: EmojiReaction(
+                                          currentUser: currentUser,
+                                          reaction: r,
+                                          onTap: onReactionTap,
+                                        ),
+                                      ))
+                                  .toList()
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
