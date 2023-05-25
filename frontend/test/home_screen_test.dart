@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
-import 'package:rib_reviews/components/timeline.dart';
-import 'package:rib_reviews/models/user.dart';
-import 'package:rib_reviews/screens/home_screen.dart';
+import 'package:rib_reviews/domain/models/user.dart';
+import 'package:rib_reviews/presentation/components/timeline/timeline.dart';
+import 'package:rib_reviews/presentation/screens/home_screen.dart';
 
 void main() {
   testWidgets('renders a timeline', (WidgetTester tester) async {

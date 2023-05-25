@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rib_reviews/screens/login_screen.dart';
+import 'package:rib_reviews/presentation/screens/login_screen.dart';
 
-import 'utils/constants.dart';
+import 'domain/utils/constants.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
