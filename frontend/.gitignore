@@ -274,6 +274,6 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/flutter,android,androidstudio
 
 .env
-lib/env/env.g.dart
+env.g.dart
 
 .vscode/
