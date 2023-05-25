@@ -39,7 +39,7 @@ jobs:
         working-directory: ./frontend
         run: |
           flutter clean
-          rm lib/env/env.g.dart
+          rm lib/data/env/env.g.dart
           cp .env.production .env
           flutter pub get
           flutter pub run build_runner build

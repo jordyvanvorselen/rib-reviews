@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:patrol/patrol.dart';
-import 'package:rib_reviews/components/event_card.dart';
-import 'package:rib_reviews/components/rating.dart';
-import 'package:rib_reviews/components/review_screen_title.dart';
+import 'package:rib_reviews/presentation/components/generic/rating.dart';
+import 'package:rib_reviews/presentation/components/review_screen_title.dart';
+import 'package:rib_reviews/presentation/components/timeline/event_card.dart';
 
 import './utils.dart';
 

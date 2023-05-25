@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:patrol/patrol.dart';
-import 'package:rib_reviews/components/event_card.dart';
-import 'package:rib_reviews/components/event_link.dart';
-import 'package:rib_reviews/components/timeline.dart';
-import 'package:rib_reviews/screens/review_screen.dart';
+import 'package:rib_reviews/presentation/components/timeline/event_card.dart';
+import 'package:rib_reviews/presentation/components/timeline/event_link.dart';
+import 'package:rib_reviews/presentation/components/timeline/timeline.dart';
+import 'package:rib_reviews/presentation/screens/review_screen.dart';
 
 import './utils.dart';
 
