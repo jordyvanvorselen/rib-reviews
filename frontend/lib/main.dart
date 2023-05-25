@@ -23,6 +23,7 @@ class Main extends StatelessWidget {
     return MaterialApp(
       title: "Rib Reviews",
       debugShowCheckedModeBanner: false,
+      scrollBehavior: const ScrollBehavior().copyWith(scrollbars: false),
       theme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: kBackgroundColor,
