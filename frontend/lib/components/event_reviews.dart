@@ -37,7 +37,7 @@ class EventReviews extends StatelessWidget {
                           radius: 17.5,
                           backgroundColor: kPrimaryColor,
                           child: ProfilePicture(
-                            photoUrl: review.user.getPhotoUrl(),
+                            photoUrl: review.user.photoUrlWithFallback,
                             radius: 15,
                           ),
                         ),

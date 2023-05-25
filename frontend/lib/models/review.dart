@@ -28,7 +28,7 @@ class Review {
         eventId: json['eventId']);
   }
 
-  String getFormattedDate() {
+  String get formattedDate {
     return DateFormat.yMMMMd('en_US').format(createdAt);
   }
 }

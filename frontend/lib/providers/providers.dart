@@ -35,19 +35,19 @@ class Providers {
 
   static final eventsController = ChangeNotifierProvider<EventsController>(
     (ref) => EventsController(
-        venuesRepository: ref.watch(venuesRepositoryProvider),
-        usersRepository: ref.watch(usersRepositoryProvider),
-        reviewsRepository: ref.watch(reviewsRepositoryProvider),
-        eventsRepository: ref.watch(eventsRepositoryProvider)),
+        ref.watch(venuesRepositoryProvider),
+        ref.watch(usersRepositoryProvider),
+        ref.watch(reviewsRepositoryProvider),
+        ref.watch(eventsRepositoryProvider)),
   );
 
   static final reactionsController =
       ChangeNotifierProvider<ReactionsController>(
     (ref) => ReactionsController(
-      reactionsRepository: ref.watch(reactionsRepositoryProvider),
-      usersRepository: ref.watch(usersRepositoryProvider),
-      reviewsRepository: ref.watch(reviewsRepositoryProvider),
-      reactionSaveService: ref.watch(reactionsSaveServiceProvider),
+      ref.watch(reactionsRepositoryProvider),
+      ref.watch(usersRepositoryProvider),
+      ref.watch(reviewsRepositoryProvider),
+      ref.watch(reactionsSaveServiceProvider),
     ),
   );
 

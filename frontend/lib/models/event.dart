@@ -37,19 +37,11 @@ class Event {
     }
   }
 
-  bool unplanned() {
-    return getState() == EventState.unplanned;
-  }
+  bool get unplanned => getState() == EventState.unplanned;
+  bool get planned => getState() == EventState.planned;
+  bool get finished => getState() == EventState.finished;
 
-  bool planned() {
-    return getState() == EventState.planned;
-  }
-
-  bool finished() {
-    return getState() == EventState.finished;
-  }
-
-  Color getIndicatorColor() {
+  Color get indicatorColor {
     switch (getState()) {
       case EventState.unplanned:
         return Colors.grey;
@@ -60,7 +52,7 @@ class Event {
     }
   }
 
-  IconData getIcon() {
+  IconData get icon {
     switch (getState()) {
       case EventState.unplanned:
         return Icons.pending;
@@ -71,7 +63,7 @@ class Event {
     }
   }
 
-  double getTotalRating() {
+  double get totalRating {
     if (reviews.isEmpty) return 0;
 
     return reviews
@@ -80,14 +72,14 @@ class Event {
         reviews.length;
   }
 
-  IndicatorStyle getIndicatorStyle() {
+  IndicatorStyle get indicatorStyle {
     return IndicatorStyle(
-      color: getIndicatorColor(),
+      color: indicatorColor,
       padding: const EdgeInsets.all(5),
       width: 50.0,
       iconStyle: IconStyle(
         color: Colors.white,
-        iconData: getIcon(),
+        iconData: icon,
         fontSize: 35.0,
       ),
     );

@@ -24,7 +24,7 @@ class User {
     );
   }
 
-  String getPhotoUrl() {
+  String get photoUrlWithFallback {
     return photoUrl ?? "https://www.gravatar.com/avatar/${generateMd5(email)}";
   }
 

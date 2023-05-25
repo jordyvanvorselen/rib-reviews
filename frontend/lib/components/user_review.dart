@@ -44,7 +44,8 @@ class UserReview extends StatelessWidget {
                   Row(
                     children: [
                       ProfilePicture(
-                          photoUrl: review.user.getPhotoUrl(), radius: 20),
+                          photoUrl: review.user.photoUrlWithFallback,
+                          radius: 20),
                       const SizedBox(width: 10),
                       SizedBox(
                         width: 150,
@@ -59,7 +60,7 @@ class UserReview extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              review.getFormattedDate(),
+                              review.formattedDate,
                               style: const TextStyle(
                                   fontSize: 12, color: kSecondaryTextColor),
                             ),

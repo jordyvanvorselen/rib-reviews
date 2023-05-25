@@ -27,7 +27,7 @@ class Common {
             SizedBox(width: Responsive.appBarSpacing(context)),
             const AppBarTitle(),
             SizedBox(width: Responsive.appBarSpacing(context)),
-            ProfilePicture(photoUrl: user.getPhotoUrl())
+            ProfilePicture(photoUrl: user.photoUrlWithFallback)
           ],
         ),
       ),

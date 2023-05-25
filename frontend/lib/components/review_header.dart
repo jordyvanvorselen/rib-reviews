@@ -21,7 +21,7 @@ class ReviewHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ReviewScreenTitle(event: widget.event),
-          Rating(rating: widget.event.getTotalRating()),
+          Rating(rating: widget.event.totalRating),
         ],
       ),
     );

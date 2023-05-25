@@ -9,22 +9,22 @@ import 'package:rib_reviews/repositories/users_repository.dart';
 import 'package:rib_reviews/services/reaction_save_service.dart';
 
 class ReactionsController with ChangeNotifier {
-  final ReactionsRepository reactionsRepository;
-  final UsersRepository usersRepository;
-  final ReviewsRepository reviewsRepository;
-  final ReactionSaveService reactionSaveService;
+  final ReactionsRepository _reactionsRepository;
+  final UsersRepository _usersRepository;
+  final ReviewsRepository _reviewsRepository;
+  final ReactionSaveService _reactionSaveService;
 
   List<Reaction> _reactions = [];
   List<Reaction> get reactions => _reactions;
 
   bool _disposed = false;
 
-  ReactionsController({
-    required this.reactionsRepository,
-    required this.usersRepository,
-    required this.reviewsRepository,
-    required this.reactionSaveService,
-  });
+  ReactionsController(
+    this._reactionsRepository,
+    this._usersRepository,
+    this._reviewsRepository,
+    this._reactionSaveService,
+  );
 
   @override
   void dispose() {
@@ -58,7 +58,7 @@ class ReactionsController with ChangeNotifier {
       reactionExists ? _reactions[index] = reaction : _reactions.add(reaction);
     }
 
-    reactionSaveService.save(reaction);
+    _reactionSaveService.save(reaction);
 
     notifyListeners();
   }
@@ -66,10 +66,10 @@ class ReactionsController with ChangeNotifier {
   void fetchReactions() async {
     if (_disposed) return;
 
-    final users = await usersRepository.all();
-    final reviews = await reviewsRepository.all(users);
+    final users = await _usersRepository.all();
+    final reviews = await _reviewsRepository.all(users);
 
-    _reactions = await reactionsRepository.all(users, reviews);
+    _reactions = await _reactionsRepository.all(users, reviews);
 
     notifyListeners();
   }

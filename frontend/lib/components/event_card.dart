@@ -25,7 +25,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (!event.finished()) return;
+        if (!event.finished) return;
 
         Navigator.push(
           context,
@@ -54,7 +54,7 @@ class EventCard extends StatelessWidget {
                         location: event.venue.location,
                       ),
                       const SizedBox(height: 25.0),
-                      event.finished()
+                      event.finished
                           ? EventReviews(reviews: event.reviews)
                           : EventDate(event: event)
                     ],
@@ -62,8 +62,8 @@ class EventCard extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      event.finished()
-                          ? Rating(rating: event.getTotalRating())
+                      event.finished
+                          ? Rating(rating: event.totalRating)
                           : EventLink(event: event)
                     ],
                   )

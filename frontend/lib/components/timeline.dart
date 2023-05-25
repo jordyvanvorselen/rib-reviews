@@ -53,7 +53,7 @@ class TimelineState extends ConsumerState<Timeline> {
 
   TimelineTile getTimelineTile(List<Event> events, Event event, int index) {
     return TimelineTile(
-      indicatorStyle: event.getIndicatorStyle(),
+      indicatorStyle: event.indicatorStyle,
       beforeLineStyle: LineStyle(
         color: getLineColor(events, index, LineType.before),
         thickness: 5,
@@ -82,12 +82,12 @@ class TimelineState extends ConsumerState<Timeline> {
     }
 
     if (idx == 0) {
-      return events[idx].getIndicatorColor();
+      return events[idx].indicatorColor;
     }
 
     final event = lineType == LineType.before ? events[idx - 1] : events[idx];
 
-    return event.getIndicatorColor();
+    return event.indicatorColor;
   }
 }
 
