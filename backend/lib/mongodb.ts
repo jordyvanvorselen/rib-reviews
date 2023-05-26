@@ -8,6 +8,10 @@ if (!process.env.DATABASE_NAME) {
   throw new Error('Invalid/Missing environment variable: "DATABASE_NAME"');
 }
 
+if (!process.env.SLACKBOT_API_TOKEN) {
+  throw new Error('Invalid/Missing environment variable: "SLACKBOT_API_TOKEN"');
+}
+
 const uri = process.env.MONGODB_URI;
 const options = {};
 

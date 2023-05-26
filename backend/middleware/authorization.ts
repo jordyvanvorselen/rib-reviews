@@ -13,6 +13,8 @@ export const authorize: Middleware<NextApiRequest> = async (
 ) => {
   if (!req.headers.authorization) return unauthorized(res);
 
+  if (isSlackbotRequest(req)) return next();
+
   await client
     .verifyIdToken({
       idToken: req.headers.authorization,
@@ -31,3 +33,7 @@ export const authorize: Middleware<NextApiRequest> = async (
 
 const unauthorized = (res: NextApiResponse) =>
   res.status(401).send({ message: "Unauthorized" });
+
+const isSlackbotRequest = (req: NextApiRequest) => {
+  return req.headers.authorization === process.env.SLACKBOT_API_TOKEN;
+};

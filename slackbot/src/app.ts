@@ -1,5 +1,5 @@
-const { App } = require("@slack/bolt");
-const { SlackEventMiddlewareArgs } = require("@slack/bolt");
+import { App } from "@slack/bolt";
+import * as api from "./utils/api";
 
 require("dotenv").config();
 
@@ -42,7 +42,7 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
           },
           {
             type: "input",
-            block_id: "cityInput",
+            block_id: "locationInput",
             label: {
               type: "plain_text",
               text: "City"
@@ -87,15 +87,25 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
 app.view("view_1", async ({ body, ack, client }: any) => {
   await ack();
 
-  const { nameInput, cityInput, websiteInput } = body.view.state.values;
+  const { nameInput, locationInput, websiteInput } = body.view.state.values;
 
-  const name = nameInput.plain_input.value;
-  const city = cityInput.plain_input.value;
-  const website = websiteInput.plain_input.value;
+  const name: string = nameInput.plain_input.value;
+  const location: string = locationInput.plain_input.value;
+  const website: string = websiteInput.plain_input.value;
+
+  const response = await api.post("/venues", {
+    name,
+    location,
+    website
+  });
+
+  await api.post("/events", {
+    venueId: response.data._id
+  });
 
   await client.chat.postMessage({
     channel: "eat-guild",
-    text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${city}.`
+    text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`
   });
 });
 
