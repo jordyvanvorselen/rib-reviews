@@ -2,14 +2,21 @@
   "name": "eat-guild",
   "version": "1.0.0",
   "description": "Slackbot to manage the events.",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p .",
+    "build:watch": "tsc -w -p .",
+    "start": "npm run build && node dist/app.js"
   },
   "author": "jordyvanvorselen@gmail.com",
   "license": "SEE LICENSE IN ../LICENSE\"",
   "dependencies": {
     "@slack/bolt": "^3.13.1",
     "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   }
 }
