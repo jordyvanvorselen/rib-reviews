@@ -6,12 +6,13 @@
   "scripts": {
     "build": "tsc -p .",
     "build:watch": "tsc -w -p .",
-    "start": "npm run build && node dist/app.js"
+    "dev": "npm run build && node dist/app.js"
   },
   "author": "jordyvanvorselen@gmail.com",
   "license": "SEE LICENSE IN ../LICENSE\"",
   "dependencies": {
     "@slack/bolt": "^3.13.1",
+    "axios": "^1.4.0",
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
