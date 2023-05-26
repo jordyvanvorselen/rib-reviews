@@ -1,3 +1,4 @@
 .vercel
 *.code-workspace
 .env
+node_modules/
