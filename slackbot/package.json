@@ -1,0 +1,11 @@
+{
+  "name": "eat-guild",
+  "version": "1.0.0",
+  "description": "Slackbot to manage the events.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jordyvanvorselen@gmail.com",
+  "license": "SEE LICENSE IN ../LICENSE\""
+}
