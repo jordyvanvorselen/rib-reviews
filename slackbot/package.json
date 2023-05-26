@@ -9,6 +9,7 @@
   "author": "jordyvanvorselen@gmail.com",
   "license": "SEE LICENSE IN ../LICENSE\"",
   "dependencies": {
+    "@slack/bolt": "^3.13.1",
     "dotenv": "^16.0.3"
   }
 }
