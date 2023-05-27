@@ -95,6 +95,8 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
 });
 
 app.view("view_1", async ({ body, ack, client }: any) => {
+  await ack();
+
   const { nameInput, locationInput, websiteInput } = body.view.state.values;
 
   const name: string = nameInput.plain_input.value;
@@ -109,8 +111,6 @@ app.view("view_1", async ({ body, ack, client }: any) => {
     channel: "eat-guild",
     text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`,
   });
-
-  await ack();
 });
 
 appRunner.setup(app);
