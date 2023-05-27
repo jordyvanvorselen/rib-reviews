@@ -74,9 +74,10 @@ Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hoste
 ### Built With
 
 - [![Next][next.js]][next-url]
-- [![React][react.js]][react-url]
+- [![Bolt for Slack][bolt.js]][bolt-url]
 - [![Flutter][flutter]][flutter-url]
 - [![Vercel][vercel]][vercel-url]
+- [![MongoDB][mongo.db]][mongo-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -159,9 +160,11 @@ Project Link: [https://github.com/jordyvanvorselen/rib-reviews](https://github.c
 [linkedin-url]: https://linkedin.com/in/jordy-van-vorselen
 [next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [next-url]: https://nextjs.org/
-[react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[react-url]: https://reactjs.org/
 [flutter]: https://img.shields.io/badge/flutter-000000?style=for-the-badge&logo=flutter&logoColor=blue
 [flutter-url]: https://flutter.dev/
+[mongo]: https://img.shields.io/badge/mongodb-000000?style=for-the-badge&logo=mongodb&logoColor=green
+[mongo-url]: https://www.mongodb.com/
+[bolt]: https://img.shields.io/badge/bolt%20for%20slack-000000?style=for-the-badge&logo=slack&logoColor=red
+[bolt-url]: https://github.com/slackapi/bolt-js
 [vercel]: https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
 [vercel-url]: https://vercel.com/
