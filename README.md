@@ -74,10 +74,10 @@ Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hoste
 ### Built With
 
 - [![Next][next.js]][next-url]
-- [![Bolt for Slack][bolt.js]][bolt-url]
+- [![Bolt for Slack][bolt]][bolt-url]
 - [![Flutter][flutter]][flutter-url]
 - [![Vercel][vercel]][vercel-url]
-- [![MongoDB][mongo.db]][mongo-url]
+- [![MongoDB][mongo]][mongo-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
