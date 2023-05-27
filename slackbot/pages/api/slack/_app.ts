@@ -2,6 +2,8 @@ import { AppRunner } from "@seratch_/bolt-http-runner";
 import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
 import { FileStateStore } from "@slack/oauth";
 
+import * as api from "../../../utils/api";
+
 require("dotenv").config();
 
 export const appRunner = new AppRunner({
@@ -103,9 +105,8 @@ app.view("view_1", async ({ body, ack, client }: any) => {
   const location: string = locationInput.plain_input.value;
   const website: string = websiteInput.plain_input.value;
 
-  // const response = await api.post("/venues", { name, location, website });
-
-  // await api.post("/events", { venueId: response.data._id });
+  const response = await api.post("/venues", { name, location, website });
+  await api.post("/events", { venueId: response.data._id });
 
   await client.chat.postMessage({
     channel: "eat-guild",
