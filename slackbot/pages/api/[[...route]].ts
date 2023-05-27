@@ -17,10 +17,10 @@ const receiver = new NextConnectReceiver({
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
-  socketMode: true,
   appToken: process.env.SLACK_APP_TOKEN,
-  receiver: receiver,
+  socketMode: false,
   developerMode: false,
+  receiver: receiver,
 });
 
 app.command("/suggest", async ({ client, ack, logger, body }: any) => {
@@ -122,7 +122,6 @@ app.view("view_1", async ({ body, ack, client }: any) => {
   });
 });
 
-// this is run just in case
 const router = receiver.start();
 
 router.get("/api", (req: NextApiRequest, res: NextApiResponse) => {
