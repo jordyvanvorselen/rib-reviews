@@ -25,19 +25,13 @@ const suggestionModal = () => {
   return Modal({ title: "Suggest a restaurant", callbackId: "suggestCallback" })
     .blocks(
       Blocks.Input({ label: "Restaurant Name", blockId: "nameInput" }).element(
-        Elements.UserSelect({
-          placeholder: 'e.g. "Denver"',
-        })
+        Elements.TextInput().placeholder('e.g. "Denver"')
       ),
       Blocks.Input({ label: "City", blockId: "locationInput" }).element(
-        Elements.UserSelect({
-          placeholder: 'e.g. "Weert"',
-        })
+        Elements.TextInput().placeholder('e.g. "Weert"')
       ),
       Blocks.Input({ label: "Website URL", blockId: "websiteInput" }).element(
-        Elements.UserSelect({
-          placeholder: 'e.g. "https://www.denver-restaurants.nl/"',
-        })
+        Elements.TextInput().placeholder('e.g. "https://www.denver-restaurants.nl/')
       )
     )
     .submit("Suggest")
