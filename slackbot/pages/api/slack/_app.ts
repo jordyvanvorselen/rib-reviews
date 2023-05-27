@@ -105,13 +105,21 @@ app.view("view_1", async ({ body, ack, client }: any) => {
   const location: string = locationInput.plain_input.value;
   const website: string = websiteInput.plain_input.value;
 
-  const response = await api.post("/venues", { name, location, website });
-  api.post("/events", { venueId: response.data._id });
+  saveSuggestion(name, location, website);
 
   await client.chat.postMessage({
     channel: "eat-guild",
     text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`,
   });
 });
+
+const saveSuggestion = async (
+  name: string,
+  location: string,
+  website: string
+) => {
+  const response = await api.post("/venues", { name, location, website });
+  await api.post("/events", { venueId: response.data._id });
+};
 
 appRunner.setup(app);
