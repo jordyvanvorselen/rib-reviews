@@ -4,7 +4,7 @@ import { FileStateStore } from "@slack/oauth";
 
 export const appRunner = new AppRunner({
   logLevel: LogLevel.DEBUG,
-  // token: process.env.SLACK_BOT_TOKEN,
+  token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
