@@ -1,31 +1,30 @@
-import { App } from "@slack/bolt";
-import { NextApiRequest, NextApiResponse } from "next";
-import { use } from "next-api-route-middleware";
-import NextConnectReceiver from "utils/NextConnectReceiver";
-import { authorize } from "../../middleware/authorize";
-import * as api from "../../utils/api";
+import { AppRunner } from "@seratch_/bolt-http-runner";
+import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
+import { FileStateStore } from "@slack/oauth";
+
+import * as api from "../../../utils/api";
 
 require("dotenv").config();
 
-const receiver = new NextConnectReceiver({
-  signingSecret: process.env.SLACK_SIGNING_SECRET || "invalid",
-  // The `processBeforeResponse` option is required for all FaaS environments.
-  // It allows Bolt methods (e.g. `app.message`) to handle a Slack request
-  // before the Bolt framework responds to the request (e.g. `ack()`). This is
-  // important because FaaS immediately terminate handlers after the response.
+export const appRunner = new AppRunner({
+  logLevel: LogLevel.DEBUG,
+  token: process.env.SLACK_BOT_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET as string,
+  clientId: process.env.SLACK_CLIENT_ID,
+  clientSecret: process.env.SLACK_CLIENT_SECRET,
   processBeforeResponse: true,
+  scopes: ["commands", "chat:write", "app_mentions:read"],
+  installationStore: new FileInstallationStore(),
+  installerOptions: {
+    stateStore: new FileStateStore({}),
+  },
 });
 
-const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  appToken: process.env.SLACK_APP_TOKEN,
-  socketMode: false,
-  developerMode: false,
-  receiver: receiver,
-});
+const app = new App(appRunner.appOptions());
 
 app.command("/suggest", async ({ client, ack, logger, body }: any) => {
+  await ack();
+
   try {
     await client.views.open({
       trigger_id: body.trigger_id,
@@ -98,6 +97,8 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
 });
 
 app.view("view_1", async ({ body, ack, client }: any) => {
+  await ack();
+
   const { nameInput, locationInput, websiteInput } = body.view.state.values;
 
   const name: string = nameInput.plain_input.value;
@@ -113,12 +114,4 @@ app.view("view_1", async ({ body, ack, client }: any) => {
   });
 });
 
-const router = receiver.start();
-
-router.get("/api", (req: NextApiRequest, res: NextApiResponse) => {
-  const { challenge } = req.body;
-
-  res.status(200).json({ challenge });
-});
-
-export default use(authorize, router);
+appRunner.setup(app);
