@@ -26,8 +26,6 @@ const app = new App({
 });
 
 app.command("/suggest", async ({ client, ack, logger, body }: any) => {
-  await ack();
-
   try {
     await client.views.open({
       trigger_id: body.trigger_id,
@@ -100,8 +98,6 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
 });
 
 app.view("view_1", async ({ body, ack, client }: any) => {
-  await ack();
-
   const { nameInput, locationInput, websiteInput } = body.view.state.values;
 
   const name: string = nameInput.plain_input.value;
