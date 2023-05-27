@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const get = async (url: string) => {
-  return axios.get(`${process.env.API_BASE_URL}/api${url}`, {
+  return axios.get(`${process.env.API_BASE_URL}${url}`, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
