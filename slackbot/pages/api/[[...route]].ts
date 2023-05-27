@@ -1,13 +1,26 @@
 import { App } from "@slack/bolt";
-import * as api from "./utils/api";
+import { NextApiRequest, NextApiResponse } from "next";
+import NextConnectReceiver from "utils/NextConnectReceiver";
+import * as api from "../../utils/api";
 
 require("dotenv").config();
+
+const receiver = new NextConnectReceiver({
+  signingSecret: process.env.SLACK_SIGNING_SECRET || "invalid",
+  // The `processBeforeResponse` option is required for all FaaS environments.
+  // It allows Bolt methods (e.g. `app.message`) to handle a Slack request
+  // before the Bolt framework responds to the request (e.g. `ack()`). This is
+  // important because FaaS immediately terminate handlers after the response.
+  processBeforeResponse: true,
+});
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   socketMode: true,
-  appToken: process.env.SLACK_APP_TOKEN
+  appToken: process.env.SLACK_APP_TOKEN,
+  receiver: receiver,
+  developerMode: false,
 });
 
 app.command("/suggest", async ({ client, ack, logger, body }: any) => {
@@ -21,7 +34,7 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
         callback_id: "view_1",
         title: {
           type: "plain_text",
-          text: "Suggest a restaurant"
+          text: "Suggest a restaurant",
         },
         blocks: [
           {
@@ -29,55 +42,55 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
             block_id: "nameInput",
             label: {
               type: "plain_text",
-              text: "Restaurant Name"
+              text: "Restaurant Name",
             },
             element: {
               type: "plain_text_input",
               action_id: "plain_input",
               placeholder: {
                 type: "plain_text",
-                text: 'e.g. "Denver"'
-              }
-            }
+                text: 'e.g. "Denver"',
+              },
+            },
           },
           {
             type: "input",
             block_id: "locationInput",
             label: {
               type: "plain_text",
-              text: "City"
+              text: "City",
             },
             element: {
               type: "plain_text_input",
               action_id: "plain_input",
               placeholder: {
                 type: "plain_text",
-                text: 'e.g. "Weert"'
-              }
-            }
+                text: 'e.g. "Weert"',
+              },
+            },
           },
           {
             type: "input",
             block_id: "websiteInput",
             label: {
               type: "plain_text",
-              text: "Website URL"
+              text: "Website URL",
             },
             element: {
               type: "plain_text_input",
               action_id: "plain_input",
               placeholder: {
                 type: "plain_text",
-                text: 'e.g. "https://www.denver-restaurants.nl/"'
-              }
-            }
-          }
+                text: 'e.g. "https://www.denver-restaurants.nl/"',
+              },
+            },
+          },
         ],
         submit: {
           type: "plain_text",
-          text: "Suggest"
-        }
-      }
+          text: "Suggest",
+        },
+      },
     });
   } catch (error) {
     logger.error(error);
@@ -96,22 +109,26 @@ app.view("view_1", async ({ body, ack, client }: any) => {
   const response = await api.post("/venues", {
     name,
     location,
-    website
+    website,
   });
 
   await api.post("/events", {
-    venueId: response.data._id
+    venueId: response.data._id,
   });
 
   await client.chat.postMessage({
     channel: "eat-guild",
-    text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`
+    text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`,
   });
 });
 
-(async () => {
-  // Start your app
-  await app.start(process.env.PORT || 3000);
+// this is run just in case
+const router = receiver.start();
 
-  console.log("⚡️ Bolt app is running!");
-})();
+router.get("/api", (req: NextApiRequest, res: NextApiResponse) => {
+  res.status(200).json({
+    test: true,
+  });
+});
+
+export default router;
