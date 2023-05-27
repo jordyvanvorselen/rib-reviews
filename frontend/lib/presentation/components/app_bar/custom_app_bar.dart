@@ -11,7 +11,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     required this.user,
     required this.context,
     this.showLogo = true,
-  })  : preferredSize = const Size.fromHeight(kToolbarHeight),
+  })  : preferredSize = const Size.fromHeight(76),
         super();
 
   final User user;
