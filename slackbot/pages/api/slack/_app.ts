@@ -21,8 +21,6 @@ export const appRunner = new AppRunner({
 const app = new App(appRunner.appOptions());
 
 app.command("/suggest", async ({ client, ack, logger, body }: any) => {
-  await ack();
-
   try {
     await client.views.open({
       trigger_id: body.trigger_id,
@@ -91,12 +89,12 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
     });
   } catch (error) {
     logger.error(error);
+  } finally {
+    await ack();
   }
 });
 
 app.view("view_1", async ({ body, ack, client }: any) => {
-  await ack();
-
   const { nameInput, locationInput, websiteInput } = body.view.state.values;
 
   const name: string = nameInput.plain_input.value;
@@ -110,6 +108,8 @@ app.view("view_1", async ({ body, ack, client }: any) => {
     channel: "eat-guild",
     text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`,
   });
+
+  await ack();
 });
 
 appRunner.setup(app);
