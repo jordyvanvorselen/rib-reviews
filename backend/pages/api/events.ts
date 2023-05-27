@@ -6,6 +6,11 @@ import { dateIsValid, documentExists } from "../../lib/utils";
 import { authorize } from "../../middleware/authorization";
 import { cors } from "../../middleware/cors";
 
+export const config = {
+  runtime: "edge",
+  regions: ["dub1"],
+};
+
 type Error = { error: string };
 type Event = {
   _id?: ObjectId;
