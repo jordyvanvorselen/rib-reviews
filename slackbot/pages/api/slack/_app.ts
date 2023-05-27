@@ -2,6 +2,8 @@ import { AppRunner } from "@seratch_/bolt-http-runner";
 import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
 import { FileStateStore } from "@slack/oauth";
 
+require("dotenv").config();
+
 export const appRunner = new AppRunner({
   logLevel: LogLevel.DEBUG,
   token: process.env.SLACK_BOT_TOKEN,

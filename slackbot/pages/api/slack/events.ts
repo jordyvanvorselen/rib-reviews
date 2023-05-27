@@ -12,10 +12,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== "POST") {
-    res
+    return res
       .status(405)
       .json({ error: "Sorry! This endpoint does not accept your requests." });
-    return;
   }
 
   await appRunner.handleEvents(req, res);
