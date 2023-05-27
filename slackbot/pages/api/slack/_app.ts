@@ -58,6 +58,8 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
 
   const { nameInput, locationInput, websiteInput } = body.view.state.values;
 
+  throw new Error(JSON.stringify(body.view.state.values));
+
   const name: string = nameInput.plain_input.value;
   const location: string = locationInput.plain_input.value;
   const website: string = websiteInput.plain_input.value;
