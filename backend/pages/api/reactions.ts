@@ -13,11 +13,6 @@ type Reaction = {
   reviewId: [ObjectId];
 };
 
-export const config = {
-  runtime: "edge",
-  regions: ["dub1"],
-};
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") return get(req, res);
   if (req.method === "PUT") return put(req, res);

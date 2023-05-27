@@ -5,8 +5,6 @@ export const config = {
   api: {
     bodyParser: false,
   },
-  runtime: "edge",
-  regions: ["dub1"],
 };
 
 export default async function handler(
