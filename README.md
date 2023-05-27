@@ -97,8 +97,11 @@ This project is set up in two main folders. The `frontend` folder contains the F
 
 - [x] Plan events
 - [x] Rate restaurants
-- [ ] React on restaurant ratings using emoji's
-- [ ] Vote for upcoming restaurants
+- [x] React on restaurant ratings using emoji's
+- [x] Slackbot to suggest new restaurants
+- [ ] Vote for suggested restaurants
+- [ ] Plan event with the most votes
+- [ ] Notify users about upcoming events
 
 See the [open issues](https://github.com/jordyvanvorselen/rib-reviews/issues) for a full list of proposed features (and known issues).
 
