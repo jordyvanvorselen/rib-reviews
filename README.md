@@ -85,10 +85,11 @@ Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hoste
 
 ## Getting Started
 
-This project is set up in two main folders. The `frontend` folder contains the Flutter mobile app, and the `backend` folder contains the Next.js backend. They both contain their own respective setup instructions.
+This project is set up in three main folders. The `frontend` folder contains the Flutter mobile app, the `backend` folder contains the Next.js backend and the `slackbot` folder contains the bolt-js slackbot. They all contain their own respective setup instructions.
 
 - Click [here](./frontend/README.md) to read more about the technical setup of the **mobile app**.
 - Click [here](./backend/README.md) to read more about the technical setup of the **backend**.
+- Click [here](./slackbot/README.md) to read more about the technical setup of the **slackbot**.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
