@@ -9,17 +9,6 @@ export const authorize: Middleware<NextApiRequest> = async (
   res: NextApiResponse,
   next: Function
 ) => {
-  return next();
-  // verify that the timestamp does not differ from local time by more than five minutes
-  if (
-    !req.headers["x-slack-request-timestamp"] ||
-    Math.abs(
-      Math.floor(new Date().getTime() / 1000) -
-        +req.headers["x-slack-request-timestamp"]
-    ) > 300
-  )
-    return res.status(400).send("Request too old!");
-
   // compute the basestring
   const baseStr = `v0:${req.headers["x-slack-request-timestamp"]}:${req.body}`;
 
