@@ -18,5 +18,8 @@ export default async function handler(
       .json({ error: "Sorry! This endpoint does not accept your requests." });
     return;
   }
+
   await appRunner.handleEvents(req, res);
+
+  res.status(200).json({ challenge: req.body.challenge });
 }
