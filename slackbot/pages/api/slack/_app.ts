@@ -102,6 +102,7 @@ app.view("view_1", async ({ body, ack, client }: any) => {
   const website: string = websiteInput.plain_input.value;
 
   // const response = await api.post("/venues", { name, location, website });
+
   // await api.post("/events", { venueId: response.data._id });
 
   await client.chat.postMessage({
