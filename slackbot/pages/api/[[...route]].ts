@@ -1,6 +1,8 @@
 import { App } from "@slack/bolt";
 import { NextApiRequest, NextApiResponse } from "next";
+import { use } from "next-api-route-middleware";
 import NextConnectReceiver from "utils/NextConnectReceiver";
+import { authorize } from "../../middleware/authorize";
 import * as api from "../../utils/api";
 
 require("dotenv").config();
@@ -130,4 +132,4 @@ router.get("/api", (req: NextApiRequest, res: NextApiResponse) => {
   });
 });
 
-export default router;
+export default use(authorize, router);

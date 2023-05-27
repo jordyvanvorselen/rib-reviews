@@ -2261,6 +2261,11 @@
   "resolved" "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz"
   "version" "0.6.3"
 
+"next-api-route-middleware@^1.0.2":
+  "integrity" "sha512-GJBQWHkQ1yOddd30isD0AU3CJ/BX80jJAn/ao6Bkv+pXkWmmMT/xd/1Rx7IcucCjex4Y8pvFInZPi8XJf0lstw=="
+  "resolved" "https://registry.npmjs.org/next-api-route-middleware/-/next-api-route-middleware-1.0.2.tgz"
+  "version" "1.0.2"
+
 "next-connect@^0.12.2":
   "integrity" "sha512-B/zKHPs5S7XWvAVsZVLvOeY2eL2U3g0W/BgCDetEJRcNDzxX2vi8rzqBuEoLLPlI8LvtHwujDVUFFjSgOEZTbA=="
   "resolved" "https://registry.npmjs.org/next-connect/-/next-connect-0.12.2.tgz"
@@ -2268,7 +2273,7 @@
   dependencies:
     "trouter" "^3.2.0"
 
-"next@13.4.4":
+"next@>=10", "next@13.4.4":
   "integrity" "sha512-C5S0ysM0Ily9McL4Jb48nOQHT1BukOWI59uC3X/xCMlYIh9rJZCv7nzG92J6e1cOBqQbKovlpgvHWFmz4eKKEA=="
   "resolved" "https://registry.npmjs.org/next/-/next-13.4.4.tgz"
   "version" "13.4.4"
