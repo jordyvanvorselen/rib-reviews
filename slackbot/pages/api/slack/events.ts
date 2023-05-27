@@ -20,5 +20,5 @@ export default async function handler(
 
   await appRunner.handleEvents(req, res);
 
-  res.status(200).json({ challenge: req.body.challenge });
+  res.status(200).json({ challenge: req.body?.challenge });
 }
