@@ -20,7 +20,7 @@ export const authorize: Middleware<NextApiRequest> = async (
     return res.status(400).send("Request too old!");
 
   // compute the basestring
-  const baseStr = `v0:${req.headers["x-slack-request-timestamp"]}:${req.rawBody}`;
+  const baseStr = `v0:${req.headers["x-slack-request-timestamp"]}:${req.body}`;
 
   // extract the received signature from the request headers
   const receivedSignature = req.headers["x-slack-signature"];
