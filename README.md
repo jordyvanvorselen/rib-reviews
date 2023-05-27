@@ -78,6 +78,7 @@ Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hoste
 - [![Flutter][flutter]][flutter-url]
 - [![Vercel][vercel]][vercel-url]
 - [![MongoDB][mongo]][mongo-url]
+- [![Firebase][firebase]][firebase-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -169,3 +170,5 @@ Project Link: [https://github.com/jordyvanvorselen/rib-reviews](https://github.c
 [bolt-url]: https://github.com/slackapi/bolt-js
 [vercel]: https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
 [vercel-url]: https://vercel.com/
+[firebase]: https://img.shields.io/badge/firebase-000000?style=for-the-badge&logo=firebase&logoColor=orange
+[firebase-url]: https://firebase.google.com/
