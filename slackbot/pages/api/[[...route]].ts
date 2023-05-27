@@ -127,9 +127,9 @@ app.view("view_1", async ({ body, ack, client }: any) => {
 const router = receiver.start();
 
 router.get("/api", (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({
-    test: true,
-  });
+  const { challenge } = req.body;
+
+  res.status(200).json({ challenge });
 });
 
 export default use(authorize, router);
