@@ -37,10 +37,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Review[]>) => {
   res.status(200).json(reviews);
 };
 
-const post = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Review | Error>
-) => {
+const post = async (req: NextApiRequest, res: NextApiResponse<Review | Error>) => {
   const db = (await clientPromise).db(DATABASE_NAME);
 
   const { rating, text, createdAt, userId, eventId } = req.body;

@@ -32,10 +32,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<User[]>) => {
   res.status(200).json(users);
 };
 
-const post = async (
-  req: NextApiRequest,
-  res: NextApiResponse<User | Error>
-) => {
+const post = async (req: NextApiRequest, res: NextApiResponse<User | Error>) => {
   const db = (await clientPromise).db(DATABASE_NAME);
   const { email, photoUrl, displayName } = req.body;
 

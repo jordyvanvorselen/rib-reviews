@@ -32,10 +32,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Reaction[]>) => {
   res.status(200).json(reactions);
 };
 
-const put = async (
-  req: NextApiRequest,
-  res: NextApiResponse<null | Reaction | Error>
-) => {
+const put = async (req: NextApiRequest, res: NextApiResponse<null | Reaction | Error>) => {
   const db = (await clientPromise).db(DATABASE_NAME);
   const { emoji, userIds, reviewId } = req.body;
 
@@ -53,11 +50,7 @@ const put = async (
 
   const result = await db
     .collection("reactions")
-    .findOneAndUpdate(
-      { emoji, reviewId },
-      { $set: reaction },
-      { upsert: true }
-    );
+    .findOneAndUpdate({ emoji, reviewId }, { $set: reaction }, { upsert: true });
 
   res.status(200).json({
     ...reaction,

@@ -31,10 +31,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Event[]>) => {
   res.status(200).json(events);
 };
 
-const post = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Event | Error>
-) => {
+const post = async (req: NextApiRequest, res: NextApiResponse<Event | Error>) => {
   const db = (await clientPromise).db(DATABASE_NAME);
 
   const { date, venueId } = req.body;
