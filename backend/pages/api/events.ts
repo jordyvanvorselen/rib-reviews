@@ -16,6 +16,7 @@ type Event = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") return get(req, res);
   if (req.method === "POST") return post(req, res);
+  if (req.method === "PUT") return put(req, res);
 };
 
 const get = async (req: NextApiRequest, res: NextApiResponse<Event[]>) => {

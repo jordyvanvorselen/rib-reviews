@@ -7,7 +7,7 @@ export const dateIsValid = (date: string, validWhenNull: boolean = false) => {
   return false;
 };
 
-export const documentExists = async (db: Db, collection: string, id: number) => {
+export const documentExists = async (db: Db, collection: string, id: string) => {
   if (!ObjectId.isValid(id)) return false;
 
   return (
