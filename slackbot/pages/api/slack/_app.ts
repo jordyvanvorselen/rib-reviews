@@ -1,6 +1,7 @@
 import { AppRunner } from "@seratch_/bolt-http-runner";
 import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
 import { FileStateStore } from "@slack/oauth";
+import { Blocks, Elements, Modal } from "slack-block-builder";
 
 import * as api from "../../../utils/api";
 
@@ -20,74 +21,36 @@ export const appRunner = new AppRunner({
   },
 });
 
+const suggestionModal = () => {
+  return Modal({ title: "Suggest a restaurant", callbackId: "suggestCallback" })
+    .blocks(
+      Blocks.Input({ label: "Restaurant Name", blockId: "nameInput" }).element(
+        Elements.UserSelect({
+          placeholder: 'e.g. "Denver"',
+        })
+      ),
+      Blocks.Input({ label: "City", blockId: "locationInput" }).element(
+        Elements.UserSelect({
+          placeholder: 'e.g. "Weert"',
+        })
+      ),
+      Blocks.Input({ label: "Website URL", blockId: "websiteInput" }).element(
+        Elements.UserSelect({
+          placeholder: 'e.g. "https://www.denver-restaurants.nl/"',
+        })
+      )
+    )
+    .submit("Suggest")
+    .buildToJSON();
+};
+
 const app = new App(appRunner.appOptions());
 
 app.command("/suggest", async ({ client, ack, logger, body }: any) => {
   try {
     await client.views.open({
       trigger_id: body.trigger_id,
-      view: {
-        type: "modal",
-        callback_id: "view_1",
-        title: {
-          type: "plain_text",
-          text: "Suggest a restaurant",
-        },
-        blocks: [
-          {
-            type: "input",
-            block_id: "nameInput",
-            label: {
-              type: "plain_text",
-              text: "Restaurant Name",
-            },
-            element: {
-              type: "plain_text_input",
-              action_id: "plain_input",
-              placeholder: {
-                type: "plain_text",
-                text: 'e.g. "Denver"',
-              },
-            },
-          },
-          {
-            type: "input",
-            block_id: "locationInput",
-            label: {
-              type: "plain_text",
-              text: "City",
-            },
-            element: {
-              type: "plain_text_input",
-              action_id: "plain_input",
-              placeholder: {
-                type: "plain_text",
-                text: 'e.g. "Weert"',
-              },
-            },
-          },
-          {
-            type: "input",
-            block_id: "websiteInput",
-            label: {
-              type: "plain_text",
-              text: "Website URL",
-            },
-            element: {
-              type: "plain_text_input",
-              action_id: "plain_input",
-              placeholder: {
-                type: "plain_text",
-                text: 'e.g. "https://www.denver-restaurants.nl/"',
-              },
-            },
-          },
-        ],
-        submit: {
-          type: "plain_text",
-          text: "Suggest",
-        },
-      },
+      view: suggestionModal(),
     });
   } catch (error) {
     logger.error(error);
@@ -96,7 +59,7 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
   }
 });
 
-app.view("view_1", async ({ body, ack, client }: any) => {
+app.view("suggestCallback", async ({ body, ack, client }: any) => {
   await ack();
 
   const { nameInput, locationInput, websiteInput } = body.view.state.values;
