@@ -1,5 +1,5 @@
-const { appRunner } = require("./_app");
 import { NextApiRequest, NextApiResponse } from "next";
+import { appRunner } from "./_app";
 
 export default async function handler(
   req: NextApiRequest,

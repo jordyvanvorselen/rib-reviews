@@ -1,12 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { appRunner } from "./_app";
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-
-const { appRunner } = require("./_app");
 
 export default async function handler(
   req: NextApiRequest,
