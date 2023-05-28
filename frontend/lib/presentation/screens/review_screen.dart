@@ -82,7 +82,7 @@ class ReviewScreenState extends ConsumerState<ReviewScreen> {
           ReviewAlert().show(
             context,
             widget.event,
-            (rating, text) async {
+            (double rating, String text) async {
               Review review =
                   await ref.watch(Providers.reviewSaveServiceProvider).save(
                         rating,
