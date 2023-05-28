@@ -36,8 +36,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
       leadingWidth: 56,
       systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: kBackgroundColor,
-        // statusBarBrightness: Brightness.dark,
-        // statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
       ),
       title: Padding(
         padding: EdgeInsets.symmetric(
