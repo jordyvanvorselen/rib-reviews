@@ -44,7 +44,7 @@ const planEventModal = () => {
   return Modal({ title: "Plan the next event", callbackId: "planEvent" })
     .blocks(
       Blocks.Input({ label: "Where will we go?", blockId: "eventInput" }).element(
-        Elements.ExternalSelect({ actionId: "input" }).minQueryLength(0)
+        Elements.ExternalSelect({ actionId: "eventSelect" }).minQueryLength(0)
       ),
       Blocks.Input({ label: "And when?", blockId: "dateInput" }).element(
         Elements.DateTimePicker({ actionId: "input" })
@@ -98,6 +98,34 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
     channel: "eat-guild",
     text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`,
   });
+});
+
+app.options("eventSelect", async ({ ack, body, options, client }: any) => {
+  options.push([
+    {
+      text: {
+        type: "plain_text",
+        text: "*this is plain_text text*",
+      },
+      value: "value-0",
+    },
+    {
+      text: {
+        type: "plain_text",
+        text: "*this is plain_text text*",
+      },
+      value: "value-1",
+    },
+    {
+      text: {
+        type: "plain_text",
+        text: "*this is plain_text text*",
+      },
+      value: "value-2",
+    },
+  ]);
+
+  await ack({ options });
 });
 
 appRunner.setup(app);
