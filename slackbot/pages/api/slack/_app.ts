@@ -82,7 +82,7 @@ const eventPlannedMessage = (userId: string, venueName: string, date: string) =>
       ),
       Divider()
     )
-    .buildToJSON();
+    .buildToObject().blocks;
 };
 
 const toOption = (id: string, name: string) => {
