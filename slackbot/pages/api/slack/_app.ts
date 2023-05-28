@@ -179,7 +179,7 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
       body.user.id,
       venueName,
       dateFormatter.format(new Date(formattedDate), "ddd, MMM DD YYYY"),
-      dateFormatter.format(new Date(formattedDate), "HH:mm A")
+      dateFormatter.format(new Date(formattedDate), "h:mm A")
     ),
   });
 });
