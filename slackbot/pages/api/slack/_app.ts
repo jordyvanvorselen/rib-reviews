@@ -54,7 +54,7 @@ const suggestionModal = () => {
 };
 
 const planEventModal = () => {
-  return Modal({ title: "Plan the next event", callbackId: "planEvent" })
+  return Modal({ title: "Plan the next event", callbackId: "planCallback" })
     .blocks(
       Blocks.Input({ label: "Where will we go?", blockId: "eventInput" }).element(
         Elements.ExternalSelect({ actionId: "eventSelect" }).minQueryLength(0)
@@ -120,6 +120,26 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
   await client.chat.postMessage({
     channel: "eat-guild",
     text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`,
+  });
+});
+
+app.view("planCallback", async ({ body, ack, client }: any) => {
+  await ack();
+
+  const { eventInput, dateInput } = body.view.state.values;
+
+  console.log(eventInput);
+
+  const id: string = eventInput.eventSelect.value;
+  const date: string = dateInput.input.value;
+
+  console.log("id that im going to plan", id);
+
+  const response = await api.put(`/events/${id}`, { date });
+
+  await client.chat.postMessage({
+    channel: "eat-guild",
+    text: `<@${body.user.id}> planned something!`,
   });
 });
 
