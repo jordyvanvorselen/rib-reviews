@@ -37,7 +37,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
       systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: kBackgroundColor,
         statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
+        systemStatusBarContrastEnforced: false,
+        systemNavigationBarContrastEnforced: false,
+        systemNavigationBarColor: kBackgroundColor,
+        systemNavigationBarIconBrightness: Brightness.light,
       ),
       title: Padding(
         padding: EdgeInsets.symmetric(
