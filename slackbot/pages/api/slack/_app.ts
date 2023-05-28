@@ -164,8 +164,10 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   const epochDate = new Date(0);
   epochDate.setSeconds(parseInt(epoch));
-  const formattedDate = dateFormatter.format(epochDate, "YYYY-MM-DD HH:mm:ss");
-  const date = convertTZ(formattedDate, "Europe/Amsterdam");
+  const formattedDate = dateFormatter.format(
+    convertTZ(epochDate, "Europe/Amsterdam"),
+    "YYYY-MM-DD HH:mm:ss"
+  );
 
   const response = await api.put(`/events/${id}`, { date: formattedDate });
 
@@ -176,8 +178,8 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
     blocks: eventPlannedMessage(
       body.user.id,
       venueName,
-      dateFormatter.format(new Date(date), "ddd, MMM DD YYYY"),
-      dateFormatter.format(new Date(date), "h A")
+      dateFormatter.format(new Date(formattedDate), "ddd, MMM DD YYYY"),
+      dateFormatter.format(new Date(formattedDate), "h A")
     ),
   });
 });
