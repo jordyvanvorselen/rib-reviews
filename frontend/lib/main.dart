@@ -7,14 +7,14 @@ import 'domain/utils/constants.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: kBackgroundColor,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-        systemStatusBarContrastEnforced: false,
-        systemNavigationBarContrastEnforced: false,
-        systemNavigationBarColor: kBackgroundColor,
-        systemNavigationBarIconBrightness: Brightness.light,
-  );
+    statusBarColor: kBackgroundColor,
+    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light,
+    systemStatusBarContrastEnforced: false,
+    systemNavigationBarContrastEnforced: false,
+    systemNavigationBarColor: kBackgroundColor,
+    systemNavigationBarIconBrightness: Brightness.light,
+  ));
 
   runApp(const ProviderScope(child: Main()));
 }
