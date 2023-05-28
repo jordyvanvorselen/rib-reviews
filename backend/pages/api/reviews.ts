@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { Double, ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
 import clientPromise from "../../lib/mongodb";
@@ -9,7 +9,7 @@ import { cors } from "../../middleware/cors";
 type Error = { error: string };
 type Review = {
   _id?: ObjectId;
-  rating: number;
+  rating: Double;
   text: string;
   createdAt: string;
   userId: ObjectId;
@@ -27,7 +27,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Review[]>) => {
 
   const reviews = results.map((r) => ({
     _id: r._id,
-    rating: r.rating,
+    rating: new Double(r.rating),
     text: r.text,
     createdAt: r.createdAt,
     userId: r.userId,
