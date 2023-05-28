@@ -2,7 +2,7 @@ import { AppRunner } from "@seratch_/bolt-http-runner";
 import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
 import { FileStateStore } from "@slack/oauth";
 import dateFormatter from "date-and-time";
-import { Blocks, Elements, Modal } from "slack-block-builder";
+import { Blocks, Divider, Elements, Image, Message, Modal, Section } from "slack-block-builder";
 
 import * as api from "../../../utils/api";
 
@@ -65,6 +65,23 @@ const planEventModal = () => {
       )
     )
     .submit("Plan")
+    .buildToJSON();
+};
+
+const eventPlannedMessage = (userId: string, venueName: string, date: string) => {
+  return Message()
+    .asUser()
+    .blocks(
+      Section({ text: `<@${userId}> has scheduled a new eat guild event:` }),
+      Divider(),
+      Section({ text: `*${venueName}*\n${date}\n\n<https://eatguild.nl|Open in app>` }).accessory(
+        Image({
+          imageUrl: "https://api.slack.com/img/blocks/bkb_template_images/notifications.png",
+          altText: "calendar thumbnail",
+        })
+      ),
+      Divider()
+    )
     .buildToJSON();
 };
 
@@ -145,7 +162,7 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   await client.chat.postMessage({
     channel: "eat-guild",
-    text: `<@${body.user.id}> planned to go to ${venueName}!`,
+    text: eventPlannedMessage(body.user.id, venueName, date),
   });
 });
 
