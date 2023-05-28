@@ -134,7 +134,10 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   const epochDate = new Date(0);
   epochDate.setUTCSeconds(parseInt(epoch));
-  const date = epochDate.toLocaleString("nl-NL").replace("/", "-").replace(", ", " ");
+  const date = epochDate
+    .toLocaleString("nl-NL", { timeZone: "UTC" })
+    .replace("/", "-")
+    .replace(", ", " ");
 
   console.log("PUT with request body ", JSON.stringify({ date }));
 

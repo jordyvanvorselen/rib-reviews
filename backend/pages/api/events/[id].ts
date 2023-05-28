@@ -27,6 +27,9 @@ const put = async (req: NextApiRequest, res: NextApiResponse<Event | Error>) => 
 
   // Events can be created without a date, that means they are not planned yet.
   if (!id || !eventExists || !dateIsValid(date, true)) {
+    console.log("eventExists", eventExists);
+    console.log("dateIsValid", dateIsValid(date, true));
+    console.log("id", id);
     return res.status(422).json({ error: "Invalid request body." });
   }
 
