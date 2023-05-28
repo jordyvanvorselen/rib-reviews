@@ -8,7 +8,7 @@ import 'domain/utils/constants.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
     statusBarColor: kBackgroundColor,
-    statusBarBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
   ));
 
   runApp(const ProviderScope(child: Main()));
@@ -32,7 +32,11 @@ class Main extends StatelessWidget {
             .textTheme
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
-        appBarTheme: const AppBarTheme(backgroundColor: kBackgroundColor),
+        appBarTheme: AppBarTheme(
+          backgroundColor: kBackgroundColor,
+          systemOverlayStyle: SystemUiOverlayStyle.dark
+              .copyWith(statusBarBrightness: Brightness.dark),
+        ),
       ),
       home: overrideWidget ?? const LoginScreen(),
     );
