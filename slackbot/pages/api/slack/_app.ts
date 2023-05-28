@@ -101,31 +101,24 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
 });
 
 app.options("eventSelect", async ({ ack, body, options, client }: any) => {
-  options.push([
-    {
-      text: {
-        type: "plain_text",
-        text: "*this is plain_text text*",
+  const opts = {
+    options: [
+      {
+        label: "[UXD-342] The button color should be artichoke green, not jalapeño",
+        value: "UXD-342",
       },
-      value: "value-0",
-    },
-    {
-      text: {
-        type: "plain_text",
-        text: "*this is plain_text text*",
+      {
+        label: "[FE-459] Remove the marquee tag",
+        value: "FE-459",
       },
-      value: "value-1",
-    },
-    {
-      text: {
-        type: "plain_text",
-        text: "*this is plain_text text*",
+      {
+        label: "[FE-238] Too many shades of gray in master CSS",
+        value: "FE-238",
       },
-      value: "value-2",
-    },
-  ]);
+    ],
+  };
 
-  await ack({ options });
+  await ack({ options: opts });
 });
 
 appRunner.setup(app);
