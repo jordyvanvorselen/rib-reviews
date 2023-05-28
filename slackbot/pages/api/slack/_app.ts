@@ -72,10 +72,12 @@ const eventPlannedMessage = (userId: string, venueName: string, date: string, ti
   return Message()
     .asUser()
     .blocks(
-      Section({ text: `<@${userId}> has scheduled a new eat guild event:` }),
+      Section({
+        text: `<@${userId}> has scheduled a new eat guild event!  :poultry_leg: :partying_face: :broccoli:`,
+      }),
       Divider(),
       Section({
-        text: `*${venueName}*\n${date}\n${time}\n\n<https://eatguild.nl|Open in app>`,
+        text: `:house_with_garden:  *${venueName}*\n:date:  ${date}\n:alarm_clock:  ${time}\n\n:link:  <https://eatguild.nl|Open in app>`,
       }).accessory(
         Image({
           imageUrl: "https://api.slack.com/img/blocks/bkb_template_images/notifications.png",
