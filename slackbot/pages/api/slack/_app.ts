@@ -132,7 +132,7 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
   const date: string = dateInput.input.value;
   const venueName = eventInput.eventSelect.selected_option.text.text;
 
-  console.log("sending PUT with request body: ", JSON.stringify({ date }));
+  console.log(JSON.stringify(dateInput));
 
   const response = await api.put(`/events/${id}`, { date });
 
