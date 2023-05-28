@@ -56,10 +56,10 @@
 Because we frequently visited grill restaurants with a group of colleagues to compare their spareribs, we started _The Eat Guild_. This app makes it possible for all members to review these restaurants. It also acts as a suggestion pipeline, so it's easier to track where we want to go next.
 
 <a href="https://github.com/jordyvanvorselen/rib-reviews">
-  <img src="screenshots/login.png" alt="Login screenshot" width="200" height="400">
-  <img src="screenshots/timeline.png" alt="Timeline screenshot" width="200" height="400">
-  <img src="screenshots/reviews.png" alt="Reviews screenshot" width="200" height="400">
-  <img src="screenshots/review_alert.png" alt="Review alert screenshot" width="200" height="400">
+  <img src=".screenshots/login.png" alt="Login screenshot" width="200" height="400">
+  <img src=".screenshots/timeline.png" alt="Timeline screenshot" width="200" height="400">
+  <img src=".screenshots/reviews.png" alt="Reviews screenshot" width="200" height="400">
+  <img src=".screenshots/review_alert.png" alt="Review alert screenshot" width="200" height="400">
   <br>
   <br>
 </a>
@@ -67,7 +67,7 @@ Because we frequently visited grill restaurants with a group of colleagues to co
 Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hosted on Vercel. It uses MongoDB Atlas as a database and Firebase for authentication. The app is also integrated with Slack using a bolt-js slackbot. The slackbot allows users to suggest new restaurants and plan events.
 
 <a href="https://github.com/jordyvanvorselen/rib-reviews">
-  <img src="screenshots/slackbot.PNG" alt="Slackbot screenshot" width="200" height="400">
+  <img src=".screenshots/slackbot.PNG" alt="Slackbot screenshot" width="200" height="400">
   <br>
   <br>
 </a>
