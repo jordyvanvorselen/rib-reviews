@@ -89,14 +89,6 @@ const eventPlannedMessage = (userId: string, venueName: string, date: string, ti
     .buildToObject().blocks;
 };
 
-function convertTZ(date: string | Date, tzString: string) {
-  return new Date(
-    (typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {
-      timeZone: tzString,
-    })
-  );
-}
-
 const toOption = (id: string, name: string) => {
   return {
     text: {
@@ -165,7 +157,6 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
   const epochDate = new Date(0);
   epochDate.setUTCSeconds(parseInt(epoch));
   const formattedDate = dateFormatter.format(epochDate, "YYYY-MM-DD HH:mm:ss");
-  const date = convertTZ(formattedDate, "UTC");
 
   const response = await api.put(`/events/${id}`, { date: formattedDate });
 
@@ -176,8 +167,8 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
     blocks: eventPlannedMessage(
       body.user.id,
       venueName,
-      dateFormatter.format(new Date(date), "ddd, MMM DD YYYY"),
-      dateFormatter.format(new Date(date), "h A")
+      dateFormatter.format(new Date(formattedDate), "ddd, MMM DD YYYY"),
+      dateFormatter.format(new Date(formattedDate), "h A")
     ),
   });
 });
