@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rib_reviews/presentation/screens/login_screen.dart';
 
 import 'domain/utils/constants.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-    statusBarColor: kBackgroundColor,
-    statusBarBrightness: Brightness.dark,
-  ));
-
   runApp(const ProviderScope(child: Main()));
 }
 
@@ -32,11 +26,6 @@ class Main extends StatelessWidget {
             .textTheme
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
-        appBarTheme: AppBarTheme(
-          backgroundColor: kBackgroundColor,
-          systemOverlayStyle: SystemUiOverlayStyle.dark
-              .copyWith(statusBarBrightness: Brightness.dark),
-        ),
       ),
       home: overrideWidget ?? const LoginScreen(),
     );
