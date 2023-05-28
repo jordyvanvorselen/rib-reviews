@@ -101,6 +101,7 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
 });
 
 app.options("eventSelect", async ({ ack, body, options, client }: any) => {
+  throw new Error("QQQ");
   const opts = {
     options: [
       {
