@@ -101,24 +101,22 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
 });
 
 app.options("eventSelect", async ({ ack }: any) => {
-  const opts = {
-    options: [
-      {
-        text: {
-          type: "plain_text",
-          text: "First",
-        },
-        value: "first",
+  const opts = [
+    {
+      text: {
+        type: "plain_text",
+        text: "First",
       },
-      {
-        text: {
-          type: "plain_text",
-          text: "Second",
-        },
-        value: "second",
+      value: "first",
+    },
+    {
+      text: {
+        type: "plain_text",
+        text: "Second",
       },
-    ],
-  };
+      value: "second",
+    },
+  ];
 
   await ack({ options: opts });
 });
