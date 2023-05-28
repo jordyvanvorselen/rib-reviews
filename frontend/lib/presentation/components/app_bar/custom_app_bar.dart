@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rib_reviews/domain/models/user.dart';
 import 'package:rib_reviews/domain/utils/responsive.dart';
 import 'package:rib_reviews/presentation/components/app_bar/app_bar_title.dart';
@@ -33,11 +32,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       leadingWidth: 56,
-      systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.transparent,
-        systemStatusBarContrastEnforced: false,
-        systemNavigationBarContrastEnforced: false,
-      ),
       title: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Responsive.horizontalPadding(context, appbar: true),
