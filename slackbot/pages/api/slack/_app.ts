@@ -135,7 +135,7 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   console.log("id that im going to plan", id);
 
-  const response = await api.put(`/events/${id}`, { date });
+  // const response = await api.put(`/events/${id}`, { date });
 
   await client.chat.postMessage({
     channel: "eat-guild",
