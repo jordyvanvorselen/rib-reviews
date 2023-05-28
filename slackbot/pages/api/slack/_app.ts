@@ -128,16 +128,17 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   const { eventInput, dateInput } = body.view.state.values;
 
-  console.log(JSON.stringify(eventInput.eventSelect.selected_option.text));
-
   const id: string = eventInput.eventSelect.selected_option.value;
   const date: string = dateInput.input.value;
+  const venueName = eventInput.eventSelect.selected_option.text.text;
+
+  console.log("sending PUT with request body: ", JSON.stringify({ date }));
 
   const response = await api.put(`/events/${id}`, { date });
 
   await client.chat.postMessage({
     channel: "eat-guild",
-    text: `<@${body.user.id}> planned something!`,
+    text: `<@${body.user.id}> planned to go to ${venueName}!`,
   });
 });
 
