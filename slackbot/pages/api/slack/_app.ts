@@ -68,13 +68,15 @@ const planEventModal = () => {
     .buildToJSON();
 };
 
-const eventPlannedMessage = (userId: string, venueName: string, date: string) => {
+const eventPlannedMessage = (userId: string, venueName: string, date: string, time: string) => {
   return Message()
     .asUser()
     .blocks(
       Section({ text: `<@${userId}> has scheduled a new eat guild event:` }),
       Divider(),
-      Section({ text: `*${venueName}*\n${date}\n\n<https://eatguild.nl|Open in app>` }).accessory(
+      Section({
+        text: `*${venueName}*\n${date}\n${time}\n\n<https://eatguild.nl|Open in app>`,
+      }).accessory(
         Image({
           imageUrl: "https://api.slack.com/img/blocks/bkb_template_images/notifications.png",
           altText: "calendar thumbnail",
@@ -152,17 +154,21 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   const epochDate = new Date(0);
   epochDate.setUTCSeconds(parseInt(epoch));
-  const date = dateFormatter.format(epochDate, "YYYY-MM-DD HH:mm:ss");
+  const formattedDate = dateFormatter.format(epochDate, "YYYY-MM-DD HH:mm:ss");
+  const date = new Date(formattedDate);
 
-  console.log("PUT with request body ", JSON.stringify({ date }));
-
-  const response = await api.put(`/events/${id}`, { date });
+  const response = await api.put(`/events/${id}`, { date: formattedDate });
 
   if (response.status !== 200) return;
 
   await client.chat.postMessage({
     channel: "eat-guild",
-    blocks: eventPlannedMessage(body.user.id, venueName, date),
+    blocks: eventPlannedMessage(
+      body.user.id,
+      venueName,
+      dateFormatter.format(new Date(date), "ddd, MMM DD YYYY"),
+      dateFormatter.format(new Date(date), "hh A")
+    ),
   });
 });
 
