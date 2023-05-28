@@ -162,7 +162,7 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   await client.chat.postMessage({
     channel: "eat-guild",
-    text: eventPlannedMessage(body.user.id, venueName, date),
+    attachments: [eventPlannedMessage(body.user.id, venueName, date)],
   });
 });
 
