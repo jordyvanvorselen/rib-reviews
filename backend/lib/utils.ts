@@ -2,9 +2,8 @@ import { Db, ObjectId } from "mongodb";
 
 export const dateIsValid = (date: string, validWhenNull: boolean = false) => {
   if (!date) return validWhenNull;
-  if (Date.parse(date) > 0) return true;
 
-  return false;
+  return Date.parse(date) > 0;
 };
 
 export const documentExists = async (db: Db, collection: string, id: string) => {

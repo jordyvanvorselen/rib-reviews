@@ -1,6 +1,7 @@
 import { AppRunner } from "@seratch_/bolt-http-runner";
 import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
 import { FileStateStore } from "@slack/oauth";
+import dateFormatter from "date-and-time";
 import { Blocks, Elements, Modal } from "slack-block-builder";
 
 import * as api from "../../../utils/api";
@@ -134,10 +135,7 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   const epochDate = new Date(0);
   epochDate.setUTCSeconds(parseInt(epoch));
-  const date = epochDate
-    .toLocaleString("nl-NL", { timeZone: "UTC" })
-    .replace("/", "-")
-    .replace(", ", " ");
+  const date = dateFormatter.format(epochDate, "YYYY-MM-DD HH:mm:ss");
 
   console.log("PUT with request body ", JSON.stringify({ date }));
 
