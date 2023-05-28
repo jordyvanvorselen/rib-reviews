@@ -129,10 +129,14 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
   const { eventInput, dateInput } = body.view.state.values;
 
   const id: string = eventInput.eventSelect.selected_option.value;
-  const date: string = dateInput.input.value;
+  const epoch: string = dateInput.input.selected_date_time;
   const venueName = eventInput.eventSelect.selected_option.text.text;
 
-  console.log(JSON.stringify(dateInput));
+  const epochDate = new Date(0);
+  epochDate.setUTCSeconds(parseInt(epoch));
+  const date = epochDate.toLocaleString("nl-NL").replace("/", "-").replace(", ", " ");
+
+  console.log("PUT with request body ", JSON.stringify({ date }));
 
   const response = await api.put(`/events/${id}`, { date });
 
