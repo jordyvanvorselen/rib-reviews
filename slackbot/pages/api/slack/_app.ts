@@ -7,6 +7,19 @@ import * as api from "../../../utils/api";
 
 require("dotenv").config();
 
+type Venue = {
+  _id: string;
+  location: string;
+  name: string;
+  website: string;
+};
+
+type Event = {
+  _id: string;
+  date: string | null;
+  venueId: string;
+};
+
 export const appRunner = new AppRunner({
   logLevel: LogLevel.DEBUG,
   token: process.env.SLACK_BOT_TOKEN,
@@ -52,6 +65,16 @@ const planEventModal = () => {
     )
     .submit("Plan")
     .buildToJSON();
+};
+
+const toOption = (id: string, name: string) => {
+  return {
+    text: {
+      type: "plain_text",
+      text: name,
+    },
+    value: id,
+  };
 };
 
 const app = new App(appRunner.appOptions());
@@ -101,24 +124,19 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
 });
 
 app.options("eventSelect", async ({ ack }: any) => {
-  const opts = [
-    {
-      text: {
-        type: "plain_text",
-        text: "First",
-      },
-      value: "first",
-    },
-    {
-      text: {
-        type: "plain_text",
-        text: "Second",
-      },
-      value: "second",
-    },
-  ];
+  const venuesResponse = await api.get("/venues");
+  const eventsResponse = await api.get("/events");
 
-  await ack({ options: opts });
+  const venues = venuesResponse.data as Venue[];
+  const events = eventsResponse.data as Event[];
+
+  const options = events
+    .filter((event) => !event.date)
+    .map((event) =>
+      toOption(event._id, venues.find((venue) => venue._id === event.venueId)?.name || "")
+    );
+
+  await ack({ options });
 });
 
 appRunner.setup(app);
