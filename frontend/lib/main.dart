@@ -32,6 +32,7 @@ class Main extends StatelessWidget {
             .textTheme
             .apply(bodyColor: kPrimaryTextColor, fontFamily: 'Onest'),
         iconTheme: const IconThemeData(color: kPrimaryTextColor),
+        appBarTheme: const AppBarTheme(backgroundColor: kBackgroundColor),
       ),
       home: overrideWidget ?? const LoginScreen(),
     );
