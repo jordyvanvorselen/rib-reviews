@@ -165,7 +165,7 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
   const epochDate = new Date(0);
   epochDate.setUTCSeconds(parseInt(epoch));
   const formattedDate = dateFormatter.format(epochDate, "YYYY-MM-DD HH:mm:ss");
-  const date = convertTZ(formattedDate, "Europe/Amsterdam");
+  const date = convertTZ(formattedDate, "UTC");
 
   const response = await api.put(`/events/${id}`, { date: formattedDate });
 
