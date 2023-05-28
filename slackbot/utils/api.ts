@@ -19,3 +19,13 @@ export const post = async (url: string, body: object | undefined) => {
     },
   });
 };
+
+export const put = async (url: string, body: object | undefined) => {
+  return axios.put(`${process.env.API_BASE_URL}${url}`, JSON.stringify(body), {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: process.env.API_KEY,
+    },
+  });
+};

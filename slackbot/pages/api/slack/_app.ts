@@ -1,11 +1,25 @@
 import { AppRunner } from "@seratch_/bolt-http-runner";
 import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
 import { FileStateStore } from "@slack/oauth";
-import { Blocks, Elements, Modal } from "slack-block-builder";
+import dateFormatter from "date-and-time";
+import { Blocks, Divider, Elements, Image, Message, Modal, Section } from "slack-block-builder";
 
 import * as api from "../../../utils/api";
 
 require("dotenv").config();
+
+type Venue = {
+  _id: string;
+  location: string;
+  name: string;
+  website: string;
+};
+
+type Event = {
+  _id: string;
+  date: string | null;
+  venueId: string;
+};
 
 export const appRunner = new AppRunner({
   logLevel: LogLevel.DEBUG,
@@ -40,9 +54,64 @@ const suggestionModal = () => {
     .buildToJSON();
 };
 
+const planEventModal = () => {
+  return Modal({ title: "Plan the next event", callbackId: "planCallback" })
+    .blocks(
+      Blocks.Input({ label: "Where will we go?", blockId: "eventInput" }).element(
+        Elements.ExternalSelect({ actionId: "eventSelect" }).minQueryLength(0)
+      ),
+      Blocks.Input({ label: "And when?", blockId: "dateInput" }).element(
+        Elements.DateTimePicker({ actionId: "input" })
+      )
+    )
+    .submit("Plan")
+    .buildToJSON();
+};
+
+const eventPlannedMessage = (userId: string, venueName: string, date: string, time: string) => {
+  return Message()
+    .asUser()
+    .blocks(
+      Section({
+        text: `<@${userId}> has scheduled a new eat guild event!  :poultry_leg: :partying_face: :broccoli:`,
+      }),
+      Divider(),
+      Section({
+        text: `:house_with_garden:  *${venueName}*\n:date:  ${date}\n:alarm_clock:  ${time}\n\n:link:  <https://eatguild.nl|Open in app>`,
+      }).accessory(
+        Image({
+          imageUrl: "https://api.slack.com/img/blocks/bkb_template_images/notifications.png",
+          altText: "calendar thumbnail",
+        })
+      ),
+      Divider()
+    )
+    .buildToObject().blocks;
+};
+
+function convertTZ(date: string | Date, tzString: string) {
+  return new Date(
+    (typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {
+      timeZone: tzString,
+    })
+  );
+}
+
+const toOption = (id: string, name: string) => {
+  return {
+    text: {
+      type: "plain_text",
+      text: name,
+    },
+    value: id,
+  };
+};
+
 const app = new App(appRunner.appOptions());
 
 app.command("/suggest", async ({ client, ack, logger, body }: any) => {
+  await ack();
+
   try {
     await client.views.open({
       trigger_id: body.trigger_id,
@@ -50,8 +119,19 @@ app.command("/suggest", async ({ client, ack, logger, body }: any) => {
     });
   } catch (error) {
     logger.error(error);
-  } finally {
-    await ack();
+  }
+});
+
+app.command("/plan", async ({ client, ack, logger, body }: any) => {
+  await ack();
+
+  try {
+    await client.views.open({
+      trigger_id: body.trigger_id,
+      view: planEventModal(),
+    });
+  } catch (error) {
+    logger.error(error);
   }
 });
 
@@ -71,6 +151,51 @@ app.view("suggestCallback", async ({ body, ack, client }: any) => {
     channel: "eat-guild",
     text: `<@${body.user.id}> suggested to go to <${website}|${name}> in ${location}.`,
   });
+});
+
+app.view("planCallback", async ({ body, ack, client }: any) => {
+  await ack();
+
+  const { eventInput, dateInput } = body.view.state.values;
+
+  const id: string = eventInput.eventSelect.selected_option.value;
+  const epoch: string = dateInput.input.selected_date_time;
+  const venueName = eventInput.eventSelect.selected_option.text.text;
+
+  const epochDate = new Date(0);
+  epochDate.setUTCSeconds(parseInt(epoch));
+  const formattedDate = dateFormatter.format(epochDate, "YYYY-MM-DD HH:mm:ss");
+  const date = convertTZ(formattedDate, "Europe/Amsterdam");
+
+  const response = await api.put(`/events/${id}`, { date: formattedDate });
+
+  if (response.status !== 200) return;
+
+  await client.chat.postMessage({
+    channel: "eat-guild",
+    blocks: eventPlannedMessage(
+      body.user.id,
+      venueName,
+      dateFormatter.format(new Date(date), "ddd, MMM DD YYYY"),
+      dateFormatter.format(new Date(date), "h A")
+    ),
+  });
+});
+
+app.options("eventSelect", async ({ ack }: any) => {
+  const venuesResponse = await api.get("/venues");
+  const eventsResponse = await api.get("/events");
+
+  const venues = venuesResponse.data as Venue[];
+  const events = eventsResponse.data as Event[];
+
+  const options = events
+    .filter((event) => !event.date)
+    .map((event) =>
+      toOption(event._id, venues.find((venue) => venue._id === event.venueId)?.name || "")
+    );
+
+  await ack({ options });
 });
 
 appRunner.setup(app);
