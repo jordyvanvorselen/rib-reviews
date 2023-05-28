@@ -141,6 +141,8 @@ app.view("planCallback", async ({ body, ack, client }: any) => {
 
   const response = await api.put(`/events/${id}`, { date });
 
+  if (response.status !== 200) return;
+
   await client.chat.postMessage({
     channel: "eat-guild",
     text: `<@${body.user.id}> planned to go to ${venueName}!`,
