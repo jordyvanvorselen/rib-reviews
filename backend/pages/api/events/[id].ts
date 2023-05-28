@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
-import clientPromise, { DATABASE_NAME } from "../../../lib/mongodb";
+import clientPromise from "../../../lib/mongodb";
 import { dateIsValid, documentExists } from "../../../lib/utils";
 import { authorize } from "../../../middleware/authorization";
 import { cors } from "../../../middleware/cors";
@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const put = async (req: NextApiRequest, res: NextApiResponse<Event | Error>) => {
-  const db = (await clientPromise).db(DATABASE_NAME);
+  const db = (await clientPromise).db();
 
   const { date } = req.body;
   const { id } = req.query;

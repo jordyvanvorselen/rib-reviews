@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
-import clientPromise, { DATABASE_NAME } from "../../lib/mongodb";
+import clientPromise from "../../lib/mongodb";
 import { authorize } from "../../middleware/authorization";
 import { cors } from "../../middleware/cors";
 
@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const get = async (req: NextApiRequest, res: NextApiResponse<User[]>) => {
-  const db = (await clientPromise).db(DATABASE_NAME);
+  const db = (await clientPromise).db();
   const results = await db.collection("users").find({}).toArray();
 
   const users = results.map((r) => ({
@@ -33,7 +33,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<User[]>) => {
 };
 
 const post = async (req: NextApiRequest, res: NextApiResponse<User | Error>) => {
-  const db = (await clientPromise).db(DATABASE_NAME);
+  const db = (await clientPromise).db();
   const { email, photoUrl, displayName } = req.body;
 
   if (!email || !displayName) {

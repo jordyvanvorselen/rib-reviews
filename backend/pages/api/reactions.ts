@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
-import clientPromise, { DATABASE_NAME } from "../../lib/mongodb";
+import clientPromise from "../../lib/mongodb";
 import { authorize } from "../../middleware/authorization";
 import { cors } from "../../middleware/cors";
 
@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const get = async (req: NextApiRequest, res: NextApiResponse<Reaction[]>) => {
-  const db = (await clientPromise).db(DATABASE_NAME);
+  const db = (await clientPromise).db();
   const results = await db.collection("reactions").find({}).toArray();
 
   const reactions = results.map((r) => ({
@@ -33,7 +33,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Reaction[]>) => {
 };
 
 const put = async (req: NextApiRequest, res: NextApiResponse<null | Reaction | Error>) => {
-  const db = (await clientPromise).db(DATABASE_NAME);
+  const db = (await clientPromise).db();
   const { emoji, userIds, reviewId } = req.body;
 
   if (!emoji || !userIds || !reviewId) {
