@@ -64,10 +64,11 @@ Because we frequently visited grill restaurants with a group of colleagues to co
   <br>
 </a>
 
-Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hosted on Vercel.
+Rib reviews is a Flutter mobile app backed by a Serverless Next.js backend hosted on Vercel. It uses MongoDB Atlas as a database and Firebase for authentication. The app is also integrated with Slack using a bolt-js slackbot. The slackbot allows users to suggest new restaurants and plan events.
 
 - Click [here](./frontend/README.md) to read more about the technical setup of the **mobile app**.
 - Click [here](./backend/README.md) to read more about the technical setup of the **backend**.
+- Click [here](./slackbot/README.md) to read more about the technical setup of the **slackbot**.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -103,7 +104,7 @@ This project is set up in three main folders. The `frontend` folder contains the
 - [x] React on restaurant ratings using emoji's
 - [x] Slackbot to suggest new restaurants
 - [ ] Vote for suggested restaurants
-- [ ] Plan event with the most votes
+- [x] Plan events using Slackbot
 - [ ] Notify users about upcoming events
 
 See the [open issues](https://github.com/jordyvanvorselen/rib-reviews/issues) for a full list of proposed features (and known issues).
