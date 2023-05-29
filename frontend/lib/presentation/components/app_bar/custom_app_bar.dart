@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rib_reviews/domain/models/user.dart';
+import 'package:rib_reviews/domain/utils/constants.dart';
 import 'package:rib_reviews/domain/utils/responsive.dart';
 import 'package:rib_reviews/presentation/components/app_bar/app_bar_title.dart';
 import 'package:rib_reviews/presentation/components/app_bar/profile_picture.dart';
@@ -30,9 +31,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: kAppBarColor,
+      elevation: 0,
       leadingWidth: 56,
-      shadowColor: null,
       title: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Responsive.horizontalPadding(context, appbar: true),

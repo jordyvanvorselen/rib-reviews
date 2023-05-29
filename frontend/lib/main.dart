@@ -20,7 +20,6 @@ class Main extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scrollBehavior: const ScrollBehavior().copyWith(scrollbars: false),
       theme: ThemeData(
-        shadowColor: null,
         brightness: Brightness.dark,
         scaffoldBackgroundColor: kBackgroundColor,
         textTheme: Theme.of(context)
