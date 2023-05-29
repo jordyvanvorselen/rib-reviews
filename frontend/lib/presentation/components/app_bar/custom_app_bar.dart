@@ -32,6 +32,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       leadingWidth: 56,
+      elevation: 0,
       title: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Responsive.horizontalPadding(context, appbar: true),
