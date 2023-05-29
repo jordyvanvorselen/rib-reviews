@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { use } from "next-api-route-middleware";
 import clientPromise from "../../lib/mongodb";
+import { prisma } from "../../lib/prisma";
 import { authorize } from "../../middleware/authorization";
 import { cors } from "../../middleware/cors";
 
@@ -10,7 +11,7 @@ type Reaction = {
   _id?: ObjectId;
   emoji: string;
   userIds: [ObjectId];
-  reviewId: [ObjectId];
+  reviewId: ObjectId;
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -22,12 +23,14 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Reaction[]>) => {
   const db = (await clientPromise).db();
   const results = await db.collection("reactions").find({}).toArray();
 
-  const reactions = results.map((r) => ({
-    _id: r._id,
-    emoji: r.emoji,
-    userIds: r.userIds,
-    reviewId: r.reviewId,
-  }));
+  const reactions = await prisma.reaction.findMany();
+
+  // const reactions = results.map((r) => ({
+  //   _id: r._id,
+  //   emoji: r.emoji,
+  //   userIds: r.userIds,
+  //   reviewId: new ObjectId(r.reviewId),
+  // }));
 
   res.status(200).json(reactions);
 };

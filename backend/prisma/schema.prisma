@@ -7,39 +7,55 @@ datasource db {
   url      = env("MONGODB_URI")
 }
 
-model events {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  date    String?
-  venueId String  @db.ObjectId
+model Event {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  date String?
+
+  venue   Venue  @relation(fields: [venueId], references: [id])
+  venueId String @db.ObjectId
+
+  Review Review[]
 }
 
-model reactions {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  emoji    String
-  reviewId String
-  userIds  String[]
+model Reaction {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  emoji String
+
+  review   Review @relation(fields: [reviewId], references: [id])
+  reviewId String @db.ObjectId
+
+  userIds String[]
 }
 
-model reviews {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt String
-  eventId   String @db.ObjectId
-  /// Multiple data types found: Float: 57.1%, Int: 42.9% out of 7 sampled entries
-  rating    Json
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  rating    Float
   text      String
-  userId    String @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId String @db.ObjectId
+
+  Reaction Reaction[]
 }
 
-model users {
+model User {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   displayName String
-  email       String
+  email       String @unique
   photoUrl    String
+
+  review Review[]
 }
 
-model venues {
+model Venue {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   location String
   name     String
   website  String
+
+  events Event[]
 }

@@ -24,6 +24,8 @@ To set up this project you need Node.js `v18.12.1` and npm `8.19.2`. You can ins
    ```sh
    npm install
    ```
+   TODO: Prisma setup:
+   - npm install @prisma/client
 4. Copy the `env.example` file:
    ```sh
    cp env.example .env
