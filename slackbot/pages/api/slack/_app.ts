@@ -1,6 +1,5 @@
 import { AppRunner } from "@seratch_/bolt-http-runner";
-import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
-import { FileStateStore } from "@slack/oauth";
+import { App, Installation, InstallationQuery, LogLevel } from "@slack/bolt";
 import dateFormatter from "date-and-time";
 import { Blocks, Divider, Elements, Image, Message, Modal, Section } from "slack-block-builder";
 
@@ -21,6 +20,16 @@ type Event = {
   venueId: string;
 };
 
+const databaseData: { [key: string]: any } = {};
+const database = {
+  set: async (key: string, data: any) => {
+    databaseData[key] = data;
+  },
+  get: async (key: string) => {
+    return databaseData[key];
+  },
+};
+
 export const appRunner = new AppRunner({
   logLevel: LogLevel.DEBUG,
   token: process.env.SLACK_BOT_TOKEN,
@@ -29,9 +38,43 @@ export const appRunner = new AppRunner({
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   processBeforeResponse: true,
   scopes: ["commands", "chat:write", "app_mentions:read"],
-  installationStore: new FileInstallationStore(),
-  installerOptions: {
-    stateStore: new FileStateStore({}),
+  installationStore: {
+    storeInstallation: async (installation: Installation) => {
+      // change the line below so it saves to your database
+      if (installation.isEnterpriseInstall && installation.enterprise !== undefined) {
+        // support for org wide app installation
+        return await database.set(installation.enterprise.id, installation);
+      }
+      if (installation.team !== undefined) {
+        // single team app installation
+        return await database.set(installation.team.id, installation);
+      }
+      throw new Error("Failed saving installation data to installationStore");
+    },
+    fetchInstallation: async (installQuery: InstallationQuery) => {
+      // change the line below so it fetches from your database
+      if (installQuery.isEnterpriseInstall && installQuery.enterpriseId !== undefined) {
+        // org wide app installation lookup
+        return await database.get(installQuery.enterpriseId);
+      }
+      if (installQuery.teamId !== undefined) {
+        // single team app installation lookup
+        return await database.get(installQuery.teamId);
+      }
+      throw new Error("Failed fetching installation");
+    },
+    deleteInstallation: async (installQuery: InstallationQuery) => {
+      // change the line below so it deletes from your database
+      if (installQuery.isEnterpriseInstall && installQuery.enterpriseId !== undefined) {
+        // org wide app installation deletion
+        return await database.delete(installQuery.enterpriseId);
+      }
+      if (installQuery.teamId !== undefined) {
+        // single team app installation deletion
+        return await database.delete(installQuery.teamId);
+      }
+      throw new Error("Failed to delete installation");
+    },
   },
 });
 
