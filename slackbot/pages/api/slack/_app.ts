@@ -1,12 +1,17 @@
+import { PrismaClient } from "@prisma/client";
 import { AppRunner } from "@seratch_/bolt-http-runner";
-import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
-import { FileStateStore } from "@slack/oauth";
+import { PrismaInstallationStore } from "@seratch_/bolt-prisma";
+import { App } from "@slack/bolt";
+import { ConsoleLogger, LogLevel } from "@slack/logger";
 import dateFormatter from "date-and-time";
 import { Blocks, Divider, Elements, Image, Message, Modal, Section } from "slack-block-builder";
 
 import * as api from "../../../utils/api";
 
 require("dotenv").config();
+
+const logger = new ConsoleLogger();
+logger.setLevel(LogLevel.DEBUG);
 
 type Venue = {
   _id: string;
@@ -21,18 +26,23 @@ type Event = {
   venueId: string;
 };
 
+const prismaClient = new PrismaClient({ log: [{ emit: "stdout", level: "query" }] });
+const installationStore = new PrismaInstallationStore({
+  prismaTable: prismaClient.slackAppInstallation,
+  clientId: process.env.SLACK_CLIENT_ID,
+  logger,
+});
+
 export const appRunner = new AppRunner({
-  logLevel: LogLevel.DEBUG,
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET as string,
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
+  stateSecret: process.env.SLACK_STATE_SECRET,
   processBeforeResponse: true,
   scopes: ["commands", "chat:write", "app_mentions:read"],
-  installationStore: new FileInstallationStore(),
-  installerOptions: {
-    stateStore: new FileStateStore({}),
-  },
+  installationStore,
+  logger,
 });
 
 const suggestionModal = () => {
