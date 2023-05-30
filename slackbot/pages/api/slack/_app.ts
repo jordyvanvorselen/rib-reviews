@@ -33,16 +33,6 @@ const installationStore = new PrismaInstallationStore({
   logger,
 });
 
-const databaseData: { [key: string]: any } = {};
-const database = {
-  set: async (key: string, data: any) => {
-    databaseData[key] = data;
-  },
-  get: async (key: string) => {
-    return databaseData[key];
-  },
-};
-
 export const appRunner = new AppRunner({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET as string,
