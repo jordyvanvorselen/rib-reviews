@@ -28,8 +28,6 @@ type Event = {
 
 const prismaClient = new PrismaClient({ log: [{ emit: "stdout", level: "query" }] });
 const installationStore = new PrismaInstallationStore({
-  // The name `slackAppInstallation` can be different
-  // if you use a different name in your Prisma schema
   prismaTable: prismaClient.slackAppInstallation,
   clientId: process.env.SLACK_CLIENT_ID,
   logger,
